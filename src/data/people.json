@@ -1,0 +1,150 @@
+{
+    "children":
+    [
+        {
+            "name":"清",
+            "children":
+            [
+                {
+                    "name": "曹溶",
+                    "thisnum": "3",
+                    "allnum": "13",
+                    "dy": "20",
+                    "children":[
+
+                    ]
+                  },
+                  {
+                    "name": "愛新覺羅弘曆",
+                    "thisnum": "32",
+                    "allnum": "2424",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "梁清標",
+                    "thisnum": "6",
+                    "allnum": "116",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "張應甲",
+                    "thisnum": "3",
+                    "allnum": "18",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "納蘭性德",
+                    "thisnum": "38",
+                    "allnum": "13",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "愛新覺羅顒琰",
+                    "thisnum": "1",
+                    "allnum": "518",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "張若麒",
+                    "thisnum": "1",
+                    "allnum": "1",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "傅山",
+                    "thisnum": "1",
+                    "allnum": "10",
+                    "dy": "20"
+                  },
+                  {
+                    "name": "石濤",
+                    "thisnum": "2",
+                    "allnum": "81",
+                    "dy": "20"
+                  }
+            ]
+        },
+
+        {
+            "name":"明",
+            "children":
+            [
+                {
+                    "name": "項元汴",
+                    "thisnum": "64",
+                    "allnum": "614",
+                    "dy": "19"
+                  },
+                  {
+                    "name": "董其昌",
+                    "thisnum": "4",
+                    "allnum": "150",
+                    "dy": "19"
+                  },
+                  {
+                    "name": "錢溥",
+                    "thisnum": "3",
+                    "allnum": "1",
+                    "dy": "19"
+                  },
+                  
+                  {
+                    "name": "張南陽",
+                    "thisnum": "1",
+                    "allnum": "58",
+                    "dy": "19"
+                  },
+                  {
+                    "name": "文彭",
+                    "thisnum": "7",
+                    "allnum": "58",
+                    "dy": "19"
+                  },
+                  {
+                    "name": "詹景鳳",
+                    "thisnum": "1",
+                    "allnum": "19",
+                    "dy": "19"
+                  },
+                  {
+                    "name": "張翀",
+                    "thisnum": "1",
+                    "allnum": "2",
+                    "dy": "19"
+                  }
+                
+            ]
+        },
+
+        {
+            "name":"元",
+            "children":
+            [
+                {
+                    "name": "歐陽玄",
+                    "thisnum": "1",
+                    "allnum": "12",
+                    "dy": "18"
+                  },
+                  {
+                    "name": "趙孟頫",
+                    "thisnum": "1",
+                    "allnum": "48",
+                    "dy": "18"
+                  }
+            ]
+        },
+        {
+            "name":"none",
+            "children":
+            [
+                {
+                    "name": "愛新覺羅溥儀",
+                    "thisnum": "3",
+                    "allnum": "240",
+                    "dy": "21"
+                  }
+            ]
+        }
+    ]    
+}

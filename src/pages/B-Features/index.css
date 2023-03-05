@@ -1,0 +1,20 @@
+.B-container{
+    display: flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+}
+#divide{
+    margin-left:5px;
+    margin-top: 10px;
+}
+#ring-view-container{
+    width:570px;
+    margin-left:8px;
+    margin-top: 10px;
+}
+#lable-view-container{
+    width:275px;
+    height: 500px;
+    margin-left:115px;
+    margin-top: 20px;
+}

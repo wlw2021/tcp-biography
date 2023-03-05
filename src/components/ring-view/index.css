@@ -1,0 +1,36 @@
+.D-container{
+    display: flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+}
+
+#wordcloud{
+    margin:180px 0 0 160px;
+}
+
+#ringtu{
+    height:440px;
+    width:440px;
+    margin:0 0 0 60px;
+
+}
+#origin{
+    width:570px;
+    height:45px;
+}
+#origintu{
+    width:555px;
+    margin:10px 0 0 10px;
+
+}
+
+.seal-link-container{
+    height:440px;
+    width:440px;
+    z-index: 5;
+    margin:-488px 0 0 60px;
+}
+#seal-link-svg{
+    height:100%;
+    width:100%;
+}

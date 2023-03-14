@@ -1,6 +1,7 @@
 import React from "react"
 import Overview from "./A-Overview"
 import Features from "./B-Features"
+import Appreciation from "./C-Appreciation"
 import "./index.css"
 
 const Pages = () => {
@@ -16,11 +17,14 @@ const Pages = () => {
                     <Features />
                 </div>
 
-                <div className="C-Appreciation"></div>
+                <div className="C-Appreciation">
+                    <Appreciation />
+                </div>
+                
             </div>
-            <div className="Right">
+            {/* <div className="Right">
                 <div className="D-LinkedData"></div>
-            </div>         
+            </div>          */}
             
         </div>
     )

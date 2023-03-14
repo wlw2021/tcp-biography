@@ -2,10 +2,9 @@ import React from 'react';
 import './index.css';
 import data from '../../data/894.json'
 
-const DevideShow = () =>{
+const DevideShow = (prop) =>{
     const sentence = data.sentences
-    console.log(sentence)
-    
+        
     const allsentence = sentence.map(function(e){
         let output = e.output;
         let full = e.sentence;
@@ -30,8 +29,7 @@ const DevideShow = () =>{
         
         return devidedSentence;
     })
-    console.log(allsentence)
-
+   
     return(
         <div className='container'>
             {

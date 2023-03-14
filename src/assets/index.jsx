@@ -9,8 +9,10 @@ import bkthing from './thing.svg'
 import bkperson from './person.svg'
 import bklocation from './location.svg'
 import bktime from './time.svg'
-import ringview from './ring.jpg'
+import ringview from './ring.png'
 import origin from './origin.jpg'
+import axis from './timeaxis.svg'
+//import locationci from './location-ci.jsx'
 
 
 
@@ -18,3 +20,4 @@ import origin from './origin.jpg'
 
 export {logo, divide, dynasty, shapePerson, shapeLocation, shapeThing, shapeTime, ringview, origin};
 export {bkthing, bklocation, bkperson, bktime}
+export {axis}

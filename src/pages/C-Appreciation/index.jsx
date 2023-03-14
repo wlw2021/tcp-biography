@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import TimeAxis from '../../components/time-axis';
 import './index.css'
-import { logo } from '../../assets';
+//import { logo } from '../../assets';
 const Appreciation =()=>{
 
     useEffect(()=>{
@@ -10,8 +11,7 @@ const Appreciation =()=>{
 
       return(
         <div className='C-container'>
-            <div id='searchbox'></div>            
-            <div id = 'pics' ></div>                
+            <TimeAxis />         
         </div>
            
       )

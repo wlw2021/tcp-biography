@@ -1,57 +1,87 @@
 #word-cloud-container{
-    width:300px;
-    height:150px;
+    width:870px;
+    height:540px;    
     position: absolute;
-    margin:200px 0 0 135px;
 }
 
 #person-container{
-    width: 118px;
-    height: 57px;
+    width: 47%;
+    height:38%;
     position: absolute;
-    margin:48px 0 0 20px;
+    margin-left:8%;
+    margin-top:19%;
+}
+#bkperson{
+    width:100%;
+    height:100%;
+    position: absolute;   
+}
+#person-cloud{
+    width:120%;
+    height: 120%;
+    margin-top:-5%;
+    margin-left:-10%;
+    position: absolute;   
 }
 
-#person-cloud{
-    width: 156px;
-    height: 70px;
-    position: absolute;   
-    margin:-70px 0 0 -20px;
-}
+
 #location-container{
-    width: 115px;
-    height: 70px;
+    height:50%;
+    width:50%;
     position: absolute;
-    margin:64px 0 0 110px;
+    margin-left:43%;
+    margin-top:23%;
+}
+#bklocation{
+    height:100%;
+    width:100%;
+    position: absolute;
 }
 #location-cloud{
-    width: 140px;
-    height: 80px;
-    position: absolute;
-    margin:-75px 0 0 -15px;
+    width:120%;
+    height: 120%;
+    margin-top:-5%;
+    margin-left:-10%;
+    position: absolute;   
 }
+
+
 #thing-container{
-    width: 115px;
-    height: 50px;
+    width: 46%;   
+    height:50%;
+    margin-top:-5%;
     position: absolute;
-    margin:0 0 0 0;
+}
+#bkthing{
+    height:100%;
+    width:100%;
+    position: absolute;
 }
 #thing-cloud{
-    width: 130px;
-    height: 80px;
-    position: absolute;
-    margin:-65px 0 0 -10px;
+    width:120%;
+    height: 120%;
+    margin-top:-5%;
+    margin-left:-10%;
+    position: absolute;   
 }
-#time-container{
-   
-    width: 145px;
-    height: 50px;
+
+
+#time-container{   
+    width: 53%;  
+    height:50%;  
     position: absolute;
-    margin:7px 0 0 115px;
+    margin-left:47%;
+    margin-top:-3%;
+}
+#bktime{
+    height:100%;
+    width:100%;
+    position: absolute;
 }
 #time-cloud{
-    width: 150px;
-    height: 80px;
-    position: absolute;
-    margin:-70px 0 0 0;
+    width:120%;
+    height: 120%;
+    margin-top:-5%;
+    margin-left:-10%;
+    position: absolute;   
 }

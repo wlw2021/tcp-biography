@@ -1,27 +1,38 @@
 import React, { useEffect, useState } from "react"
 import * as d3 from "d3"
-import Js2WordCloud from "js2wordcloud"
-import { shapePerson, shapeLocation, shapeThing, shapeTime, bklocation,bkperson,bkthing,bktime } from "../../../assets"
+import { Js2WordCloud } from "./package/main"
+import {bklocation,bkperson,bkthing,bktime, shapePerson, shapeLocation, shapeThing, shapeTime } from "../../../assets"
 import './index.css'
 import personData from '../../../data/person.json'
 import locationData from '../../../data/location.json'
 import thingData from '../../../data/thing.json'
 import timeData from '../../../data/time.json'
+//import { infoarr } from "./package/wordcloud2"
 
 
 
 
-
-const WordCloud = () => {
+const WordCloud = (prop) => {
     const ColorRuler = [
-        "rgba(0, 0, 0, 0.3)",
         "rgba(0, 0, 0, 0.5)",
         "rgba(0, 0, 0, 0.7)",
         "rgba(0, 0, 0, 0.9)",
         "rgba(0, 0, 0, 1)",
     ]
 
-    var fontmax=8, fontmin=5;
+    var fontmax=25, fontmin=21;
+
+    var cloudind=[];
+
+    function handlelist(list){
+        console.log(list)
+        //console.log(list)
+        list.map((e)=>{
+            console.log(e.length)
+            //console.log(e[10])
+        })
+
+    }
 
     
     const renderCloud = (list, num) => {
@@ -43,7 +54,9 @@ const WordCloud = () => {
             .clamp(true)
             .domain(domain)
             .range(ColorRuler)
-        let imageShape;
+            
+        let imageShape=shapePerson;
+        
         switch(num){
             case 1: imageShape = shapePerson;break;
             case 2: imageShape = shapeLocation;break;
@@ -86,10 +99,39 @@ const WordCloud = () => {
         setTimeout(function () {
             wc.hideLoading()
             wc.setOption(options)
-        }, 20)
+           
+            container.addEventListener('wordcloudstop', function(e){
+                //console.log('here')
+                var list = e.detail;
+                list.map((e)=>{
+                    //console.log(e);
+                    if(e){
+                        e.map((it)=>{
+                            if(it){
+                                for( var i=0;i<cloudind.length;i++){
+                                    if(cloudind[i].item[0]===it.item[0]) return
+                                }
+                                cloudind.push(it)
+                            }
+                        })
+                    }
+                })
+                //console.log(cloudind)
+                setTimeout(
+                    function(){
+                        prop.setWordind(cloudind)
+                    },300
+                )
+               
+            })
+
+            
+            
+        }, 300)
         window.onresize = () => {
             wc.resize()
         }
+       
     }
 
     useEffect(() => {              
@@ -125,4 +167,5 @@ const WordCloud = () => {
         
     )
 }
+
 export default WordCloud

@@ -12,9 +12,14 @@
     margin-left:8px;
     margin-top: 10px;
 }
+#seal-container{
+    height:500px;
+    width:110px;
+    margin-top: 20px;
+}
 #lable-view-container{
     width:275px;
     height: 500px;
-    margin-left:115px;
+    margin-left:5px;
     margin-top: 20px;
 }

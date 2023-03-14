@@ -3,19 +3,30 @@ import './index.css'
 import { divide } from '../../assets';
 import RingView from '../../components/ring-view';
 import DevideShow from '../../components/label-view';
+import SealView from '../../components/seal-view';
 const Features =()=>{
-
+    const [selectedPerson, setSelectedPerson] = useState ("曹溶")
       return(
         <div className='B-container'>
             <div id="ring-view-container">
-                <RingView />                
+                <RingView 
+                 selectedPerson = {selectedPerson}
+                 setSelectedPerson = {setSelectedPerson}
+                />                
             </div>    
 
             <div id="divide">
                 <img src={divide} alt="分割线" />
-            </div>     
+            </div>  
+            <div id="seal-container">
+                <SealView 
+                selectedPerson = {selectedPerson}
+                setSelectedPerson = {setSelectedPerson}/>                               
+            </div>    
             <div id="lable-view-container">
-                <DevideShow />                
+                <DevideShow 
+                selectedPerson = {selectedPerson}
+                setSelectedPerson = {setSelectedPerson}/>                
             </div>      
         </div>
            

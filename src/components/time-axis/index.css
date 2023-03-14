@@ -1,0 +1,16 @@
+#axis-container{
+    width:1730px;
+    height:360px;
+}
+
+#axis{
+    margin: 15px 0 0 15px;
+}
+#year-layer-svg{
+    margin:35px 0 0 0;
+    width:1730px;
+    height:360px;
+}
+.scroll-line{
+    stroke-dasharray: 3 2;
+}

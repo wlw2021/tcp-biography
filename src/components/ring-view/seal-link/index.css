@@ -1,0 +1,33 @@
+
+.seal-link-container{
+    height:440px;
+    width:440px;
+}
+#word-container{
+    position:absolute;
+    height:100%;
+    width:100%;
+    pointer-events: none; 
+}
+#seal-link-svg{
+    position:absolute;
+    height:100%;
+    width:100%;
+    pointer-events: none; 
+}
+#seal-link-svg rect{
+    pointer-events: all; 
+}
+#bklocation{
+    width:165;
+    height:75;
+    position:absolute;
+}
+#locationci{
+    width:165;
+    height:75;
+    position:absolute;
+}
+.linkword{
+    stroke-dasharray: 2 1;
+}

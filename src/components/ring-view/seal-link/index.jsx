@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
-import {bklocation,bkperson,bkthing,bktime} from "../../../assets"
 import './index.css'
 import person from '../../../data/seal-all.json';
-import locationci from'../../../data/location.json'
-import personci from'../../../data/person.json'
-import timeci from'../../../data/time.json'
-import thingci from'../../../data/thing.json'
-import caorong from'../../../data/caorong.json'
-import zhaomengfu from'../../../data/zhaomengfu.json'
 import axios from 'axios';
-import WordCloud from '../word-cloud';
 
 
-
-const SealLink =(prop)=>{
+const SealLink =(prop)=>{    
+    var personind=[];
 
     function Rotateind(x,y){
         var pi = Math.PI;
@@ -33,35 +25,22 @@ const SealLink =(prop)=>{
    
     function highlight(d) {
         prop.setSelectedPerson(d);
-    }    
-    useEffect(()=>{       
+    }   
+    
+    useEffect(()=>{ 
+
+        personind=[]
     
         //印章人名连线
         d3.select("#seal-link-svg").selectChildren("*")?.remove();
-
-        let width = 400
-        let height = 400
-        
         var svg = d3
         .select("#seal-link-svg")
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "0 0 440 440")
 
-        
-        
-        //var url="http://aailab.cn:28081/getlines/894/"+prop.selectedPerson
-        // var url = 'http://aailab.cn:28081/getauinfoscore/894'
-        // axios({
-        //     method:"get",
-        //     url:url,
-        // }).then(function (res) {
-        //     console.log(res.data);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // })
-
-
+        let width = 400
+        let height = 400
+       
         let cluster = d3.cluster()
         .size([width, height - 80])
         
@@ -105,7 +84,7 @@ const SealLink =(prop)=>{
                 case"清": basex=qingx;basey=qingy;count=countq;countq++;break;
                 case"元": basex=yuanx;basey=yuany;count=county;county++;break;
                 case"明": basex=mingx;basey=mingy;count=countm;countm++;break;
-                case"none": basex=wux;basey=wuy;count=countw;countw++;break;
+                case"None": basex=wux;basey=wuy;count=countw;countw++;break;
             }
            if(count%2){
             d.y=basey+20;
@@ -114,6 +93,16 @@ const SealLink =(prop)=>{
             d.y=basey;
            }
             d.x=(parseInt(count/2))*20+basex;
+
+            
+
+            var indinfo = {
+                name:d.data.name,
+                x:d.x,
+                y:d.y
+            }
+
+            personind.push(indinfo)
             
             return "node";
         }
@@ -153,7 +142,6 @@ const SealLink =(prop)=>{
             return "RGB(151,99,95,"+depth+")"
         })
         
-        var zx,zy,cx,cy;
 
         g.selectAll('.node').append('text')
         .attr('y', function (d) {
@@ -177,37 +165,29 @@ const SealLink =(prop)=>{
         .style('fill',function(d){ 
             //console.log(prop.selectedPerson);              
             
-            if(prop.selectedPerson===d.parent.data.name||prop.selectedPerson==='none')
+            if(prop.selectedPerson===d.parent.data.name)
             return"rgb(0,0,0,0.3)"
             else return"none"
             
         })
         .style('stroke', function(d){                
             
-            if(prop.selectedPerson===d.parent.data.name||prop.selectedPerson==='none')
+            if(prop.selectedPerson===d.parent.data.name)
             return"rgb(0,0,0,1)"
             else return"none"
             
         })
         .style('stroke-width',0.5)
 
-        
         g.selectAll(".link")
             .data(links)
             .enter()
             .append("path")
             .attr("class", "link")
-            .style("stroke", function(d){  
-                if(d.source.data.name==='趙孟頫'){
-                    zx=d.source.x;
-                    zy=d.source.y;
-                }
-                          
-                if(prop.selectedPerson===d.source.data.name||prop.selectedPerson==='none')
-                
+            .style("stroke", function(d){     
+                if(prop.selectedPerson===d.source.data.name)                
                 return"rgb(0,0,0,0.3)"
-                else return"none"
-                
+                else return"none"                
             })
             .style('stroke-width',0.7)
             .style("fill", "none")
@@ -223,118 +203,145 @@ const SealLink =(prop)=>{
                     })
             )
 
-           // 赵孟頫连线
-            //var ci = zhaomengfu.data.cylines;
-            
-
-            if(prop.selectedPerson==='趙孟頫'){
-
-                let hierarchy = d3.hierarchy(zhaomengfu)
-                    .sum(function (d) {
-                    return d.value
+            const showCYLines = async(svg) =>{ 
+               
+                var px,py
+        
+                var cylink = {
+                    name:prop.selectedPerson,
+                    children:[]
+                }
+                
+        
+                var url="http://aailab.cn:28081/getlines/894/"+prop.selectedPerson
+                await axios({
+                        method:"get",
+                        url:url,
+                    }).then(function (res) {
+                        cylink.children = res.data.data.cylines;
                     })
-                // 初始化树状图
-                let tree2 = cluster(hierarchy)
-                // 获取节点
-                let nodes2 = tree2.descendants()
-                // 获取边,也就是连线
-                let links2 = tree2.links()
-                //console.log(nodes2)
-                var i=0;
-
-                nodes2.map((e)=>{
-                    console.log(prop.wordind)
-                    //console.log(e);
-                    if(e.height==1){
-                        e.x=zx;
-                        e.y=zy;
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+        
+                for(var p = 0; p<personind.length;p++){
+                    if(cylink.name===personind[p].name){
+                        px=personind[p].x;
+                        py=personind[p].y;
                     }
-                    else{
-                        for(var i=0 ; i<prop.wordind.length;i++){
-                            if(e.data.text===prop.wordind[i].item[0]){
-                                if(e.data.type==='Thing'){
-                                    e.x=prop.wordind[i].dimension.x+135-69
-                                    e.y=prop.wordind[i].dimension.y+210-16
-                                    return
-                                }
-                                else if(e.data.type==='Location'){
-                                    e.x=prop.wordind[i].dimension.x+135-70+130
-                                    e.y=prop.wordind[i].dimension.y+210-16+80
-                                    return
-                                }
-                                else if(e.data.type==='Person'){
-                                    e.x=prop.wordind[i].dimension.x+135-40
-                                    e.y=prop.wordind[i].dimension.y+210-16+68
-                                    return
-                                }
-                                else if(e.data.type==='Time'){
-                                    e.x=prop.wordind[i].dimension.x+135-60+130
-                                    e.y=prop.wordind[i].dimension.y+210-12
-                                    return
-                                }
-                                return
-                            }
+                }
+                
+                //console.log(cylink)
+                //console.log(px,py)
+                //console.log(personind)
+        
+                if(prop.selectedPerson!='none'){        
+                    //console.log(cylink)
+                    //console.log(datac)
+                    let width = 400
+                    let height = 400
+                
+                    let cluster = d3.cluster()
+                    .size([width, height - 80])
+        
+                    let hierarchy = d3.hierarchy(cylink)
+                        .sum(function (d) {
+                        return d.value
+                        })
+                    // 初始化树状图
+                    let tree2 = cluster(hierarchy)
+                    // 获取节点
+                    let nodes2 = tree2.descendants()
+                    // 获取边,也就是连线
+                    let links2 = tree2.links()
+                    //console.log(nodes2)
+        
+                    nodes2.map((e)=>{
+                        //console.log(prop.wordind)
+                        //console.log(e);
+                        if(e.height==1){
+                            e.x=px;
+                            e.y=py;
                         }
-                        e.x=zx;
-                        e.y=zy;
-                    }
-                })
+                        else{
+                            for(var i=0 ; i<prop.wordind.length;i++){
+                                if(e.data.text===prop.wordind[i].item[0]){
+                                    if(e.data.type==='Thing'){
+                                        e.x=prop.wordind[i].dimension.x/3+70
+                                        e.y=prop.wordind[i].dimension.y/3+190
+                                        return
+                                    }
+                                    else if(e.data.type==='Location'){
+                                        e.x=prop.wordind[i].dimension.x/3+190
+                                        e.y=prop.wordind[i].dimension.y/3+272
+                                        return
+                                    }
+                                    else if(e.data.type==='Person'||e.data.type==='PersonName'){
+                                        e.x=prop.wordind[i].dimension.x/3+98
+                                        e.y=prop.wordind[i].dimension.y/3+260
+                                        return
+                                    }
+                                    else if(e.data.type==='Time'){
+                                        e.x=prop.wordind[i].dimension.x/3+205
+                                        e.y=prop.wordind[i].dimension.y/3+193
+                                        return
+                                    }
+                                    return
+                                }
+                            }
+                            e.x=px;
+                            e.y=py;
+                        }
+                    })
 
-                var wg=svg.append('g').attr('class','wordlink')
-                wg.selectAll(".linkword")
-                .data(links2)
-                .enter()
-                .append("path")
-                .attr("class", "linkword")
-                .attr('id',function(e){
-                    return e.target.data.text
-                })
-                .style("stroke", function(d){  
-                if(d.target.x==0) return'none';
-                                        
-                return"rgb(0,0,0,0.3)"
-
-                })
-                .style('stroke-width',0.7)
-                .style("fill", "none")
-                .attr("pointer-events", "none")
-                .attr(
-                "d",
-                d3.linkHorizontal()
-                .x(function (d) {
-                    return d.x
-                })
-                .y(function (d) {
-                    return d.y
-                })
-                )
-
-                wg.selectAll(".nodes2")
-                .data(nodes2)
-                .enter()
-                .append('circle')
-                .attr('cx',(d)=>{return d.x}).attr('cy',(d)=>{return d.y})
-        .attr('r',1)
-        .style('fill',function(d){ 
-            //console.log(prop.selectedPerson);              
-            
-            
-            return"rgb(0,0,0,0.3)"
-         
-        })
-        .style('stroke', function(d){                
-            
-           
-            return"rgb(0,0,0,1)"
-            
-            
-        })
-        .style('stroke-width',0.5)
-            }              
-
-
-
-       
+                    //console.log(nodes2)
+        
+                    var wg=svg.append('g').attr('class','wordlink')
+                    wg.selectAll(".linkword")
+                    .data(links2)
+                    .enter()
+                    .append("path")
+                    .attr("class", "linkword")
+                    .attr('id',function(e){
+                        return e.target.data.text
+                    })
+                    .style("stroke", function(d){
+                                            
+                    return"rgb(0,0,0,0.3)"
+        
+                    })
+                    .style('stroke-width',0.7)
+                    .style("fill", "none")
+                    .attr("pointer-events", "none")
+                    .attr(
+                    "d",
+                    d3.linkHorizontal()
+                    .x(function (d) {
+                        return d.x
+                    })
+                    .y(function (d) {
+                        return d.y
+                    })
+                    )
+        
+                    wg.selectAll(".nodes2")
+                    .data(nodes2)
+                    .enter()
+                    .append('circle')
+                    .attr('cx',(d)=>{return d.x}).attr('cy',(d)=>{return d.y})
+                    .attr('r',1)
+                    .style('fill',function(d){ 
+                        return"rgb(0,0,0,0.3)"         
+                    })
+                    .style('stroke', function(d){  
+                        return"rgb(0,0,0,1)"            
+                    })
+                    .style('stroke-width',0.5)
+                }
+            }
+        
+            showCYLines(svg)
+  
     },[prop.selectedPerson,prop.rotation,prop.wordind])
     
 

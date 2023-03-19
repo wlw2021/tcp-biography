@@ -3,26 +3,37 @@
     "name": "赵孟頫",
       "children": [
         {
+          "text": "公謹", 
+          "type": "PersonName"
+        }, 
+        {
+          "text": "齊州", 
+          "type": "Location"
+        }, 
+        {
+          "text": "山川", 
+          "type": "Thing"
+        }, 
+        {
+          "text": "鵲山", 
+          "type": "Thing"
+        }, 
+        {
+          "text": "元貞元年", 
+          "type": "Time"
+        }, 
+        {
+          "text": "西元一二九五年）十有二月", 
+          "type": "Time"
+        }, 
+        {
           "text": "吳興", 
-          "type": "Person"
+          "type": "Location"
         }, 
         {
-          "text": "楊載", 
+          "text": "趙孟頫", 
           "type": "Person"
-        }, 
-        {
-          "text": "董其昌", 
-          "type": "Person"
-        }, 
-        {
-          "text": "莊受祺", 
-          "type": "Person"
-        }, 
-        {
-          "text": "葉顒", 
-          "type": "Person"
-        }       
-        
+        }
       ]
 }
     

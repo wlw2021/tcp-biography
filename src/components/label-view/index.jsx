@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import data from '../../data/894.json'
+import axios from 'axios';
 
 const DevideShow = (prop) =>{
-    const sentence = data.sentences
-        
-    const allsentence = sentence.map(function(e){
+
+    var showdata = {
+        output:[],
+        sentence:''
+    }
+
+    const [showList,setShowList]=useState([])
+
+    const devide = (e) =>{
         let output = e.output;
         let full = e.sentence;
         let devidedSentence = [];
@@ -28,12 +35,56 @@ const DevideShow = (prop) =>{
         }
         
         return devidedSentence;
-    })
+    }
+
+    useEffect(()=>{
+
+        const showPerson = async()=>{
+            var data2;
+            var list=[];
+            const url = 'http://aailab.cn:28081/resultner/894'
+            await axios({
+                method:"get",
+                url:url,
+            }).then(function (res) {
+                data2 = res.data.data;
+                console.log(data2)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+
+            if(prop.selectedPerson!='none'){
+                for (var i =0;i<data2.length;i++){
+                    if((data2[i].author===prop.selectedPerson)||(data2[i].author==='清高宗'&&prop.selectedPerson==='愛新覺羅弘曆')){
+                        showdata.output=data2[i].output
+                        showdata.sentence=data2[i].sentence
+                        showdata=devide(showdata)
+                        list.push(showdata)
+                    }
+                }                
+            }
+
+            else{
+                data2.map((e)=>{
+                    showdata.output=e.output
+                    showdata.sentence=e.sentence
+                    showdata=devide(showdata)
+                    list.push(showdata)
+                })
+            }
+            
+            setShowList(list)
+        }
+
+        showPerson()
+    },[prop.selectedPerson])
    
     return(
         <div className='container'>
             {
-                allsentence.map(function(e,i){
+                showList.map(function(e,i){
                     const words = e;
                     return(
                         <div>

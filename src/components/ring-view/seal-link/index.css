@@ -1,7 +1,7 @@
 
 .seal-link-container{
-    height:440px;
-    width:440px;
+    height:1320px;
+    width:1320px;
 }
 #word-container{
     position:absolute;
@@ -18,16 +18,7 @@
 #seal-link-svg rect{
     pointer-events: all; 
 }
-#bklocation{
-    width:165;
-    height:75;
-    position:absolute;
-}
-#locationci{
-    width:165;
-    height:75;
-    position:absolute;
-}
+
 .linkword{
-    stroke-dasharray: 2 1;
+    stroke-dasharray: 3 3;
 }

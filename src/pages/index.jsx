@@ -9,13 +9,15 @@ const Pages = () => {
         <div className="layout-container">
             <div className="Title">Traditional Chinese Painting Biography</div>
             <div className="Left">
-                <div className="A-Overview">
+                {/* <div className="A-Overview">
                     <Overview />
-                </div>  
+                </div>   */}
 
                 <div className="B-Features">
                     <Features />
                 </div>
+
+                <div className = "D-Graphs"></div>
 
                 <div className="C-Appreciation">
                     <Appreciation />

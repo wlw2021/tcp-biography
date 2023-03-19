@@ -5,7 +5,7 @@ import RingView from '../../components/ring-view';
 import DevideShow from '../../components/label-view';
 import SealView from '../../components/seal-view';
 const Features =()=>{
-    const [selectedPerson, setSelectedPerson] = useState ("曹溶")
+    const [selectedPerson, setSelectedPerson] = useState ("none")
       return(
         <div className='B-container'>
             <div id="ring-view-container">
@@ -16,7 +16,7 @@ const Features =()=>{
             </div>    
 
             <div id="divide">
-                <img src={divide} alt="分割线" />
+                <img id='dividetu' src={divide} alt="分割线" />
             </div>  
             <div id="seal-container">
                 <SealView 

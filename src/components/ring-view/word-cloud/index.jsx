@@ -3,14 +3,7 @@ import * as d3 from "d3"
 import { Js2WordCloud } from "./package/main"
 import {bklocation,bkperson,bkthing,bktime, shapePerson, shapeLocation, shapeThing, shapeTime } from "../../../assets"
 import './index.css'
-import personData from '../../../data/person.json'
-import locationData from '../../../data/location.json'
-import thingData from '../../../data/thing.json'
-import timeData from '../../../data/time.json'
-//import { infoarr } from "./package/wordcloud2"
-
-
-
+import axios from "axios"
 
 const WordCloud = (prop) => {
     const ColorRuler = [
@@ -121,12 +114,8 @@ const WordCloud = (prop) => {
                     function(){
                         prop.setWordind(cloudind)
                     },300
-                )
-               
+                )               
             })
-
-            
-            
         }, 300)
         window.onresize = () => {
             wc.resize()
@@ -134,11 +123,49 @@ const WordCloud = (prop) => {
        
     }
 
-    useEffect(() => {              
-        renderCloud(personData, 1)
-        renderCloud(locationData, 2)
-        renderCloud(thingData, 3)
-        renderCloud(timeData, 4)
+    const handleWord = (list) =>{
+        var cloudlist = []
+        for (const [key, value] of Object.entries(list)) {
+            cloudlist.push([key, value])
+          }    
+
+        return cloudlist       
+    }
+
+    useEffect(() => {
+
+        var personData, locationData, timeData, thingData
+        
+        const getWord = async() =>{
+            const url = 'http://aailab.cn:28081/getciyun/894'
+            await axios({
+                method:"get",
+                url:url,
+            }).then(function (res) {
+                //console.log(res.data)
+                personData = res.data.data.PersonName;
+                locationData = res.data.data.Location;
+                thingData = res.data.data.Thing;
+                timeData = res.data.data.Time;
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+            personData = handleWord(personData);
+            timeData = handleWord(timeData);
+            thingData = handleWord(thingData);
+            locationData = handleWord(locationData);
+            
+            //console.log(personData)
+            renderCloud(personData, 1)
+            renderCloud(locationData, 2)
+            renderCloud(thingData, 3)
+            renderCloud(timeData, 4)
+        }
+
+        getWord();        
+        
     }, [])
 
     return (

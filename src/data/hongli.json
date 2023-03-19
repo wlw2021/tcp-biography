@@ -1,0 +1,241 @@
+{
+    "name":"弘历",
+    "children":
+    [
+    {
+      "text": "此卷", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "內府", 
+      "type": "Location"
+    }, 
+    {
+      "text": "石渠寶笈", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "戊辰", 
+      "type": "Time"
+    }, 
+    {
+      "text": "西元一七四八年", 
+      "type": "Time"
+    }, 
+    {
+      "text": "齊州", 
+      "type": "Location"
+    }, 
+    {
+      "text": "己巳", 
+      "type": "Time"
+    }, 
+    {
+      "text": "西元一七四九年", 
+      "type": "Time"
+    }, 
+    {
+      "text": "御筆", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "輦曽城", 
+      "type": "Location"
+    }, 
+    {
+      "text": "蓬海", 
+      "type": "Location"
+    }, 
+    {
+      "text": "天花", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "天水", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "名山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "濟城", 
+      "type": "Location"
+    }, 
+    {
+      "text": "兩山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "天花", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "繡墅巔", 
+      "type": "Location"
+    }, 
+    {
+      "text": "靈鵲銀河", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "春煙", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "綠花村", 
+      "type": "Location"
+    }, 
+    {
+      "text": "西鵲", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "吳道子", 
+      "type": "PersonName"
+    }, 
+    {
+      "text": "雨", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "鵲山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "靈鵲", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "鵲山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "乾隆戊辰（西元一七四八年）春日", 
+      "type": "Time"
+    }, 
+    {
+      "text": "乾隆戊辰", 
+      "type": "Time"
+    }, 
+    {
+      "text": "西元一七四八年）春日", 
+      "type": "Time"
+    }, 
+    {
+      "text": "御筆", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "鵲華二山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "趙孟頫", 
+      "type": "PersonName"
+    }, 
+    {
+      "text": "今年二月", 
+      "type": "Time"
+    }, 
+    {
+      "text": "闕里", 
+      "type": "Location"
+    }, 
+    {
+      "text": "濟陽", 
+      "type": "Location"
+    }, 
+    {
+      "text": "東北隅", 
+      "type": "Location"
+    }, 
+    {
+      "text": "諸山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "山頂", 
+      "type": "Location"
+    }, 
+    {
+      "text": "迤西頂", 
+      "type": "Location"
+    }, 
+    {
+      "text": "鵲山", 
+      "type": "Location"
+    }, 
+    {
+      "text": "郵報", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "畫卷", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "吳興", 
+      "type": "Location"
+    }, 
+    {
+      "text": "鵲山", 
+      "type": "Location"
+    }, 
+    {
+      "text": "華西", 
+      "type": "Location"
+    }, 
+    {
+      "text": "戊辰", 
+      "type": "Time"
+    }, 
+    {
+      "text": "西元一七四八年", 
+      "type": "Time"
+    }, 
+    {
+      "text": "清明日", 
+      "type": "Time"
+    }, 
+    {
+      "text": "戊辰", 
+      "type": "Time"
+    }, 
+    {
+      "text": "西元一七四八年", 
+      "type": "Time"
+    }, 
+    {
+      "text": "清明日", 
+      "type": "Time"
+    }, 
+    {
+      "text": "御筆", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "吳興", 
+      "type": "PersonName"
+    }, 
+    {
+      "text": "此卷", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "二山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "鵲華二山", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "畫卷", 
+      "type": "Thing"
+    }, 
+    {
+      "text": "清明後三日", 
+      "type": "Time"
+    }
+  ]}

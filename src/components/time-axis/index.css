@@ -1,15 +1,27 @@
 #axis-container{
-    width:1730px;
-    height:360px;
+    position:absolute;
+    width:88%;
+    height:100%;
+}
+#year-similar-svg{
+    margin-left:1%;
+    width:98%;
+    height:23%;
+}
+#axis{
+    width:98%;
+    height:7%;
+    margin-left:1%;
+    /* margin-top:0.7%; */
 }
 
-#axis{
-    margin: 15px 0 0 15px;
+#axistu{
+   width:100%;
 }
 #year-layer-svg{
-    margin:35px 0 0 0;
-    width:1730px;
-    height:360px;
+    margin-left:1%;
+    width:98%;
+    height:100%;
 }
 .scroll-line{
     stroke-dasharray: 3 2;

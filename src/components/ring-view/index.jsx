@@ -25,6 +25,8 @@ const RingView =(prop)=>{
 
     const [wordind, setWordind] = useState([]);
 
+    const ringr=660;
+
 
     
     const handleEnter = (e) =>{
@@ -37,8 +39,8 @@ const RingView =(prop)=>{
     }
     const handleMove = (e) =>{      
         //console.log('move'); 
-        setmx(e.clientX-485-16);
-        setmy(e.clientY-80);        
+        setmx(e.clientX);
+        setmy(e.clientY-240);        
     }
 
 
@@ -48,25 +50,25 @@ const RingView =(prop)=>{
     const handleDragMove=(e)=>{
         
         if(isDrag){
-            setRectx(e.clientX-505)
+            setRectx(e.clientX)
         }
 
     }
     const handleDragUp=(e)=>{
-        setRectx(e.clientX-505)
+        setRectx(e.clientX)
         setDrag(false)
     }
 
 
     function Rotateind(x,y){        
         var pi = Math.PI;
-        var x1=x-220;
-        var y1=220-y;
+        var x1=x-ringr;
+        var y1=ringr-y;
         var theta = Math.atan2(y1,x1)
         var phi = (rotation/180)*pi;
         var r=Math.sqrt((x1*x1)+(y1*y1))
-        var xr = 220+(r*Math.cos(theta+phi))
-        var yr = 220-(r*Math.sin(theta+phi))
+        var xr = ringr+(r*Math.cos(theta+phi))
+        var yr = ringr-(r*Math.sin(theta+phi))
         return [xr,yr];
 
     }
@@ -74,13 +76,13 @@ const RingView =(prop)=>{
     function originxy(x1,y1){
         [x1,y1]=Rotateind(x1,y1);
         var pi=3.1415926;
-        var xr=x1-220;
-        var yr=220-y1;
+        var xr=x1-ringr;
+        var yr=ringr-y1;
         var r = Math.sqrt(xr*xr+yr*yr);
         var theta = Math.atan2(yr,xr)
         if(theta < 0)theta+=2*pi;
         var xo = (2*pi - theta) / (2 * pi/9000);
-        var yo = (220 - r) / (67/1000);
+        var yo = (ringr - r) / (201/1000);
         if(0<xo && xo<=9000 && 0<yo && yo<1000){
             xo=Math.floor(xo)
             yo=Math.floor(yo)                      
@@ -97,10 +99,10 @@ const RingView =(prop)=>{
     useEffect(()=>{
 
 
-        console.log(wordind)
+        //console.log(wordind)
         //鼠标鱼眼效果
         //console.log(indpro);
-        var rotate = (1-yuantu[Math.floor((rectx/550)*18280)]/9000)*360-90
+        var rotate = (1-yuantu[Math.floor((rectx/1650)*18280)]/9000)*360-90
         setRotation(rotate)
         
         //console.log(rotate);
@@ -109,10 +111,10 @@ const RingView =(prop)=>{
         ring.style.transform='rotate('+rotation+'deg)'
 
         var c=document.getElementById('zoom-view');
-        c.width=800;
-        c.height=550;
+        c.width=2400;
+        c.height=1650;
         var ctx=c.getContext('2d');
-        var [xo,yo] = originxy(mx-60,my);
+        var [xo,yo] = originxy(mx-180,my);
 
       
         
@@ -123,18 +125,18 @@ const RingView =(prop)=>{
        
         if(isZoom&&yo>=0&&xo>=0){
             //ctx.clearRect(0,0,c.width,c.height);            
-            ctx.rect(mx,my,200,100)
+            ctx.rect(mx,my,600,300)
             ctx.stroke()
             image.onload = function(){
-                ctx.drawImage(this,xo,yo,800,400,mx,my,200,100);
+                ctx.drawImage(this,xo,yo,800,400,mx,my,600,300);
             }      
            
         } 
 
         var c2=document.getElementById('rotate-view')
 
-        c2.width = 555;
-        c2.height = 40;
+        c2.width = 1665;
+        c2.height = 135;
 
         var ctx2=c2.getContext('2d');
 
@@ -144,7 +146,11 @@ const RingView =(prop)=>{
         
         // var recx=555-(indpro[Math.floor(angle*9000)][0]/18280)*555+60;
         
-        ctx2.rect(rectx-30,2,60,35.5);
+        ctx2.lineWidth = 3;
+        ctx2.fillStyle = "RGBA(0,0,0,0.3)"
+        ctx2.fillRect(rectx-90,13,180,107);
+        ctx2.rect(rectx-90,13,180,107);
+
         setRectx(rectx)
 
         ctx2.stroke()
@@ -163,6 +169,13 @@ const RingView =(prop)=>{
             <div id = 'ring-view'>
                 <img src={ringview} id='ringtu'></img>
 
+                <div id='wordcloud'>
+                    <WordCloud 
+                    wordind = {wordind}
+                    setWordind = {setWordind}
+                    /> 
+                </div> 
+
                 
 
                 <div id='seallink'
@@ -176,12 +189,7 @@ const RingView =(prop)=>{
                     rotation = {rotation}
                     />
                 </div>
-                <div id='wordcloud'>
-                    <WordCloud 
-                    wordind = {wordind}
-                    setWordind = {setWordind}
-                    /> 
-                </div> 
+                
 
                                
                 

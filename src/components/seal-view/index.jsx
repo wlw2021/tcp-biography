@@ -33,19 +33,19 @@ const SealView = (prop) =>{
             var currenty=45
 
     const drawPersonSeal = async (key, seals) =>{
-        
-        // setTimeout((e)=>{svg.append('text')
-        // .attr('class','seal-name')
-        // .attr('y', currenty)
-        // .attr('x', currentx)
-        // .style('text-anchor', "start")
-        // .text(key)
-        // .style('font-family', '宋体')
-        // .style('font-size', namesize)
-        // .style('font-weight',10)
-        // currenty += interval*2;},300)
 
-        setIsOver(false)
+         svg.append('text')
+        .attr('class','seal-name')
+        .attr('y', currenty)
+        .attr('x', currentx)
+        .style('text-anchor', "start")
+        .text(key)
+        .style('font-family', '宋体')
+        .style('font-size', namesize)
+        .style('font-weight',10)
+
+        currenty += interval*2
+
         for(var i = 0;i<seals.length;i++){
             var e = seals[i]
             var typej,image64j
@@ -150,11 +150,10 @@ const SealView = (prop) =>{
         currenty+=rectsize+interval+boxheight+10
         }
         setIsOver(true)
-        
+        return true
     }
 
-    const showSeal = async() =>{
-        
+    const showSeal = async() =>{       
 
         var author = {}
 
@@ -172,13 +171,13 @@ const SealView = (prop) =>{
         //console.log(author)
         
         Object.keys(author).map(async (key)=>{
-            if(key===prop.selectedPerson||prop.selectedPerson==='none'||key!='文彭'){                
+            if(key===prop.selectedPerson||prop.selectedPerson==='none'){                
                 var seals = author[key] 
                 if(key===prop.selectedPerson){
                     var len = seals.length
                     svg.attr('height',(rectsize+interval*2+boxheight)*len+namesize+100)
                 }
-            
+                
                 await drawPersonSeal(key,seals)                
                 
                 currenty+=190

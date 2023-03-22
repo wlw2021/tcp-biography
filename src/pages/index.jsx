@@ -1,8 +1,9 @@
 import React from "react"
-import Overview from "./A-Overview"
 import Features from "./B-Features"
 import Appreciation from "./C-Appreciation"
+import Relation from "./D-Relation"
 import "./index.css"
+import 'antd/dist/reset.css';
 
 const Pages = () => {
     return (
@@ -17,17 +18,15 @@ const Pages = () => {
                     <Features />
                 </div>
 
-                <div className = "D-Graphs"></div>
+                <div className = "D-Relation">
+                    <Relation />
+                </div>
 
                 <div className="C-Appreciation">
                     <Appreciation />
                 </div>
                 
             </div>
-            {/* <div className="Right">
-                <div className="D-LinkedData"></div>
-            </div>          */}
-            
         </div>
     )
 }

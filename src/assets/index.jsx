@@ -12,6 +12,8 @@ import bktime from './time.svg'
 import ringview from './ring.png'
 import origin from './origin.jpg'
 import axis from './timeaxis.svg'
+import figure from './figure.svg'
+import painter from './painter.svg'
 //import locationci from './location-ci.jsx'
 
 
@@ -21,3 +23,4 @@ import axis from './timeaxis.svg'
 export {logo, divide, dynasty, shapePerson, shapeLocation, shapeThing, shapeTime, ringview, origin};
 export {bkthing, bklocation, bkperson, bktime}
 export {axis}
+export{figure, painter}

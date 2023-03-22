@@ -1,0 +1,29 @@
+.D-container{
+    height:100%;
+    width:100%;
+    display: flex;
+    flex-wrap:wrap;
+    align-content:flex-start;
+}
+
+#relation-link{
+    height:100%;
+    width:52%;
+    background-color: rgba(0,0,0,0.1);
+}
+#relation-matrix{
+    margin-left:0.8%;
+    height:100%;
+    width:45%;
+}
+
+#divide2{
+    margin-left:1%;
+    margin-top: 0.5%;
+    height: 90%;
+    width:0.2%;
+}
+#dividetu2{
+    height:100%;
+    width:100%;
+}

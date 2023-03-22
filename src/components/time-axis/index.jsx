@@ -4,6 +4,7 @@ import './index.css'
 import { axis } from "../../assets";
 import * as d3 from "d3";
 import year from '../../data/year.json'
+import { ProvidePlugin } from "webpack";
 
 const TimeAxis = () =>{
 
@@ -203,26 +204,51 @@ const TimeAxis = () =>{
             .style('stroke-width',0.5)
 
             //人名方块
-            g.append('rect')
-            .attr('x',indx-43).attr('y',indy+3.5)
-            .attr('width',38)
-            .attr('height',38)
-            .style('fill','white')
-            .style('stroke',"RGB(122,32,2,1)")
-            .style('stroke-width',2.5)
+            if(e.name==='趙孟頫'){
+                g.append('circle')
+                .attr('cx',indx-43).attr('cy',indy+3.5)
+                .attr('r',38)
+                .style('fill','white')
+                .style('stroke',"RGB(122,32,2,1)")
+                .style('stroke-width',2.5)
             
 
-            g.append('rect')
-            .attr('x',indx-40).attr('y',(d)=>indy+6.5)
-            .attr('width',32).attr('height',32)
-            .style('fill',"RGB(151,99,95,1)")
+                g.append('circle')
+                .attr('cx',indx-40).attr('cy',(d)=>indy+6.5)
+                .attr('r',38)
+                .style('fill',"RGB(151,99,95,1)")
             
-            g.append('text')
-            .attr('y', indy+32).attr('x', indx-37)
-            .style('text-anchor', "start")
-            .text(e.name.substring(0,1))
-            .style('font-size', '25px')
-            .style('fill','white');
+                g.append('text')
+                .attr('y', indy+32).attr('x', indx-37)
+                .style('text-anchor', "start")
+                .text(e.name.substring(0,1))
+                .style('font-size', '25px')
+                .style('fill','white');
+            }
+
+            else{
+                g.append('rect')
+                .attr('x',indx-43).attr('y',indy+3.5)
+                .attr('width',38)
+                .attr('height',38)
+                .style('fill','white')
+                .style('stroke',"RGB(122,32,2,1)")
+                .style('stroke-width',2.5)
+                
+
+                g.append('rect')
+                .attr('x',indx-40).attr('y',(d)=>indy+6.5)
+                .attr('width',32).attr('height',32)
+                .style('fill',"RGB(151,99,95,1)")
+                
+                g.append('text')
+                .attr('y', indy+32).attr('x', indx-37)
+                .style('text-anchor', "start")
+                .text(e.name.substring(0,1))
+                .style('font-size', '25px')
+                .style('fill','white');
+            }
+            
 
             var seal=e.seal;
             var sentence = e.sentence;

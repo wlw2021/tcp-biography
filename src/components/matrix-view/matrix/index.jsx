@@ -41,7 +41,7 @@ const Matrix = (prop) =>{
         const getmatrix = (list,table)=>{
           const matrix = [];
           const n = items.length;
-          console.log(list)
+          //console.log(list)
           //console.log(table)
           
           for (let i = 0; i < n; i++) {
@@ -110,11 +110,11 @@ const Matrix = (prop) =>{
         const chartHeight = eachRow * items.length;
         //const chartWidth = width - margin.left - margin.right;
         const height = chartHeight + margin.top + margin.bottom;
-        const svg = d3.select('#matrix-svg').attr('height',1100).attr('width',1100).attr("preserveAspectRatio", "xMidYMid meet")
+        const svg = d3.select('#matrix-svg').attr('height',1020).attr('width',1020).attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "0 0 "+height+" "+height)
         const labelWidth = 120;
 
-        console.log(matrix)
+        //console.log(matrix)
 
   
   const group = svg.append('g').attr('transform', `translate(${margin.left}, ${margin.top})`);

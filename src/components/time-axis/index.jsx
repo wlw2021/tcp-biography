@@ -4,22 +4,41 @@ import './index.css'
 import { axis } from "../../assets";
 import * as d3 from "d3";
 import year from '../../data/year.json'
-import { ProvidePlugin } from "webpack";
 
 const TimeAxis = () =>{
 
     const senty = [14,11,4];
 
+    const colors = {
+        'Others': '#AAB0BE',
+        'Political': '#7891AA',
+        'Academic': '#AD7982',
+        'Social': '#8AA79B',
+        'Kinship':'#CA9087',
+        'Paint':'#D6BF9E',
+        'None':'none'
+      }
     
+    
+    const types = ['Others','Political','Academic','Social','Kinship','Paint','None']   
 
     useEffect(()=>{      
+
+        var iy = 50;
+        var nx=40;
         
         d3.select("#year-layer-svg").selectChildren("*")?.remove();
         d3.select("#year-similar-svg").selectChildren("*")?.remove();
+        d3.select("#none-svg").selectChildren("*")?.remove();
         var ssvg = d3
         .select("#year-similar-svg")
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "0 0 1730 110")
+
+        var nsvg = d3
+        .select("#none-svg")
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .attr("viewBox", "0 0 230 475")
 
         var defs=ssvg.append("defs")
         var filter=defs.append("filter").attr("id", "shadow")
@@ -159,11 +178,86 @@ const TimeAxis = () =>{
                         }
                     }
                 })
+                
+                var noneList = authorlist['佚名']
+                console.log(noneList)
+
+                
+                
+                var ylen = 300/noneList.length
+
+                noneList.forEach(async (pic)=>{
+                    var type, image64
+                    url = 'http://aailab.cn:28081/getimg?imgid='+pic.相似画作图+'&imgtype=画心'
+                await axios({
+                        method:"get",
+                        url:url,
+                    }).then(function (res) {
+                        type = res.data.data.note;
+                        image64 = res.data.data.streamimg;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+
+                var img = "data:image/"+type+";base64,"+image64
+                
+                var g = nsvg.append('g')
+                    .attr('id', 'simipic'+'pic'+pic.相似画作id).attr('class','pic'+pic.相似画作id);
+
+                g.append('image')
+                .attr('xlink:href',img)
+                .attr('class','pic'+pic.相似画作id)
+                .attr('x',nx)
+                .attr('y',iy)
+                .attr("preserveAspectRatio", "none")
+                .attr('height',90)
+                .attr('width',160)                             
+
+                g.append('rect')
+                .attr('class','pic'+pic.相似画作id)
+                .attr('x',nx).attr('y',80+iy)
+                .attr('height',20).attr('width',160)                            
+                .style('fill','rgba(0,0,0,0.5)')
+
+                g.append('text')
+                .attr('class','pic'+pic.相似画作id)
+                .attr('x',nx+7).attr('y',iy+92)
+                .style('text-anchor', "start")            
+                .style('font-size',12).style('font-family','仿宋')
+                .style('fill','white').text(pic.画作名)
+                iy+=ylen
+                })
+            iy+=100
+           
+
         }
         showSimilar()
 
-        year.map((e)=>{
-            if(e.birth==0){
+        var authorlevel = {};
+        var sy=260;
+        year.forEach((e)=>{
+            if(e.birth===0 && e.death===0){
+                //console.log(e)
+                var g = nsvg.append('g').attr('id','scroll'+e.name);
+                g.append('rect')
+                .attr('x',nx).attr('y',sy)
+                .attr('height',38.5).attr('width',160)
+                .style('fill','#E4DAC5')
+                .style('stroke','#8c765f')
+                .style('stroke-width',1.4)
+
+                g.append('text')
+                .attr('x', nx+45).attr('y', sy+30)
+                .style('text-anchor', "start")
+                .style('font-family','宋体')
+                .text(e.name)
+                .style('font-size', '25px')
+                
+                sy+=50
+            }
+        else
+            {if(e.birth==0){
                 e.birth=e.death-50;
             }
             else if(e.death==0){
@@ -172,6 +266,8 @@ const TimeAxis = () =>{
             var indx = (e.birth-1195)*peryearlen;
             var length = (e.death-e.birth)*peryearlen;
             var indy=(e.level-2)*63-10;
+            //console.log(authorlevel)
+            authorlevel[e.name]=e.level;
 
             //console.log(indy)
             
@@ -206,16 +302,16 @@ const TimeAxis = () =>{
             //人名方块
             if(e.name==='趙孟頫'){
                 g.append('circle')
-                .attr('cx',indx-43).attr('cy',indy+3.5)
-                .attr('r',38)
+                .attr('cx',indx-23.5).attr('cy',indy+23)
+                .attr('r',19)
                 .style('fill','white')
                 .style('stroke',"RGB(122,32,2,1)")
                 .style('stroke-width',2.5)
             
 
                 g.append('circle')
-                .attr('cx',indx-40).attr('cy',(d)=>indy+6.5)
-                .attr('r',38)
+                .attr('cx',indx-23.5).attr('cy',(d)=>indy+23.5)
+                .attr('r',16)
                 .style('fill',"RGB(151,99,95,1)")
             
                 g.append('text')
@@ -350,13 +446,210 @@ const TimeAxis = () =>{
 
             }
 
-            
-
             sealcount=0;
-            sentcount = 0
-
+            sentcount = 0}
         })
 
+        //事件连线
+        const showEvent = async()=>{
+            var relation,person
+            var personind = {}
+            var url = 'http://aailab.cn:28081/getpersonscore?pid=894&addnames=&addcids='
+            await axios({
+                    method:"get",
+                    url:url,
+                }).then(function (res) {
+                    //console.log(res.data)
+                    relation=res.data.data.人物关系信息
+                    person=res.data.data.人物列表
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+                //console.log(relation)
+
+            Object.keys(relation).forEach((key)=>{
+                var thisrelation=relation[key]
+                var thisname
+
+                Object.keys(person).some((pname)=>{
+                    if(Number(person[pname])===Number(key)){
+                        thisname = pname
+                        return
+                    }
+                })
+                
+        
+                var level = authorlevel[thisname]
+                //console.log(authorlevel)
+                //console.log(thisname)
+                //console.log(level)
+                var ey=(level-2)*63-10
+                if(thisrelation.卒年!=null){
+                    var ex=(thisrelation.卒年-1195)*peryearlen+5;
+                }
+                else if(thisrelation.生年!=null){
+                    var ex=(thisrelation.生年+50-1195)*peryearlen+5;
+                }
+                else{return}
+
+                
+                //console.log(thisrelation)
+                var rsum = 0;
+                var allre = thisrelation.全部关系数量
+                Object.values(allre).forEach((value)=>{
+                    rsum+=value
+                })
+                //console.log(rsum)
+                if(rsum!=0&&level){
+                    personind[key]={
+                        endx:ex,
+                        kiny:0,
+                        poliy:0,
+                        acay:0,
+                        paiy:0,
+                        socy:0,
+                        othy:0
+                    }
+                    var g = svg.append('g').attr('id','event'+thisrelation.姓名);
+                    
+                    Object.keys(thisrelation.全部关系年份).forEach((rkey)=>{
+                        var type
+                        switch(rkey){
+                            case'亲缘':type = 'Kinship';break;
+                            case'其他':type = 'Others';break;
+                            case '政治':type = 'Political';break;
+                            case '文学':type = 'Academic';break;
+                            case '社交':type = 'Social';break;
+                            case '画作':type = 'Paint';break;
+                        }
+                        Object.keys(thisrelation.全部关系年份[rkey]).forEach((ykey)=>{
+                            var soloex = (Number(ykey)-1195)*peryearlen
+                            g.append('rect').attr('x',soloex).attr('y',ey).attr('id',rkey+' '+thisname+ykey)
+                            .attr('height',45).attr('width',3)
+                            .style('fill',colors[type])
+                        })
+                    })
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','亲缘'+thisname)
+                    .attr('height',thisrelation.全部关系数量.亲缘*35/rsum).attr('width',3)
+                    .style('fill',colors.Kinship)
+                    personind[key].kiny=ey;
+                    ey+=thisrelation.全部关系数量.亲缘*35/rsum
+                    
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','政治'+thisname)
+                    .attr('height',thisrelation.全部关系数量.政治*35/rsum).attr('width',3)
+                    .style('fill',colors.Political)
+                    personind[key].poliy=ey;
+                    ey+=thisrelation.全部关系数量.政治*35/rsum
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','文学'+thisname)
+                    .attr('height',thisrelation.全部关系数量.文学*35/rsum).attr('width',3)
+                    .style('fill',colors.Academic)
+                    personind[key].acay=ey;
+                    ey+=thisrelation.全部关系数量.文学*35/rsum
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','画作'+thisname)
+                    .attr('height',thisrelation.全部关系数量.画作*35/rsum).attr('width',3)
+                    .style('fill',colors.Paint)
+                    personind[key].paiy=ey;
+                    ey+=thisrelation.全部关系数量.画作*35/rsum
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','社交'+thisname)
+                    .attr('height',thisrelation.全部关系数量.社交*35/rsum).attr('width',3)
+                    .style('fill',colors.Social)
+                    personind[key].socy=ey;
+                    ey+=thisrelation.全部关系数量.社交*35/rsum
+
+                    g.append('rect').attr('x',ex).attr('y',ey).attr('id','其他'+thisname)
+                    .attr('height',thisrelation.全部关系数量.其他*35/rsum).attr('width',3)
+                    .style('fill',colors.Others)
+                    personind[key].othy=ey;
+                    ey+=thisrelation.全部关系数量.其他*35/rsum 
+                } 
+             })
+
+             //console.log(relation)
+             //console.log(personind)
+             Object.keys(relation).forEach((p1)=>{
+                if(personind[p1]===undefined) return;
+                else{
+                    var doublekin = relation[p1].相关亲缘
+                    var doublepoli = relation[p1].相关政治
+                    var doubleaca = relation[p1].相关文学
+                    var doublepai = relation[p1].相关画作
+                    var doublesoc = relation[p1].相关社交
+                    var doubleoth = relation[p1].相关其他
+                    //console.log(doublesoc)
+                    Object.keys(doubleaca).forEach((p2)=>{
+                        //console.log(doubleaca[p2])
+                        if(personind[p2]===undefined) return;
+                        doubleaca[p2].forEach((rela)=>{
+                            //console.log(rela)
+                            if(rela.起始年!=null||rela.结束年!=null){
+                                var xind
+                                if(rela.起始年!=null){
+                                    xind=(rela.起始年-1195)*peryearlen;
+                                }
+                                if(rela.结束年!=null){
+                                    xind=(rela.结束年-1195)*peryearlen;
+                                }
+                                var y1=personind[p1].kiny
+                                var y2=personind[p2].kiny
+                                var g = svg.append('g').attr('id','event'+p1+p2+'aca');
+
+                                g.append('rect')
+                                .attr('x',xind).attr('y',y1)
+                                .attr('width',3).attr('height',45)
+                                .style('fill',colors.Academic)
+
+                                g.append('rect')
+                                .attr('x',xind).attr('y',y2)
+                                .attr('width',3).attr('height',45)
+                                .style('fill',colors.Academic)
+
+                                g.append('line').attr('class','scroll-line')
+                                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+                                .style('stroke',colors.Academic).style('stroke-width',2)
+                            }
+                            else{
+                                if(personind[p2].endx-personind[p1].endx<20){
+                                    var x1=personind[p1].endx
+                                    var x2=personind[p1].endx+40
+                                    var x3=personind[p2].endx
+                                }
+                                else{
+                                    var x1=personind[p1].endx
+                                    var x2=(personind[p1].endx+personind[p2].endx)/2
+                                    var x3=personind[p2].endx
+                                }
+                                var y1=(personind[p1].acay+personind[p1].paiy)/2
+                                var y2=(personind[p2].acay+personind[p2].paiy)/2
+                                var g = svg.append('g').attr('id','event'+p1+p2+'kin');
+                                g.append('line').attr('class','scroll-line')
+                                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+                                .style('stroke',colors.Academic).style('stroke-width',2)
+    
+                                g.append('line').attr('class','scroll-line')
+                                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+                                .style('stroke',colors.Academic).style('stroke-width',2)
+    
+                                g.append('line').attr('class','scroll-line')
+                                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+                                .style('stroke',colors.Academic).style('stroke-width',2)
+                            }
+                        })
+                        
+                    })
+
+                }
+             })
+
+        }
+        setTimeout(()=>{showEvent()},5000)
+        
     },[])
 
     return(
@@ -366,6 +659,7 @@ const TimeAxis = () =>{
                 <img src={axis} id = "axistu"></img>
             </div>
             <svg id="year-layer-svg"></svg>
+            <svg id='none-svg'></svg>
         </div>
     )
 

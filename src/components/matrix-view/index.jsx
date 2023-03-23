@@ -3,6 +3,7 @@ import './index.css'
 import React, { useEffect, useState } from "react"
 import * as d3 from "d3"
 import Matrix from "./matrix";
+import MatrixChart from "./matrix-chart";
 
 const MatrixView = (prop) =>{
 
@@ -40,7 +41,13 @@ const MatrixView = (prop) =>{
                 personOrder={personOrder}
                 />
             </div>     
-            <div id = 'matrix-chart'></div>                 
+            <div id = 'matrix-chart'>
+                <MatrixChart
+                itemlist = {personItems}
+                relation = {relationList}
+                personOrder={personOrder}
+                 />
+            </div>                 
         </div>
     )
 

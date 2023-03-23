@@ -1,0 +1,10 @@
+
+.ant-table-thead > tr > th {
+    font-size: 25px !important;
+    font-family: '宋体';
+ }
+
+.ant-table-cell{
+    font-size:20px !important;
+
+}

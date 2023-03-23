@@ -231,13 +231,9 @@ const SealLink =(prop)=>{
                     }
                 }
                 
-                //console.log(cylink)
-                //console.log(px,py)
-                //console.log(personind)
-        
+                
                 if(prop.selectedPerson!='none'){        
-                    //console.log(cylink)
-                    //console.log(datac)
+                    
                     let width = 400
                     let height = 400
                 
@@ -256,7 +252,7 @@ const SealLink =(prop)=>{
                     let links2 = tree2.links()
                     //console.log(nodes2)
         
-                    nodes2.map((e)=>{
+                    nodes2.forEach((e)=>{
                         //console.log(prop.wordind)
                         //console.log(e);
                         if(e.height==1){
@@ -264,7 +260,8 @@ const SealLink =(prop)=>{
                             e.y=py;
                         }
                         else{
-                            for(var i=0 ; i<prop.wordind.length;i++){
+                            var i
+                            for(i=0 ; i<prop.wordind.length;i++){
                                 if(e.data.text===prop.wordind[i].item[0]){
                                     if(e.data.type==='Thing'){
                                         e.x=prop.wordind[i].dimension.x/3+70
@@ -286,8 +283,7 @@ const SealLink =(prop)=>{
                                         e.y=prop.wordind[i].dimension.y/3+193
                                         return
                                     }
-                                    return
-                                }
+                                }                               
                             }
                             e.x=px;
                             e.y=py;

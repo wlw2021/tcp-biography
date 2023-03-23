@@ -1,4 +1,3 @@
-import axios from "axios";
 import './index.css'
 import React, {
     Dispatch,
@@ -50,10 +49,10 @@ import Relation from "../../../pages/D-Relation";
       })
   
       //console.log(linkCnt)
-  
+   
       const forceLinks = Object.values(linkCnt)
       const forceNodes = Object.keys(id2name).map((d) => {return({ id: +d })})  
-  
+      console.log(id2name)
       const scale = d3
         .scaleLinear()
         .domain([1, forceMax])
@@ -77,7 +76,7 @@ import Relation from "../../../pages/D-Relation";
         } catch (e) {
           console.log(e)
         }
-  
+        console.log(forceNodes)
         setNodes(forceNodes)
         setLinks(forceLinks)
         setMax(forceMax)
@@ -142,11 +141,14 @@ const ForceLink = (prop) =>{
     const [info, setInfo] = useState(null) // 山水，人物，花鸟
     const [position, setPosition] = useState(null)
   
-    console.log(prop.personInfo)
+    //console.log(prop.personInfo)
+
+    console.log(nodes)
 
     const transform = useZoom($container)
+    //console.log(prop.personInfo)
 
-  const range = useMemo(() => {
+    const range = useMemo(() => {
     let minX = Number.MAX_VALUE
     let minY = Number.MAX_VALUE
     let maxX = Number.MIN_VALUE
@@ -175,7 +177,20 @@ const ForceLink = (prop) =>{
 
   const onHoverPerson = useCallback(
     (node) => {
-      setInfo(prop.personInfo[node.id])
+      var showinfo = prop.personInfo[node.id]
+            
+      var bieming = showinfo.别名[0]+' '+showinfo.别名[1]
+      var thisinfo = {
+        姓名:showinfo.姓名,
+        别名:bieming,
+        朝代:showinfo.朝代,
+        生年:showinfo.生年,
+        卒年:showinfo.卒年,
+        社会区分:showinfo.社会区分[0],
+        籍贯:showinfo.籍贯
+      }
+      setInfo(thisinfo)   
+      
       setPosition({
         x: xScale(node.x),
         y: yScale(node.y)
@@ -193,14 +208,14 @@ const ForceLink = (prop) =>{
     return Math.min(20, 12 * Math.sqrt(transform.k))
   }, [transform.k])
 
-  console.log(links)
+  //console.log(links)
 
     return(
         <div id="force-link-container" ref={$container}>
             <svg width="100%" height={height + "px"} viewBox={`0 0 ${height} ${height}`}>
         <g stroke="#ccc" opacity={0.6} cursor="pointer">
           {links.map((link) => {
-            if (link.source.id !== 17690 && link.target.id !== 17690) {
+            if (link.source.id !== 10183 && link.target.id !== 10183) {
               return null
             }
 
@@ -235,6 +250,7 @@ const ForceLink = (prop) =>{
         <g fontSize={fontSize} textAnchor="middle" cursor="pointer">
           {nodes.map((node) => {
             const r = 30
+            console.log(prop.personInfo[node.id].画家)
             return (
               <g
                 //key={node.id}
@@ -247,7 +263,7 @@ const ForceLink = (prop) =>{
                     }
                   : {})}
               >
-                <image href={prop.personInfo[node.id] ? painter : figure} width={r} height={r} />)
+                <image href={(prop.personInfo[node.id].画家===true) ? painter : figure} width={r} height={r} />)
                 <text dx={r / 2} dy={r + fontSize}>
                   {prop.personInfo[node.id].姓名}
                 </text>
@@ -260,14 +276,22 @@ const ForceLink = (prop) =>{
         <div
           className="info"
           style={{
-            transform: `translate(${position.x - height / 2 + 50}px,${
-              position.y - height / 2 + 60
+            transform: `translate(${position.x - height / 2 + 700}px,${
+              position.y - height / 2-500
             }px)`
           }}
         >
           {info && (
             <>
-              <p>总数:</p>
+             <svg id= 'tool-tip' height ='600' width ="450">
+              <rect width ='400' height='330' fill='rgba(0,0,0,0.1)' stroke='black' atroke-width='10'></rect>
+              <text x='30' y='50' textAnchor="start" fontSize={30}>姓名:{info.姓名}</text>
+              <text x='30' y='100' textAnchor="start" fontSize={30}>别名:{info.别名}</text>
+              <text x='30' y='150' textAnchor="start" fontSize={30}>朝代:{info.朝代}</text>
+              <text x='30' y='200' textAnchor="start" fontSize={30}>生卒年:{info.生年}~{info.卒年}</text>             
+              <text x='30' y='250' textAnchor="start" fontSize={30}>社会区分:{info.社会区分}</text>
+              <text x='30' y='300' textAnchor="start" fontSize={30}>籍贯:{info.籍贯}</text>
+             </svg>
             </>
           )}
         </div>

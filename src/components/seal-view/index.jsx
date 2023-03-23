@@ -3,13 +3,14 @@ import * as d3 from "d3";
 import './index.css'
 import person from '../../data/seal-all.json';
 import axios from 'axios';
-import { DRAW_MODES } from 'pixi.js';
+
 
 const SealView = (prop) =>{
 
-    const [isOver, setIsOver] = useState(true)
+    
 
     useEffect(()=>{
+        var sealStart={}
         const namesize = 45;
         const interval = 15;
         const rectsize = 130;
@@ -36,7 +37,7 @@ const SealView = (prop) =>{
 
          svg.append('text')
         .attr('class','seal-name')
-        .attr('y', currenty)
+        .attr('y', sealStart[key])
         .attr('x', currentx)
         .style('text-anchor', "start")
         .text(key)
@@ -87,7 +88,7 @@ const SealView = (prop) =>{
         g.append('rect')
         .attr('class','image-rect')
         .attr('x',interval*0.9)
-        .attr('y',currenty)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('filter','url(#shadow)')
         .attr('width',rectsize)
         .attr('height',rectsize)                 
@@ -96,7 +97,7 @@ const SealView = (prop) =>{
         g.append('rect')
         .attr('class','image-rect')
         .attr('x',interval*0.9)
-        .attr('y',currenty)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('width',rectsize)
         .attr('height',rectsize)                 
         .style('fill','white')
@@ -105,7 +106,7 @@ const SealView = (prop) =>{
         g.append('rect')
         .attr('class','image-rect')
         .attr('x',interval*2+rectsize)
-        .attr('y',currenty)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('width',rectsize)
         .attr('height',rectsize)  
         .attr('filter','url(#shadow)')
@@ -114,7 +115,7 @@ const SealView = (prop) =>{
         g.append('rect')
         .attr('class','image-rect')
         .attr('x',interval*2+rectsize)
-        .attr('y',currenty)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('width',rectsize)
         .attr('height',rectsize)
         .style('fill','white');
@@ -122,7 +123,7 @@ const SealView = (prop) =>{
         g.append('image')
         .attr('xlink:href',imgj)
         .attr('x',interval*1.2)
-        .attr('y',currenty+interval*0.2)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval+interval*0.2)
         .attr('width',rectsize*0.9)
         .attr('height',rectsize*0.9);
 
@@ -131,11 +132,11 @@ const SealView = (prop) =>{
         g.append('image')
         .attr('xlink:href',imgy)
         .attr('x',interval*2.2+rectsize)
-        .attr('y',currenty+2)
+        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval+2)
         .attr('width',rectsize*0.9)
         .attr('height',rectsize*0.9);
 
-        g.append('rect').attr('x',interval).attr('y',currenty+rectsize+8)
+        g.append('rect').attr('x',interval).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+rectsize+8)
         .attr('width',boxwidht)
         .attr('height',boxheight)
         .style('fill','white')
@@ -143,14 +144,12 @@ const SealView = (prop) =>{
         .style('stroke-width',1.3);
 
         g.append('text')
-        .attr('x',interval*1.2).attr('y',currenty+interval*0.2+rectsize+boxheight*0.9)
+        .attr('x',interval*1.2).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+interval*0.2+rectsize+boxheight*0.9)
         .style('text-anchor', "start")            
         .style('font-size',30).style('font-family','仿宋')
         .style('fill','black').text(content)
-        currenty+=rectsize+interval+boxheight+10
+        
         }
-        setIsOver(true)
-        return true
     }
 
     const showSeal = async() =>{       
@@ -162,14 +161,26 @@ const SealView = (prop) =>{
             method:"get",
             url:url,
         }).then(function (res) {
-            console.log(res.data)
+            //console.log(res.data)
             author = res.data.data
         })
         .catch(function (error) {
             console.log(error);
         })
         //console.log(author)
-        
+        var cy=0;
+        if(prop.selectedPerson === 'none'){
+            Object.keys(author).map(async (key)=>{
+                sealStart[key]=cy+namesize;
+                var len=author[key].length
+                cy+=len*(interval+rectsize+boxheight+namesize)+120;
+            })
+        }
+
+        else{
+            sealStart[prop.selectedPerson]=cy+namesize;
+        }
+
         Object.keys(author).map(async (key)=>{
             if(key===prop.selectedPerson||prop.selectedPerson==='none'){                
                 var seals = author[key] 

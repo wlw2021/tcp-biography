@@ -17,12 +17,16 @@ import Relation from "../../../pages/D-Relation";
   const R = 30
   const MAX_LINE_WIDTH = 20
 
-  const useForceGraph = (data, id2name, size) => {
+  const useForceGraph = (data, id2name, size, prop) => {
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
     const [max, setMax] = useState(1)
-  
+    
+    
     useEffect(() => {
+      setNodes([])
+      setLinks([])
+
       if (!size) return
       if(!data) return
   
@@ -52,7 +56,7 @@ import Relation from "../../../pages/D-Relation";
    
       const forceLinks = Object.values(linkCnt)
       const forceNodes = Object.keys(id2name).map((d) => {return({ id: +d })})  
-      console.log(id2name)
+      //console.log(id2name)
       const scale = d3
         .scaleLinear()
         .domain([1, forceMax])
@@ -76,12 +80,12 @@ import Relation from "../../../pages/D-Relation";
         } catch (e) {
           console.log(e)
         }
-        console.log(forceNodes)
+        //console.log(forceNodes)
         setNodes(forceNodes)
         setLinks(forceLinks)
         setMax(forceMax)
       }, 0)
-    }, [data, id2name, size])
+    }, [data, id2name, size, prop])
   
     return {
       nodes,
@@ -134,18 +138,30 @@ const useZoom = (ref) => {
 // }
 
 const ForceLink = (prop) =>{    
+    console.log(prop)
     const $container = useRef(null)
     const height = 1030
   
-    const { nodes, links, scale } = useForceGraph(prop.relationList, prop.personInfo, height)
+    const { nodes, links, scale } = useForceGraph(prop.relationList, prop.personInfo, height, prop)
     const [info, setInfo] = useState(null) // 山水，人物，花鸟
     const [position, setPosition] = useState(null)
+    const [hid1,sethid1] = useState(null)
+    const [hid2,sethid2] = useState(null)
   
     //console.log(prop.personInfo)
 
-    console.log(nodes)
+    //console.log(nodes)
 
     const transform = useZoom($container)
+    const onClickLink = (id1,id2) =>{
+      sethid1(id1)
+      sethid2(id2)
+      prop.relationList.some((d)=>{
+        if((d.人1id===id1&&d.人2id===id2)||(d.人1id===id2&&d.人2id===id1))
+        prop.setChartInfo(d)
+        return
+      })
+    }
     //console.log(prop.personInfo)
 
     const range = useMemo(() => {
@@ -212,10 +228,10 @@ const ForceLink = (prop) =>{
 
     return(
         <div id="force-link-container" ref={$container}>
-            <svg width="100%" height={height + "px"} viewBox={`0 0 ${height} ${height}`}>
+            <svg width="100%" id= 'force-link-svg' height={height + "px"} viewBox={`0 0 ${height} ${height}`}>
         <g stroke="#ccc" opacity={0.6} cursor="pointer">
           {links.map((link) => {
-            if (link.source.id !== 10183 && link.target.id !== 10183) {
+            if (link.source.id !== Number(prop.linkedID) && link.target.id !== Number(prop.linkedID)) {
               return null
             }
 
@@ -226,22 +242,24 @@ const ForceLink = (prop) =>{
               <>
                 {/* strokeWidth略宽达到stroke+fill效果 */}
                 <line
-                  key={link.index}
+                  key={link.index+'in'}
                   x1={xScale(link.source.x)}
                   y1={yScale(link.source.y)}
                   x2={xScale(link.target.x)}
                   y2={yScale(link.target.y)}
                   stroke="black"
                   strokeWidth={scale(link.cnt) * 1.2 + 1}
+                  onClick={() => onClickLink(link.source.id, link.target.id)}
                 />
                 <line
-                  key={link.index}
+                  key={link.index+'out'}
                   x1={xScale(link.source.x)}
                   y1={yScale(link.source.y)}
                   x2={xScale(link.target.x)}
                   y2={yScale(link.target.y)}
-                  stroke= "#ccc"
+                  stroke= {((link.source.id===hid1&&link.target.id===hid2)||(link.source.id===hid2&&link.target.id===hid1))?"yellow" : "#ccc"}
                   strokeWidth={scale(link.cnt) * 1.2}
+                  onClick={() => onClickLink(link.source.id, link.target.id)}
                 />
               </>
             )
@@ -250,7 +268,7 @@ const ForceLink = (prop) =>{
         <g fontSize={fontSize} textAnchor="middle" cursor="pointer">
           {nodes.map((node) => {
             const r = 30
-            console.log(prop.personInfo[node.id].画家)
+            //console.log(prop.personInfo[node.id].画家)
             return (
               <g
                 //key={node.id}
@@ -284,7 +302,7 @@ const ForceLink = (prop) =>{
           {info && (
             <>
              <svg id= 'tool-tip' height ='600' width ="450">
-              <rect width ='400' height='330' fill='rgba(0,0,0,0.1)' stroke='black' atroke-width='10'></rect>
+              <rect width ='400' height='330' fill='rgba(255,255,255,0.5)' stroke='black' atroke-width='10'></rect>
               <text x='30' y='50' textAnchor="start" fontSize={30}>姓名:{info.姓名}</text>
               <text x='30' y='100' textAnchor="start" fontSize={30}>别名:{info.别名}</text>
               <text x='30' y='150' textAnchor="start" fontSize={30}>朝代:{info.朝代}</text>

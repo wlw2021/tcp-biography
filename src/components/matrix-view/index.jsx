@@ -19,7 +19,7 @@ const MatrixView = (prop) =>{
                 method:"get",
                 url:url,
             }).then(function (res) {
-                console.log(res.data)    
+                //console.log(res.data)    
                 setPersonItems(res.data.data.人物列表)
                 setPersonOrder(res.data.data.排序人物列表)
                 setRelationList(res.data.data.关系列表)            

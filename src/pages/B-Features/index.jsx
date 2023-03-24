@@ -4,7 +4,7 @@ import { divide } from '../../assets';
 import RingView from '../../components/ring-view';
 import DevideShow from '../../components/label-view';
 import SealView from '../../components/seal-view';
-const Features =()=>{
+const Features =(prop)=>{
     const [selectedPerson, setSelectedPerson] = useState ("none")
       return(
         <div className='B-container'>
@@ -25,6 +25,8 @@ const Features =()=>{
             </div>    
             <div id="lable-view-container">
                 <DevideShow 
+                linkedID={prop.linkedID}
+                setLinkedID={prop.setLinkedID}
                 selectedPerson = {selectedPerson}
                 setSelectedPerson = {setSelectedPerson}/>                
             </div>      

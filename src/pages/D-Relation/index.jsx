@@ -3,12 +3,11 @@ import './index.css'
 import { divide } from '../../assets';
 import ForceView from '../../components/force-view';
 import MatrixView from '../../components/matrix-view';
-const Relation =()=>{
+const Relation =(prop)=>{
 
-   const [linkedid, setLinkedid] = useState('17690')
 
     useEffect(()=>{
-        
+        console.log(prop,'D')
     },[])
     
 
@@ -16,8 +15,8 @@ const Relation =()=>{
         <div className='D-container'>
             <div id="relation-link">
               <ForceView 
-              linkedid = {linkedid}
-              setLinkedid = {setLinkedid}/>                             
+              linkedID = {prop.linkedID}
+              setLinkedID = {prop.setLinkedID}/>                             
             </div>    
 
             <div id="divide2">

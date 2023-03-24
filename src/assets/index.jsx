@@ -14,6 +14,9 @@ import origin from './origin.jpg'
 import axis from './timeaxis.svg'
 import figure from './figure.svg'
 import painter from './painter.svg'
+import linkdata from './linkdata.svg'
+import bio from './bio.svg'
+import lined from './line.svg'
 //import locationci from './location-ci.jsx'
 
 
@@ -23,4 +26,4 @@ import painter from './painter.svg'
 export {logo, divide, dynasty, shapePerson, shapeLocation, shapeThing, shapeTime, ringview, origin};
 export {bkthing, bklocation, bkperson, bktime}
 export {axis}
-export{figure, painter}
+export{figure, painter, linkdata, bio, lined}

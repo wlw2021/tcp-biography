@@ -85,6 +85,7 @@ import './index.css'
                 address:place,
                 time:time
             }
+            count++;
             tabledata.push(item)
         })
         setData(tabledata)

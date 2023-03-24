@@ -1,111 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
-import data from '../../data/894.json'
+
 import axios from 'axios';
+import LabelText from './lable-text';
+import { bio, linkdata,lined } from '../../assets';
+
 
 const DevideShow = (prop) =>{
+    const [position, setPosition] = useState(null)
+    const [clickP, setClickP] = useState(null)
+    
 
-    var showdata = {
-        output:[],
-        sentence:''
+    const handleClick = ()=>{
+      
+      if(clickP==="公謹") prop.setLinkedID('10183')
+      else prop.setLinkedID('17690')
     }
-
-    const [showList,setShowList]=useState([])
-
-    const devide = (e) =>{
-        let output = e.output;
-        let full = e.sentence;
-        let devidedSentence = [];
-
-        if(output.length!==0){
-            if(output[0].start !== 0){
-                let ele = full.substring(0,output[0].start);
-                devidedSentence.push({span: ele, type: 'none'});
-            }
-            for(var i=0; i<output.length-1; i++){
-                devidedSentence.push({span: output[i].span, type: output[i].type});
-                if(output[i].end !== output[i+1].start){
-                    let ele = full.substring(output[i].end,output[i+1].start);
-                    devidedSentence.push({span: ele, type: 'none'});
-                }
-            }
-            devidedSentence.push({span: output[i].span, type: output[i].type});
-            let ele = full.substring(output[i].end);
-            devidedSentence.push({span: ele, type: 'none'});
-        }
-        
-        return devidedSentence;
-    }
-
-    useEffect(()=>{
-
-        const showPerson = async()=>{
-            var data2;
-            var list=[];
-            const url = 'http://aailab.cn:28081/resultner/894'
-            await axios({
-                method:"get",
-                url:url,
-            }).then(function (res) {
-                data2 = res.data.data;
-                console.log(data2)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
-
-            if(prop.selectedPerson!='none'){
-                for (var i =0;i<data2.length;i++){
-                    if((data2[i].author===prop.selectedPerson)||(data2[i].author==='清高宗'&&prop.selectedPerson==='愛新覺羅弘曆')){
-                        showdata.output=data2[i].output
-                        showdata.sentence=data2[i].sentence
-                        showdata=devide(showdata)
-                        list.push(showdata)
-                    }
-                }                
-            }
-
-            else{
-                data2.map((e)=>{
-                    showdata.output=e.output
-                    showdata.sentence=e.sentence
-                    showdata=devide(showdata)
-                    list.push(showdata)
-                })
-            }
-            
-            setShowList(list)
-        }
-
-        showPerson()
-    },[prop.selectedPerson])
    
     return(
-        <div className='container'>
-            {
-                showList.map(function(e,i){
-                    const words = e;
-                    return(
-                        <div>
-                            {words.map(function(e){
-                                if(e.type === 'none'){
-                                    return e.span;
-                                }
-                            return(
-                                <mark className={e.type}>
-                                    {e.span}
-                                    
-                                </mark>
-                            )
-                            })}
-                            <br />
-                            <br />
-                        </div>  
-                                          
-                    )
-                })
-            }           
+        <div className='label-container'>
+            <LabelText 
+            position={position}
+            setPosition={setPosition}
+            clickP = {clickP}
+            setClickP = {setClickP}
+            selectedPerson={prop.selectedPerson}/>         
+         {!!position && (
+        <div
+          className="info"
+          style={{
+            transform: `translate(${position.x-2270}px,${
+              position.y - 1920
+            }px)`
+          }}
+        >
+            <svg id= 'tool-tip' height ='600' width ="450">
+                <rect width ='220' height='90' fill='white' stroke='black' strokeWidth={3}></rect> 
+                <image href = {linkdata} x={15} y={5} height={80} onClick = {handleClick}></image> 
+                <image href = {lined} x={85} y={7} height={70}></image>
+                <image href = {bio} x={95} y={12} height={60}></image>            
+            </svg>
+        </div>
+      )}   
         </div>
     )
 

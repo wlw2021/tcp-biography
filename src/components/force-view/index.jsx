@@ -20,18 +20,22 @@ const ForceView = (prop) =>{
 
     const [personInfo,setPersonInfo] = useState(null)
     const [relationList, setRelationList] = useState(null)
+    const [chartInfo, setChartInfo]=useState(null)
 
     useEffect(()=>{
-
+        setPersonInfo(null)
+        setRelationList(null)
+        console.log(prop)
+        console.log(prop.linkedID)
+        //prop.setLinkedID('10183')
         const getShowValue = async() =>{
-            var url = 'http://aailab.cn:28081/getpersonnet?cid='+ '10183'
+            var url = 'http://aailab.cn:28081/getpersonnet?cid='+prop.linkedID
+            console.log(url)
             await axios({
                 method:"get",
                 url:url,
             }).then(function (res) {
-                console.log('here')
-                console.log(res.data)
-                setPersonInfo(res.data.data.人物信息)
+               setPersonInfo(res.data.data.人物信息)
                 setRelationList(res.data.data.关系列表)                                
             })
             .catch(function (error) {
@@ -46,18 +50,22 @@ const ForceView = (prop) =>{
         <div id="force-container">
             <div id = 'force-link'>
                 <ForceLink 
-                linkedid = {prop.linkedid}
-                setLinkedid = {prop.setLinkedid}
+                linkedID = {prop.linkedID}
+                setLinkedID = {prop.setLinkedID}
                 personInfo = {personInfo}
                 relationList = {relationList}
+                chartInfo = {chartInfo}
+                setChartInfo = {setChartInfo}
                 />
             </div>
             <div id = 'force-chart'>
                 <ForceChart 
-                linkedid = {prop.linkedid}
-                setLinkedid = {prop.setLinkedid}
+                linkedID = {prop.linkedID}
+                setLinkedID = {prop.setLinkedID}
                 personInfo = {personInfo}
                 relationList = {relationList}
+                chartInfo = {chartInfo}
+                setChartInfo = {setChartInfo}
                 />
             </div>
         </div>

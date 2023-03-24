@@ -1,0 +1,73 @@
+.container{
+    height:100%;
+    width:100%;
+    line-height: 2; 
+    direction: ltr;   
+    font-size: 36px;
+    font-family:'宋体';
+    letter-spacing: 6px;
+    overflow-y: scroll;
+}
+.Abstract{
+    background: #68bebe; 
+    padding: 2px 2px; 
+    margin: 0 2px;     
+    border-radius: 2.31454px;
+}
+.Location{
+    background: rgba(152,174,210,1); 
+    padding: 2px 2px; 
+    margin: 0 2px;    
+    border-radius: 2.31454px;
+}
+.PersonName{
+    background: #bc92ee; 
+    padding: 2px 2px; 
+    margin: 0 2px;     
+    border-radius: 2.31454px;
+}
+.Organization{
+    background: #f08260; 
+    padding: 2px 2px; 
+    margin: 0 2px;    
+    border-radius: 2.31454px;
+}
+.Person{
+    background: rgba(171,202,203,1); 
+    padding: 2px 2px; 
+    margin: 0 2px; 
+    border-radius: 2.31454px;    
+}
+.Thing{
+    background: rgba(218,224,152,1); 
+    padding: 2px 2px; 
+    margin: 0 2px;    
+    border-radius: 2.31454px;
+}
+.Time{
+    background: rgba(248,228,168,1); 
+    padding: 2px 2px; 
+    margin: 0 2px;    
+    border-radius: 2.31454px;
+}
+
+.info{
+    position:absolute;
+}
+
+
+::-webkit-scrollbar{
+	width:12px;
+    background:rgba(144, 147, 153,0.3);
+}
+
+/*滑块*/
+::-webkit-scrollbar-thumb{
+	width:10px;
+	background:rgba(144, 147, 153,1);
+}
+
+/*滚槽*/
+::-webkit-scrollbar-track-piece{
+	width:10px
+}

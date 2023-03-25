@@ -40,7 +40,7 @@ const RingView =(prop)=>{
     const handleMove = (e) =>{      
         //console.log('move'); 
         setmx(e.clientX);
-        setmy(e.clientY-240);        
+        setmy(e.clientY-280);        
     }
 
 
@@ -128,7 +128,7 @@ const RingView =(prop)=>{
             ctx.rect(mx,my,600,300)
             ctx.stroke()
             image.onload = function(){
-                ctx.drawImage(this,xo,yo,800,400,mx,my,600,300);
+                ctx.drawImage(this,xo-300,yo-300,800,400,mx,my,600,300);
             }      
            
         } 

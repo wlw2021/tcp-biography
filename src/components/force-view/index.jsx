@@ -13,6 +13,7 @@ import React, {
 import * as d3 from "d3"
 import ForceLink from "./force-link";
 import ForceChart from "./force-chart";
+import App2 from "./force-chart/test";
   const R = 30
   const MAX_LINE_WIDTH = 20
 
@@ -67,6 +68,7 @@ const ForceView = (prop) =>{
                 chartInfo = {chartInfo}
                 setChartInfo = {setChartInfo}
                 />
+                {/* <App2 /> */}
             </div>
         </div>
     )

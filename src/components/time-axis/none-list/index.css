@@ -1,0 +1,9 @@
+#none-container{
+    width:100%;
+    height:100%;
+}
+#none-svg{
+    position:absolute;
+    width:100%;
+    height:100%;
+}

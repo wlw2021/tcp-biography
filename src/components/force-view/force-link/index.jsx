@@ -138,7 +138,7 @@ const useZoom = (ref) => {
 // }
 
 const ForceLink = (prop) =>{    
-    console.log(prop)
+    //console.log(prop)
     const $container = useRef(null)
     const height = 1030
   

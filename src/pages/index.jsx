@@ -10,7 +10,7 @@ const Pages = () => {
     const [linkedID,setLinkedID] = useState('17690')
     return (
         <div className="layout-container">
-            <div className="Title">Traditional Chinese Painting Biography</div>
+            <div className="Title" style={{fontFamily:'宋体'}}>Traditional Chinese Painting Biography</div>
             
                 <div className="B-Features">
                     <Features 

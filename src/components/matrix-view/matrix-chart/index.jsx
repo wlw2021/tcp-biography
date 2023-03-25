@@ -77,7 +77,7 @@ import './index.css'
             var time = begin+' ~ '+end
 
             var item = {
-                key: count,
+                key: count++,
                 id1:name1,
                 id2:name2,
                 relation:d.关系,
@@ -85,7 +85,7 @@ import './index.css'
                 address:place,
                 time:time
             }
-            count++;
+            
             tabledata.push(item)
         })
         setData(tabledata)

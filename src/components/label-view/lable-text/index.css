@@ -8,44 +8,42 @@
     letter-spacing: 6px;
     overflow-y: scroll;
 }
-.Abstract{
-    background: #68bebe; 
-    padding: 2px 2px; 
-    margin: 0 2px;     
-    border-radius: 2.31454px;
-}
+
 .Location{
-    background: rgba(152,174,210,1); 
+    background: rgb(100, 159, 219, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
     border-radius: 2.31454px;
 }
+.LocationName{
+    background: rgb(100, 159, 219, 0.6); 
+    padding: 2px 2px; 
+    margin: 0 2px;    
+    border-radius: 2.31454px;
+}
+
 .PersonName{
-    background: #bc92ee; 
+    background: rgb(106, 182, 180,0.6); 
     padding: 2px 2px; 
     margin: 0 2px;     
-    border-radius: 2.31454px;
-}
-.Organization{
-    background: #f08260; 
-    padding: 2px 2px; 
-    margin: 0 2px;    
     border-radius: 2.31454px;
 }
 .Person{
-    background: rgba(171,202,203,1); 
+    background: rgb(106, 182, 180,0.6); 
     padding: 2px 2px; 
     margin: 0 2px; 
     border-radius: 2.31454px;    
 }
+
+
 .Thing{
-    background: rgba(218,224,152,1); 
+    background: rgb(182, 195, 66, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
     border-radius: 2.31454px;
 }
 .Time{
-    background: rgba(248,228,168,1); 
+    background: rgb(228, 188, 71, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
     border-radius: 2.31454px;

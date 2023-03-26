@@ -68,7 +68,6 @@ const LabelText = (prop) =>{
                 url:url,
             }).then(function (res) {
                 data2 = res.data.data;
-                console.log(data2)
             })
             .catch(function (error) {
                 console.log(error);

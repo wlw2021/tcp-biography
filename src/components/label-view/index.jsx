@@ -25,7 +25,6 @@ const DevideShow = (prop) =>{
         method:"get",
         url:url,
           }).then(function (res) {
-              console.log(res.data)
               id=(res.data.data[0].id)
           })
           .catch(function (error) {
@@ -33,18 +32,16 @@ const DevideShow = (prop) =>{
           })
       var newdata;
       var url = 'http://aailab.cn:28081/getpersonscore?pid=894&addnames='+clickP+'&addcids='+id
-      console.log(url)
       await axios({
         method:"get",
         url:url,
           }).then(function (res) {
-              console.log(res.data)
               var the = res.data.data.人物关系信息[id]
               var score = the.分数.画作相关+the.分数.讨论度+the.分数.身份
               var level =5 - Math.floor(score/20)
               newdata={
                 name:the.姓名,
-                cid:id,
+                cid:String(id),
                 birth:the.生年,
                 death:the.卒年,
                 level:level,

@@ -5,12 +5,20 @@ import * as d3 from "d3";
 import year from '../../../data/year.json'
 
 const PersonScroll = (prop) => {
-
     
     const [position, setPosition] = useState (null)
     const [info, setInfo] = useState (null)
-    const relation = prop.relation
-    const person=prop.person
+
+    var drag = d3.drag().on("start",function(d){
+                            console.log(d);
+                        })
+                        .on("drag",function(d){
+                            console.log(d);
+                        })
+                        .on("end",function(d){
+                            console.log(d);
+                        });
+    
 
     const senty = [14,11,4];
 
@@ -23,11 +31,8 @@ const PersonScroll = (prop) => {
         'Paint':'#D6BF9E',
         'None':'none'
       }
-    
-    
-    const types = ['Others','Political','Academic','Social','Kinship','Paint','None']   
 
-    d3.select("#year-layer-svg").selectChildren("*")?.remove();
+    // d3.select("#year-layer-svg").selectChildren("*")?.remove();
         
     var svg = d3
     .select("#year-layer-svg")
@@ -39,9 +44,18 @@ const PersonScroll = (prop) => {
     var authorlevel = {};
     var noneauthor =[];
 
-//////////////////////作者卷轴//////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////
+const handleSwitch =(e)=>{
+    console.log(e)
+    d3.select('#scroll'+e.name).remove();
+    showPersonScroll(e)
+
+}
+
+    
 const showPersonScroll = (e)=>{
+
+    const relation = prop.relation
+    const person=prop.person
 
     if(e.birth===0 && e.death===0){
         noneauthor.push(e)
@@ -55,17 +69,22 @@ const showPersonScroll = (e)=>{
     }
     var indx = (e.birth-1195)*peryearlen;
     var length = (e.death-e.birth)*peryearlen;
-    var indy=(e.level-2)*63-10;
-    authorlevel[e.name]=e.level;
+    var therela = relation[e.cid]
+    var score=therela.分数.画作相关+therela.分数.讨论度+therela.分数.身份
+    var level = 5-Math.floor((score-18)/13)
+    var indy=(level-2)*63-10;
+    authorlevel[e.name]=level;
   
     var g = svg.append('g').attr('id','scroll'+e.name);
+    g.on('click', ()=>{handleSwitch(e)})
+    g.call(drag)
 
     //卷轴
     g.append('rect')
     .attr('x',indx+1).attr('y',indy+3.25)
     .attr('height',38.5).attr('width',length)
-    .style('fill','#E4DAC5')
-    .style('stroke','#8c765f')
+    .style('fill','RGB(190,166,130,0.6)')
+    .style('stroke','RGB(104,29,23,0.53)')
     .style('stroke-width',1.4)
     
     g.append('rect')
@@ -242,6 +261,7 @@ const showPersonScroll = (e)=>{
     var thisname=e.name
     var thisrelation
     var key = e.cid
+    console.log(key)
     Object.keys(relation).some((k)=>{
      if(e.cid===k){
          thisrelation = relation[k]
@@ -257,10 +277,10 @@ const showPersonScroll = (e)=>{
          }
      })
      
-     console.log(thisname)
+     //console.log(thisname)
      var level = authorlevel[thisname]
      var ey=(level-2)*63-10
-     return
+     
      if(thisrelation.卒年!=null){
          var ex=(thisrelation.卒年-1195)*peryearlen+5;
      }
@@ -363,435 +383,459 @@ const showPersonScroll = (e)=>{
 
 }
 
+const handleClick=(rela,e)=>{
+    //console.log(person)
+    const relation = prop.relation
+    const person=prop.person
+    var x=e.clientX
+    var y=e.clientY
+    var name1,name2;
+    setInfo(rela)
+    Object.keys(person).forEach((key)=>{
+        if(person[key]===rela.人1id){
+            name1=key
+        }
+        if(person[key]===rela.人2id){
+            name2=key
+        }
+    })
 
-    const authorScroll =async () =>{            
-           year.forEach((e)=>{
-            showPersonScroll(e)
-               
-           })
-           //console.log(noneauthor)
-           prop.setNoneListS(noneauthor)
+    setInfo({
+        id1:name1,
+        id2:name2,
+        relation:rela.关系,
+        type:rela.关系类型,
+        place:rela.地点? rela.地点:'不详',
+        begin:rela.起始年? rela.起始年:'不详',
+        end:rela.结束年? rela.结束年:'不详',
+    })
+    setPosition({
+        x:x,
+        y:y
+    })  
+     
+    setTimeout(()=>{
+        setPosition(null)
+        setInfo(null)
+    },5000)            
+}
 
-           const handleClick=(rela,e)=>{
-            console.log(person)
-            var x=e.clientX
-            var y=e.clientY
-            var name1,name2;
-            setInfo(rela)
-            Object.keys(person).forEach((key)=>{
-                if(person[key]===rela.人1id){
-                    name1=key
-                }
-                if(person[key]===rela.人2id){
-                    name2=key
-                }
-            })
-
-            setInfo({
-                id1:name1,
-                id2:name2,
-                relation:rela.关系,
-                type:rela.关系类型,
-                place:rela.地点? rela.地点:'不详',
-                begin:rela.起始年? rela.起始年:'不详',
-                end:rela.结束年? rela.结束年:'不详',
-            })
-            setPosition({
-                x:x,
-                y:y
-            })  
-             
-            setTimeout(()=>{
-                setPosition(null)
-                setInfo(null)
-            },5000)            
-           }
-          
-
+const relationLink= () =>{            
+        
+    const relation = prop.relation
+    const person=prop.person
+        
+        
+console.log(personind)
 /////////////////////////////// ///////////////事件连线
 var strech = [30,60,40];
 var eventi = 0
 Object.keys(relation).forEach((p1)=>{
 if(personind[p1]===undefined) return;
 else{
-    var doublekin = relation[p1].相关亲缘
-    var doublepoli = relation[p1].相关政治
-    var doubleaca = relation[p1].相关文学
-    var doublepai = relation[p1].相关画作
-    var doublesoc = relation[p1].相关社交
-    var doubleoth = relation[p1].相关其他
-    //console.log(doublesoc)
+var doublekin = relation[p1].相关亲缘
+var doublepoli = relation[p1].相关政治
+var doubleaca = relation[p1].相关文学
+var doublepai = relation[p1].相关画作
+var doublesoc = relation[p1].相关社交
+var doubleoth = relation[p1].相关其他
+//console.log(doublesoc)
 ///////////文学事件///////////////////////////////////////////////////       
-    Object.keys(doubleaca).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doubleaca[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'aca');
+Object.keys(doubleaca).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doubleaca[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'aca');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Academic)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Academic)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Academic)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Academic)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Academic).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Academic).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=(personind[p1].acay+personind[p1].paiy)/2
-                var y2=(personind[p2].acay+personind[p2].paiy)/2
-                var g = svg.append('g').attr('id','event'+p1+p2+'aca');
-                g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
-                    handleClick(rela,e)
-                })
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Academic).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
-                    handleClick(rela,e)
-                })
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Academic).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
-                    handleClick(rela,e)
-                })
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Academic).style('stroke-width',2)
-
+                return
             }
-        })
-        
+            var y1=(personind[p1].acay+personind[p1].paiy)/2
+            var y2=(personind[p2].acay+personind[p2].paiy)/2
+            var g = svg.append('g').attr('id','event'+p1+p2+'aca');
+            g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
+                handleClick(rela,e)
+            })
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Academic).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
+                handleClick(rela,e)
+            })
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Academic).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
+                handleClick(rela,e)
+            })
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Academic).style('stroke-width',2)
+
+        }
     })
+    
+})
 ///////////亲缘事件连线///////////////////////////////////////////////////  
-    Object.keys(doublekin).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doublekin[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'kin');
+Object.keys(doublekin).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doublekin[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'kin');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Kinship)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Kinship)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Kinship)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Kinship)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Kinship).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Kinship).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=(personind[p1].kiny+personind[p1].poliy)/2
-                var y2=(personind[p2].kiny+personind[p2].poliy)/2
-                var g = svg.append('g').attr('id','event'+p1+p2+'kin');
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Kinship).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Kinship).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Kinship).style('stroke-width',2)
+                return
             }
-        })
-        
+            var y1=(personind[p1].kiny+personind[p1].poliy)/2
+            var y2=(personind[p2].kiny+personind[p2].poliy)/2
+            var g = svg.append('g').attr('id','event'+p1+p2+'kin');
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Kinship).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Kinship).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Kinship).style('stroke-width',2)
+        }
     })
+    
+})
 ///////////政治事件///////////////////////////////////////////////////  
-    Object.keys(doublepoli).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doublepoli[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'poli');
+Object.keys(doublepoli).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doublepoli[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'poli');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Political)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Political)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Political)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Political)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Political).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Political).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=(personind[p1].poliy+personind[p1].acay)/2
-                var y2=(personind[p2].poliy+personind[p2].acay)/2
-                var g = svg.append('g').attr('id','event'+p1+p2+'poli');
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Political).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Political).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Political).style('stroke-width',2)
+                return
             }
-        })            
-    })
+            var y1=(personind[p1].poliy+personind[p1].acay)/2
+            var y2=(personind[p2].poliy+personind[p2].acay)/2
+            var g = svg.append('g').attr('id','event'+p1+p2+'poli');
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Political).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Political).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Political).style('stroke-width',2)
+        }
+    })            
+})
 ///////////画作事件///////////////////////////////////////////////////  
-    Object.keys(doublepai).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doublepai[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'pai');
+Object.keys(doublepai).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doublepai[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'pai');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Paint)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Paint)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Paint)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Paint)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Paint).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Paint).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=(personind[p1].paiy+personind[p1].socy)/2
-                var y2=(personind[p2].paiy+personind[p2].socy)/2
-                var g = svg.append('g').attr('id','event'+p1+p2+'pai');
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Paint).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Paint).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Paint).style('stroke-width',2)
+                return
             }
-        })
-        
+            var y1=(personind[p1].paiy+personind[p1].socy)/2
+            var y2=(personind[p2].paiy+personind[p2].socy)/2
+            var g = svg.append('g').attr('id','event'+p1+p2+'pai');
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Paint).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Paint).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Paint).style('stroke-width',2)
+        }
     })
+    
+})
 ///////////社交事件///////////////////////////////////////////////////  
-    Object.keys(doublesoc).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doublesoc[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'soc');
+Object.keys(doublesoc).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doublesoc[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'soc');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Social)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Social)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Social)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Social)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Social).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Social).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=(personind[p1].socy+personind[p1].othy)/2
-                var y2=(personind[p2].socy+personind[p2].othy)/2
-                var g = svg.append('g').attr('id','event'+p1+p2+'soc');
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Social).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Social).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Social).style('stroke-width',2)
+                return
             }
-        })
-        
+            var y1=(personind[p1].socy+personind[p1].othy)/2
+            var y2=(personind[p2].socy+personind[p2].othy)/2
+            var g = svg.append('g').attr('id','event'+p1+p2+'soc');
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Social).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Social).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Social).style('stroke-width',2)
+        }
     })
+    
+})
 ///////////其他事件///////////////////////////////////////////////////  
-    Object.keys(doubleoth).forEach((p2)=>{
-        if(personind[p2]===undefined) return;
-        doubleoth[p2].forEach((rela)=>{
-            //console.log(rela)
-            if(rela.起始年!=null||rela.结束年!=null){
-                var xind
-                if(rela.起始年!=null){
-                    xind=(rela.起始年-1195)*peryearlen;
-                }
-                if(rela.结束年!=null){
-                    xind=(rela.结束年-1195)*peryearlen;
-                }
-                var y1=personind[p1].kiny
-                var y2=personind[p2].kiny
-                var g = svg.append('g').attr('id','event'+p1+p2+'oth');
+Object.keys(doubleoth).forEach((p2)=>{
+    if(personind[p2]===undefined) return;
+    doubleoth[p2].forEach((rela)=>{
+        //console.log(rela)
+        if(rela.起始年!=null||rela.结束年!=null){
+            var xind
+            if(rela.起始年!=null){
+                xind=(rela.起始年-1195)*peryearlen;
+            }
+            if(rela.结束年!=null){
+                xind=(rela.结束年-1195)*peryearlen;
+            }
+            var y1=personind[p1].kiny
+            var y2=personind[p2].kiny
+            var g = svg.append('g').attr('id','event'+p1+p2+'oth');
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y1)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Others)
+            g.append('rect')
+            .attr('x',xind).attr('y',y1)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Others)
 
-                g.append('rect')
-                .attr('x',xind).attr('y',y2)
-                .attr('width',3).attr('height',45)
-                .style('fill',colors.Others)
+            g.append('rect')
+            .attr('x',xind).attr('y',y2)
+            .attr('width',3).attr('height',45)
+            .style('fill',colors.Others)
 
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
-                .style('stroke',colors.Others).style('stroke-width',2)
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',xind).attr('x2',xind).attr('y1',y1+45).attr('y2',y2)
+            .style('stroke',colors.Others).style('stroke-width',2)
+        }
+        else{
+            if(personind[p2].endx-personind[p1].endx<0){
+                var x1=personind[p1].endx
+                var x2=personind[p1].endx+strech[(eventi++)%3]
+                var x3=personind[p2].endx
             }
             else{
-                if(personind[p2].endx-personind[p1].endx<0){
-                    var x1=personind[p1].endx
-                    var x2=personind[p1].endx+strech[(eventi++)%3]
-                    var x3=personind[p2].endx
-                }
-                else{
-                   return
-                }
-                var y1=personind[p1].othy
-                var y2=personind[p2].othy
-                var g = svg.append('g').attr('id','event'+p1+p2+'oth');
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
-                .style('stroke',colors.Others).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
-                .style('stroke',colors.Others).style('stroke-width',2)
-
-                g.append('line').attr('class','scroll-line')
-                .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
-                .style('stroke',colors.Others).style('stroke-width',2)
+                return
             }
-        })
-        
+            var y1=personind[p1].othy
+            var y2=personind[p2].othy
+            var g = svg.append('g').attr('id','event'+p1+p2+'oth');
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
+            .style('stroke',colors.Others).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x2).attr('y1',y1).attr('y2',y2)
+            .style('stroke',colors.Others).style('stroke-width',2)
+
+            g.append('line').attr('class','scroll-line')
+            .attr('x1',x2).attr('x2',x3).attr('y1',y2).attr('y2',y2)
+            .style('stroke',colors.Others).style('stroke-width',2)
+        }
     })
+    
+})
 
 }
 })
-           
-    }
+        
+}
 
-    authorScroll()
+    useEffect(()=>{
+        d3.select("#year-layer-svg").selectChildren("*")?.remove();
+        if(!prop.person) return
+        
 
-    useEffect(()=>{ 
-                prop.addScroll.forEach((e)=>{
-            showPersonScroll(e)
-        })    
-         
+        const relation = prop.relation
+        const person=prop.person
+
+        console.log('here')
+        year.forEach((e)=>{
+            showPersonScroll(e)               
+        })
+        prop.setNoneListS(noneauthor)
+        relationLink()
+
+    },[prop.person])
+
+
+    useEffect(()=>{
+        if(!prop.person) return
+        console.log('here2')
+        prop.addScroll.forEach((e)=>{
+            showPersonScroll(e)               
+        })
+        prop.setNoneListS(noneauthor)
+        setTimeout(()=>{
+            relationLink()
+        },100)
+        
+        //console.log(prop.addScroll)
     },[prop.addScroll])
 
+
+
     return(
-        <div>
+        <div id='person-layer-container'>
             <svg id="year-layer-svg">
 
             </svg>

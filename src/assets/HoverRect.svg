@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="87px" height="24px" viewBox="0 0 87 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Hover Rect</title>
+    <defs>
+        <path d="M1.9,0 L79.1,0 C80.149341,-1.92760819e-16 81,0.850658975 81,1.9 L81,13.0702134 C81,14.1195544 80.149341,14.9702134 79.1,14.9702134 L45.7900073,14.9702134 L45.7900073,14.9702134 L41.7487437,18 L37.2099927,14.9702134 L1.9,14.9702134 C0.850658975,14.9702134 -7.33921496e-15,14.1195544 0,13.0702134 L0,1.9 C9.35373922e-17,0.850658975 0.850658975,-2.51328391e-16 1.9,0 Z" id="path-1"></path>
+        <filter x="-7.4%" y="-16.7%" width="114.8%" height="166.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.269831731 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.3" transform="translate(-269.000000, -645.000000)">
+            <g id="编组-22" transform="translate(272.000000, 632.136039)">
+                <g id="Rectangle-Copy-19" transform="translate(0.000000, 12.863961)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill-opacity="0.70703125" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

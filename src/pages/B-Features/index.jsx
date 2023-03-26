@@ -27,6 +27,8 @@ const Features =(prop)=>{
                 <DevideShow 
                 linkedID={prop.linkedID}
                 setLinkedID={prop.setLinkedID}
+                addScroll = {prop.addScroll}
+                setAddScroll = {prop.setAddScroll}
                 selectedPerson = {selectedPerson}
                 setSelectedPerson = {setSelectedPerson}/>                
             </div>      

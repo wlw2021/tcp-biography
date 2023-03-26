@@ -8,6 +8,7 @@ import { useCacheToken } from "@ant-design/cssinjs"
 
 const Pages = () => {
     const [linkedID,setLinkedID] = useState('17690')
+    const [addScroll,setAddScroll] = useState([])
     return (
         <div className="layout-container">
             <div className="Title" style={{fontFamily:'宋体'}}>Traditional Chinese Painting Biography</div>
@@ -15,7 +16,9 @@ const Pages = () => {
                 <div className="B-Features">
                     <Features 
                     linkedID = {linkedID}
-                    setLinkedID = {setLinkedID}/>
+                    setLinkedID = {setLinkedID}
+                    addScroll = {addScroll}
+                    setAddScroll = {setAddScroll}/>
                 </div>
 
                 <div className = "D-Relation">
@@ -26,8 +29,8 @@ const Pages = () => {
 
                 <div className="C-Appreciation">
                     <Appreciation 
-                    linkedID = {linkedID}
-                    setLinkedID = {setLinkedID}/>
+                    addScroll = {addScroll}
+                    setAddScroll = {setAddScroll}/>
                 </div>
                 
             </div>

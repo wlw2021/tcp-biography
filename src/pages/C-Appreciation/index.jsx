@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TimeAxis from '../../components/time-axis';
 import './index.css'
 //import { logo } from '../../assets';
-const Appreciation =()=>{
+const Appreciation =(prop)=>{
 
     useEffect(()=>{
         
@@ -11,7 +11,9 @@ const Appreciation =()=>{
 
       return(
         <div className='C-container'>
-            <TimeAxis />         
+            <TimeAxis 
+            addScroll = {prop.addScroll}
+            setAddScroll = {prop.setAddScroll}/>         
         </div>
            
       )

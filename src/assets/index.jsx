@@ -17,6 +17,7 @@ import painter from './painter.svg'
 import linkdata from './linkdata.svg'
 import bio from './bio.svg'
 import lined from './line.svg'
+import hoverRect from './HoverRect.svg'
 //import locationci from './location-ci.jsx'
 
 
@@ -25,5 +26,5 @@ import lined from './line.svg'
 
 export {logo, divide, dynasty, shapePerson, shapeLocation, shapeThing, shapeTime, ringview, origin};
 export {bkthing, bklocation, bkperson, bktime}
-export {axis}
+export {axis, hoverRect}
 export{figure, painter, linkdata, bio, lined}

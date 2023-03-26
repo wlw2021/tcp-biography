@@ -7,7 +7,7 @@ import SimilarPaint from "./similar-painting";
 import NoneDisplay from "./none-list";
 import year from '../../data/year.json'
 
-const TimeAxis = () =>{
+const TimeAxis = (prop) =>{
 
     const [noneListP,setNoneListP]=useState(null)
     const [noneListS,setNoneListS]=useState(null)
@@ -46,7 +46,7 @@ const TimeAxis = () =>{
         const authorScroll =async () =>{
             var relation,person
             var personind = {}
-            var url = 'http://aailab.cn:28081/getpersonscore?pid=894&addnames=&addcids='
+            var url = 'http://aailab.cn:28081/getpersonscore?pid=894&addnames=公謹&addcids=10183'
             await axios({
                     method:"get",
                     url:url,
@@ -61,7 +61,12 @@ const TimeAxis = () =>{
 
                 var authorlevel = {};
                 var noneauthor =[];
+                prop.addScroll.forEach((e)=>{
+                    year.push(e);
+                })
+            console.log(prop.addScroll)
                year.forEach((e)=>{
+                console.log(e)
                    if(e.birth===0 && e.death===0){
                        noneauthor.push(e)
                    }  
@@ -380,6 +385,7 @@ const TimeAxis = () =>{
               
                 }
                })
+
 
                //console.log(noneauthor)
                setNoneListS(noneauthor)
@@ -794,17 +800,8 @@ Object.keys(relation).forEach((p1)=>{
         }
         authorScroll()
          
-
-///////////////////////////////事件连线////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-        // const showEvent = async()=>{           
-
-             
-
-        // }
-        //setTimeout(()=>{showEvent()},5000)
         
-    },[])
+    },[prop.addScroll])
 
     return(
         <div id="axis-container">

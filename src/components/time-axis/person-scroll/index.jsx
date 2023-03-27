@@ -8,14 +8,74 @@ const PersonScroll = (prop) => {
     
     const [position, setPosition] = useState (null)
     const [info, setInfo] = useState (null)
+    const [isDraging, setIsDraging] = useState(false)
+    const [startY, setStartY] = useState(false)
+    const [dragingEle, setDragingELe] = useState('yes')
+
+    const levelY = [-73, -10, 53, 116, 179]
 
     var drag = d3.drag().on("start",function(d){
-                            console.log(d);
+                            setIsDraging(true)
+                            setStartY(d.y)
+                            var dragname=d.sourceEvent.target.getAttribute('class')
+                            var changeele;
+                            year.some((e)=>{
+                                if(e.cid===String(dragname)){
+                                    changeele=e;
+                                    return
+                                }
+                            })
+                            console.log(changeele)
+                            setDragingELe(changeele)
+                            console.log(d)
                         })
                         .on("drag",function(d){
-                            console.log(d);
+                            var ele = d3.select(this)
+                            var na = ele.attr('class')
+                            var id=ele.attr('id').substring(6)
+                            console.log(id)
+                            var transy
+                            var level=(authorlevel[na]-2)*63+10
+                            //ele.attr('transform',"translate(0,"+d.y+")")
+                            if(d.y&&d.y<-10){
+                                transy=-73-(authorlevel[na]-2)*63+10
+                                ele.attr('transform',"translate(0,"+transy+")")
+                                
+                            }
+                            else if(d.y&&d.y<53){
+                                transy=-10-(authorlevel[na]-2)*63+10
+                                ele.attr('transform',"translate(0,"+transy+")")
+                                
+                            }
+                            else if(d.y&&d.y<116){
+                                transy=53-(authorlevel[na]-2)*63+10
+                                ele.attr('transform',"translate(0,"+transy+")")
+                                
+                            }
+                            else if(d.y&&d.y<179){
+                                transy=116-(authorlevel[na]-2)*63+10
+                                ele.attr('transform',"translate(0,"+transy+")")
+                                
+                            }
+                            else {
+                                transy=179-(authorlevel[na]-2)*63+10
+                                ele.attr('transform',"translate(0,"+transy+")")
+                              
+                            }
+                           personind[id].kiny=level+transy
+                           personind[id].poliy=level+transy
+                           personind[id].acay=level+transy
+                           personind[id].othy=level+transy
+                           personind[id].paiy=level+transy
+                           personind[id].socy=level+transy
+
+                           relationLink();
+                           
+                            console.log(personind)
                         })
                         .on("end",function(d){
+                            setIsDraging(false)
+                            setDragingELe(null)
                             console.log(d);
                         });
     
@@ -32,7 +92,7 @@ const PersonScroll = (prop) => {
         'None':'none'
       }
 
-    // d3.select("#year-layer-svg").selectChildren("*")?.remove();
+    
         
     var svg = d3
     .select("#year-layer-svg")
@@ -52,7 +112,7 @@ const handleSwitch =(e)=>{
 }
 
     
-const showPersonScroll = (e)=>{
+const showPersonScroll = (e,dragy)=>{
 
     const relation = prop.relation
     const person=prop.person
@@ -72,28 +132,40 @@ const showPersonScroll = (e)=>{
     var therela = relation[e.cid]
     var score=therela.分数.画作相关+therela.分数.讨论度+therela.分数.身份
     var level = 5-Math.floor((score-18)/13)
-    var indy=(level-2)*63-10;
+    var indy;
+    if(dragy!=-100){
+        if(authorlevel[e.name]===undefined){
+            indy =dragy+(level-2)*63-10
+        }
+        else{
+            indy=dragy+(authorlevel[e.name]-2)*63-10
+        }
+        
+    }
+    else{
+        indy=(level-2)*63-10;
+    }
     authorlevel[e.name]=level;
   
-    var g = svg.append('g').attr('id','scroll'+e.name);
+    var g = svg.append('g').attr('id','scroll'+e.cid).attr('class',e.name);
     g.on('click', ()=>{handleSwitch(e)})
     g.call(drag)
 
     //卷轴
-    g.append('rect')
+    g.append('rect').attr('class',e.cid)
     .attr('x',indx+1).attr('y',indy+3.25)
     .attr('height',38.5).attr('width',length)
     .style('fill','RGB(190,166,130,0.6)')
     .style('stroke','RGB(104,29,23,0.53)')
     .style('stroke-width',1.4)
     
-    g.append('rect')
+    g.append('rect').attr('class',e.cid)
     .attr('x',indx).attr('y',indy)
     .attr('rx',10).attr('ry',2)
     .attr('height',45).attr('width',2.5)
     .style('fill','#8c765f')
 
-    g.append('rect')
+    g.append('rect').attr('class',e.cid)
     .attr('x',indx+length).attr('y',indy)
     .attr('rx',10).attr('ry',2)
     .attr('height',45).attr('width',2.5)
@@ -321,7 +393,7 @@ const showPersonScroll = (e)=>{
              socy:0,
              othy:0
          }
-         var g = svg.append('g').attr('id','event'+thisrelation.姓名);
+         //var g = svg.append('g').attr('id','event'+thisrelation.姓名);
          
          Object.keys(thisrelation.全部关系年份).forEach((rkey)=>{
              var type
@@ -810,7 +882,7 @@ Object.keys(doubleoth).forEach((p2)=>{
 
         console.log('here')
         year.forEach((e)=>{
-            showPersonScroll(e)               
+            showPersonScroll(e,-100)               
         })
         prop.setNoneListS(noneauthor)
         relationLink()
@@ -820,9 +892,8 @@ Object.keys(doubleoth).forEach((p2)=>{
 
     useEffect(()=>{
         if(!prop.person) return
-        console.log('here2')
         prop.addScroll.forEach((e)=>{
-            showPersonScroll(e)               
+            showPersonScroll(e,-100)               
         })
         prop.setNoneListS(noneauthor)
         setTimeout(()=>{
@@ -831,6 +902,8 @@ Object.keys(doubleoth).forEach((p2)=>{
         
         //console.log(prop.addScroll)
     },[prop.addScroll])
+
+    
 
 
 

@@ -2,6 +2,16 @@
     height:100%;
     width:100%;
 }
+#labelSample{
+	margin-top:-5%;
+	width:70%;
+	height:8%;
+	margin-left:20%;
+}
+#text-container{
+	width:100%;
+	height:95%;
+}
 
 ::-webkit-scrollbar{
 	width:12px;

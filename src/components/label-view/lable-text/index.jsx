@@ -62,7 +62,7 @@ const LabelText = (prop) =>{
         const showPerson = async()=>{
             var data2;
             var list=[];
-            const url = 'http://aailab.cn:28081/resultner/894'
+            const url = 'http://aailab.cn:28081/resultner/'+prop.whichCase
             await axios({
                 method:"get",
                 url:url,

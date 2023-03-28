@@ -30,7 +30,7 @@ const SimilarPaint = (prop) =>{
             var authorlist={};            
             var similist;
 
-            var url = 'http://aailab.cn:28081/gethuaxin/894'
+            var url = 'http://aailab.cn:28081/gethuaxin/'+prop.whichCase
             await axios({
                     method:"get",
                     url:url,
@@ -169,7 +169,7 @@ const SimilarPaint = (prop) =>{
         }
         showSimilar()    
            
-    },[showType])
+    },[showType,prop.whichCase])
 
     const handleClick = ()=>{
         setShowType(!showType)

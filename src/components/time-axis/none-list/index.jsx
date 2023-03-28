@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import './index.css'
 import * as d3 from "d3";
+import { uncertainty } from "../../../assets";
 
 const NoneDisplay = (prop) =>{
     useEffect(()=>{
@@ -89,8 +90,12 @@ const NoneDisplay = (prop) =>{
     },[prop])
 
     return(
+        
         <div id = 'none-container'>
-            <svg id = 'none-svg'></svg>
+            <img src = {uncertainty} id='uncertainty'height={40}></img>
+            <svg id = 'none-svg'>
+                
+            </svg>
         </div>
     )
 }

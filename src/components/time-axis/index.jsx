@@ -20,7 +20,7 @@ const TimeAxis = (prop) =>{
         
         const authorScroll =async () =>{            
         
-            var url = 'http://aailab.cn:28081/getpersonscore?pid=894&addnames=周密&addcids=10183'
+            var url = 'http://aailab.cn:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密&addcids=10183'
             await axios({
                     method:"get",
                     url:url,
@@ -41,6 +41,7 @@ const TimeAxis = (prop) =>{
         <div id="axis-container">
             <div id='year-similar'>
                 <SimilarPaint 
+                whichCase={prop.whichCase}
                  noneListP ={noneListP}
                  setNoneListP ={setNoneListP}/>
             </div>
@@ -49,6 +50,7 @@ const TimeAxis = (prop) =>{
             </div>
             <div id='person-year'>
                 <PersonScroll 
+                whichCase={prop.whichCase}
                 noneListS ={noneListS}
                 setNoneListS ={setNoneListS}
                 relation = {relation}

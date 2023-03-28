@@ -135,14 +135,16 @@ const WordCloud = (prop) => {
     useEffect(() => {
 
         var personData, locationData, timeData, thingData
+
         
         const getWord = async() =>{
-            const url = 'http://aailab.cn:28081/getciyun/894'
+            const url = 'http://aailab.cn:28081/getciyun/'+prop.whichCase
+            console.log(url)
             await axios({
                 method:"get",
                 url:url,
             }).then(function (res) {
-                //console.log(res.data)
+                console.log(res.data)
                 personData = res.data.data.PersonName;
                 locationData = res.data.data.Location;
                 thingData = res.data.data.Thing;
@@ -166,7 +168,7 @@ const WordCloud = (prop) => {
 
         getWord();        
         
-    }, [])
+    }, [prop.whichCase])
 
     return (
         <div id='word-cloud-container'>

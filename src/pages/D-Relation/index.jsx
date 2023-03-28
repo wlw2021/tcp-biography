@@ -15,6 +15,7 @@ const Relation =(prop)=>{
         <div className='D-container'>
             <div id="relation-link">
               <ForceView 
+              whichCase={prop.whichCase}
               linkedID = {prop.linkedID}
               setLinkedID = {prop.setLinkedID}/>                             
             </div>    
@@ -23,7 +24,16 @@ const Relation =(prop)=>{
                 <img id='dividetu2' src={divide} alt="分割线" />
             </div>  
             <div id="relation-matrix">
-              <MatrixView />                              
+              <MatrixView 
+              matrixID = {prop.matrixID}
+              setMatrixID = {prop.setMatrixID}
+              matrixName = {prop.matrixName}
+              setMatrixName = {prop.setMatrixName}
+              whichCase={prop.whichCase}
+              linkedID = {prop.linkedID}
+              setLinkedID = {prop.setLinkedID}
+              linkedName={prop.linkedName}
+              setLinkedName={prop.setLinkedName}/>                              
             </div>          
         </div>
            

@@ -20,6 +20,8 @@ const boxSize =25
 
 const Matrix = (prop) =>{
     useEffect(()=>{
+      if(!prop.itemlist||!prop.personOrder)return
+      console.log(prop)
       const items = []
       var itemlist = prop.itemlist
       var itemorder=prop.personOrder
@@ -106,7 +108,9 @@ const Matrix = (prop) =>{
 
         const matrix = getmatrix(prop.relation,itemlist)
         const eachRow = Math.hypot(boxSize, boxSize);
-        const margin = {top: 20, left: 260, right: 20, bottom: 20};
+        console.log(itemlist.length)
+        var left = Math.pow(1.17,items.length)*8
+        const margin = {top: 20, left: left, right: 20, bottom: 20};
         const chartHeight = eachRow * items.length;
         //const chartWidth = width - margin.left - margin.right;
         const height = chartHeight + margin.top + margin.bottom;

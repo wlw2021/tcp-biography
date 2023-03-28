@@ -6,10 +6,12 @@ import DevideShow from '../../components/label-view';
 import SealView from '../../components/seal-view';
 const Features =(prop)=>{
     const [selectedPerson, setSelectedPerson] = useState ("none")
+    
       return(
         <div className='B-container'>
             <div id="ring-view-container">
                 <RingView 
+                whichCase={prop.whichCase}
                  selectedPerson = {selectedPerson}
                  setSelectedPerson = {setSelectedPerson}
                 />                
@@ -20,13 +22,21 @@ const Features =(prop)=>{
             </div>  
             <div id="seal-container">
                 <SealView 
+                whichCase={prop.whichCase}
                 selectedPerson = {selectedPerson}
                 setSelectedPerson = {setSelectedPerson}/>                               
             </div>    
             <div id="lable-view-container">
                 <DevideShow 
+                whichCase={prop.whichCase}
                 linkedID={prop.linkedID}
                 setLinkedID={prop.setLinkedID}
+                linkedName={prop.linkedName}
+                setLinkedName={prop.setLinkedName}
+                matrixID = {prop.matrixID}
+                setMatrixID = {prop.setMatrixID}
+                matrixName = {prop.matrixName}
+                setMatrixName = {prop.setMatrixName}
                 addScroll = {prop.addScroll}
                 setAddScroll = {prop.setAddScroll}
                 selectedPerson = {selectedPerson}

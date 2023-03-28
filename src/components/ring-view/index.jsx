@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
-import { logo, ringview, origin } from '../../assets';
+import { logo, ringview, origin, xyorigin, xyring, qhTitle, qhsample } from '../../assets';
 import './index.css'
 import WordCloud from './word-cloud';
-import indpro from '../../data/reverse.json';
+import indqh from '../../data/reverse.json';
+import indxy from '../../data/xynew2old.json'
 import SealLink from './seal-link';
-import yuantu from '../../data/yuantu.json'
-import axios from 'axios';
-
-
+import yuantu1 from '../../data/yuantu.json'
+import yuantu2 from '../../data/xyyuantu.json'
 
 
 const RingView =(prop)=>{
+    var yuantu
 
-    const ref = useRef();
-
+    const picid=prop.whichCase
+    var indpro
+    
     const [isZoom, setZoom]= useState(false);
     const [isDrag, setDrag] = useState(false)
     const [mx, setmx] = useState(0);
     const [my, setmy] = useState(0);
     const [rectx, setRectx] = useState(350)
-
     const [rotation, setRotation] = useState(45);
-
     const [wordind, setWordind] = useState([]);
+    
 
     const ringr=660;
 
@@ -94,15 +94,36 @@ const RingView =(prop)=>{
     }
 
     const image = new Image();
-    image.src = origin;
+
+    if(prop.cases === '894'){
+        image.src = origin;
+    }
+    
+    else image.src = xyorigin
     
     useEffect(()=>{
-
-
+        var len;
+        if(prop.whichCase==='13941'){
+            len=24830;
+            indpro = indxy
+            yuantu = yuantu2
+            yuantu.forEach((e,i)=>{
+                if(e<0){
+                    if(i>1)
+                    e=yuantu[i-1]
+                    else e=0;
+                }
+            })
+        }
+        else {
+            len=18280;
+            indpro = indqh
+            yuantu = yuantu1
+        }
         //console.log(wordind)
         //鼠标鱼眼效果
         //console.log(indpro);
-        var rotate = (1-yuantu[Math.floor((rectx/1650)*18280)]/9000)*360-90
+        var rotate = (1-yuantu[Math.floor((rectx/1650)*len)]/9000)*360-90
         setRotation(rotate)
         
         //console.log(rotate);
@@ -154,9 +175,6 @@ const RingView =(prop)=>{
         setRectx(rectx)
 
         ctx2.stroke()
-
-
-
     },[isZoom,mx,my,rotation,rectx,wordind])
     
 
@@ -164,15 +182,19 @@ const RingView =(prop)=>{
         <div className='ring-view'>
             <div id="logo">
                 <img src={logo} alt="标志" />
-            </div>          
+            </div>  
+            <img src={qhTitle} id='qhTitle'></img> 
+            <img src={qhsample} id='qhsample'></img>
+        <div id ='main'>     
 
             <div id = 'ring-view'>
-                <img src={ringview} id='ringtu'></img>
+                <img src={picid==='894'?ringview:xyring} id='ringtu'></img>
 
                 <div id='wordcloud'>
                     <WordCloud 
                     wordind = {wordind}
                     setWordind = {setWordind}
+                    whichCase = {prop.whichCase}
                     /> 
                 </div> 
 
@@ -183,6 +205,7 @@ const RingView =(prop)=>{
                 onMouseLeave={handleLeave}
                 onMouseMove={handleMove}>
                     <SealLink    
+                    whichCase = {prop.whichCase}
                     wordind = {wordind}
                     selectedPerson = {prop.selectedPerson}
                     setSelectedPerson = {prop.setSelectedPerson}
@@ -197,13 +220,14 @@ const RingView =(prop)=>{
             </div>
 
             <div id = 'origin'>
-                <img src={origin} id='origintu'></img>
+                <img src={picid==='894'?origin:xyorigin} id='origintu'></img>
                 <canvas id='rotate-view'
                 onMouseDown={handleDragDown}
                 onMouseUp={handleDragUp}
                 onMouseMove={handleDragMove}
                 ></canvas>
                 
+            </div>
             </div>
                         
         </div>

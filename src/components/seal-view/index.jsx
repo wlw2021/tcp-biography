@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
 import './index.css'
-import person from '../../data/seal-all.json';
 import axios from 'axios';
 
 
 const SealView = (prop) =>{
-
-    
-
     useEffect(()=>{
         var sealStart={}
         const namesize = 45;
@@ -156,12 +152,12 @@ const SealView = (prop) =>{
 
         var author = {}
 
-        var url = 'http://aailab.cn:28081/getyinzhanglist/894'
+        var url = 'http://aailab.cn:28081/getyinzhanglist/'+prop.whichCase
         await axios({
             method:"get",
             url:url,
         }).then(function (res) {
-            //console.log(res.data)
+            console.log(res.data)
             author = res.data.data
         })
         .catch(function (error) {

@@ -12,6 +12,7 @@ const Appreciation =(prop)=>{
       return(
         <div className='C-container'>
             <TimeAxis 
+            whichCase={prop.whichCase}
             addScroll = {prop.addScroll}
             setAddScroll = {prop.setAddScroll}/>         
         </div>

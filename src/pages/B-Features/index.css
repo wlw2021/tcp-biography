@@ -7,7 +7,7 @@
 }
 #divide{
     margin-left:45px;
-    margin-top: 90px;
+    margin-top: 4%;
     height: 80%;
     width:0.19%;
 }
@@ -20,9 +20,9 @@
     height:100%;
     width:57%;
     margin-left:24px;
-    margin-top: 30px;
 }
 #seal-container{
+    margin-top: 5%;
     width:11.5%;
     height:94%;
     margin-left:15px;

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="195px" height="15px" viewBox="0 0 195 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 10</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.3" transform="translate(-825.000000, -57.000000)">
+            <g id="编组-10" transform="translate(825.000000, 57.000000)">
+                <g id="编组-3" transform="translate(51.292838, 0.000000)">
+                    <text id="Location" font-family="STSongti-SC-Bold, Songti SC" font-size="10.8" font-weight="bold" fill="#090909">
+                        <tspan x="11.4206709" y="11">Location</tspan>
+                    </text>
+                    <rect id="矩形" fill="#6788BD" opacity="0.677571615" x="0" y="3" width="9.01631913" height="9" rx="1.8"></rect>
+                </g>
+                <g id="编组-6" transform="translate(156.282865, 0.000000)">
+                    <text id="Thing" font-family="STSongti-SC-Bold, Songti SC" font-size="10.8" font-weight="bold" fill="#090909">
+                        <tspan x="12.6228468" y="11">Thing</tspan>
+                    </text>
+                    <rect id="矩形" fill="#D2D981" opacity="0.818336124" x="0" y="3" width="9.01631913" height="9" rx="1.8"></rect>
+                </g>
+                <g id="编组-5" transform="translate(112.203083, 0.000000)">
+                    <text id="Time" font-family="STSongti-SC-Bold, Songti SC" font-size="10.8" font-weight="bold" fill="#090909">
+                        <tspan x="11.4206709" y="11">Time</tspan>
+                    </text>
+                    <rect id="矩形" fill="#F7DE95" opacity="0.818336124" x="0" y="3" width="9.01631913" height="9" rx="1.8"></rect>
+                </g>
+                <g id="编组-2">
+                    <text id="Figure" font-family="STSongti-SC-Bold, Songti SC" font-size="10.8" font-weight="bold" fill="#090909">
+                        <tspan x="11.4206709" y="11">Figure</tspan>
+                    </text>
+                    <rect id="矩形" fill="#7CACAD" opacity="0.637602307" x="0" y="3" width="9.01631913" height="9" rx="1.8"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

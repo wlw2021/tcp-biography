@@ -2,32 +2,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import './index.css'
 import * as d3 from "d3";
-import year from '../../../data/year.json'
+import year1 from '../../../data/year.json'
 
 const PersonScroll = (prop) => {
     
     const [position, setPosition] = useState (null)
     const [info, setInfo] = useState (null)
-    const [isDraging, setIsDraging] = useState(false)
-    const [startY, setStartY] = useState(false)
-    const [dragingEle, setDragingELe] = useState('yes')
+   
 
     const levelY = [-73, -10, 53, 116, 179]
 
-    var drag = d3.drag().on("start",function(d){
-                            setIsDraging(true)
-                            setStartY(d.y)
-                            var dragname=d.sourceEvent.target.getAttribute('class')
-                            var changeele;
-                            year.some((e)=>{
-                                if(e.cid===String(dragname)){
-                                    changeele=e;
-                                    return
-                                }
-                            })
-                            console.log(changeele)
-                            setDragingELe(changeele)
-                            console.log(d)
+    var drag = d3.drag().on("start",function(d){                          
+                           
                         })
                         .on("drag",function(d){
                             var ele = d3.select(this)
@@ -74,8 +60,6 @@ const PersonScroll = (prop) => {
                             console.log(personind)
                         })
                         .on("end",function(d){
-                            setIsDraging(false)
-                            setDragingELe(null)
                             console.log(d);
                         });
     
@@ -131,7 +115,7 @@ const showPersonScroll = (e,dragy)=>{
     var length = (e.death-e.birth)*peryearlen;
     var therela = relation[e.cid]
     var score=therela.分数.画作相关+therela.分数.讨论度+therela.分数.身份
-    var level = 5-Math.floor((score-18)/13)
+    var level = 5-Math.floor((score-8)/14)
     var indy;
     if(dragy!=-100){
         if(authorlevel[e.name]===undefined){
@@ -333,7 +317,6 @@ const showPersonScroll = (e,dragy)=>{
     var thisname=e.name
     var thisrelation
     var key = e.cid
-    console.log(key)
     Object.keys(relation).some((k)=>{
      if(e.cid===k){
          thisrelation = relation[k]
@@ -343,7 +326,6 @@ const showPersonScroll = (e,dragy)=>{
 
      Object.keys(person).some((pname)=>{
          if(Number(person[pname])===Number(key)){
-            console.log(pname,thisrelation)
              thisname = pname
              return
          }
@@ -873,6 +855,8 @@ Object.keys(doubleoth).forEach((p2)=>{
 }
 
     useEffect(()=>{
+        
+
         d3.select("#year-layer-svg").selectChildren("*")?.remove();
         if(!prop.person) return
         
@@ -880,7 +864,31 @@ Object.keys(doubleoth).forEach((p2)=>{
         const relation = prop.relation
         const person=prop.person
 
-        console.log('here')
+        const getList = () =>{
+            var yearList = [];
+            Object.keys(relation).forEach((key)=>{
+                var e=relation[key]
+                var sole = {
+                    name: e.姓名,
+                    cid: String(key),
+                    birth: e.生年? e.生年 : 0,
+                    death: e.卒年? e.卒年 : 0,
+                    seal: [],
+                    sentence: []
+                }
+                yearList.push(sole)
+            })
+            return yearList
+        }
+
+        var year
+        if(prop.whichCase==='894'){
+            year=year1;
+        }
+        else{
+            year = getList()
+        }
+
         year.forEach((e)=>{
             showPersonScroll(e,-100)               
         })

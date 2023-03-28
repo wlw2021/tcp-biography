@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
 import './index.css'
-import person from '../../../data/seal-all.json';
+import person1 from '../../../data/seal-all.json';
+import person2 from '../../../data/seal-allxy.json';
 import axios from 'axios';
 
 
 const SealLink =(prop)=>{    
     var personind=[];
-
+    var person
+    if(prop.whichCase==='13941')person=person2
+    else person=person1
     function Rotateind(x,y){
         var pi = Math.PI;
         var x1=x-220;
@@ -213,7 +216,7 @@ const SealLink =(prop)=>{
                 }
                 
         
-                var url="http://aailab.cn:28081/getlines/894/"+prop.selectedPerson
+                var url="http://aailab.cn:28081/getlines/"+prop.whichCase+"/"+prop.selectedPerson
                 await axios({
                         method:"get",
                         url:url,

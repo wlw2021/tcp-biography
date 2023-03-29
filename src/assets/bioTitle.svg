@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="248px" height="23px" viewBox="0 0 248 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 152</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.3" transform="translate(-12.000000, -731.000000)">
+            <g id="编组-152" transform="translate(12.000000, 731.000000)">
+                <g id="编组-15" transform="translate(42.000000, 0.000000)" fill="#000000" font-family="TimesNewRomanPS-BoldMT, Times New Roman" font-size="20" font-weight="bold">
+                    <text id="Painting-Biograph-Vi">
+                        <tspan x="0" y="18">Painting Biograph View</tspan>
+                    </text>
+                </g>
+                <g id="编组" transform="translate(0.000000, 4.000000)">
+                    <g id="编组-139" transform="translate(0.548701, 2.133333)">
+                        <polygon id="矩形" fill="#000000" transform="translate(16.370324, 5.714286) rotate(90.000000) translate(-16.370324, -5.714286) " points="10.6560381 -10.6560381 22.0846095 -10.6560381 22.0846095 22.0846095 10.6560381 22.0846095"></polygon>
+                        <polygon id="矩形" fill="#FFFFFF" transform="translate(17.329379, 5.714286) rotate(90.000000) translate(-17.329379, -5.714286) " points="12.6627119 -10.2433409 21.9960452 -10.2433409 21.9960452 21.6719123 12.6627119 21.6719123"></polygon>
+                    </g>
+                    <path d="M1.37175197,0 C1.82631059,-8.35010632e-17 2.19480315,0.368492566 2.19480315,0.823051183 L2.19480315,15.1769488 C2.19480315,15.6315074 1.82631059,16 1.37175197,16 C0.917193355,16 0.548700788,15.6315074 0.548700788,15.1769488 L0.548700788,0.823051183 C0.548700788,0.368492566 0.917193355,8.35010632e-17 1.37175197,0 Z" id="矩形" fill="#000000"></path>
+                    <path d="M33.628248,0 C34.0828066,-8.35010632e-17 34.4512992,0.368492566 34.4512992,0.823051183 L34.4512992,15.1769488 C34.4512992,15.6315074 34.0828066,16 33.628248,16 C33.1736894,16 32.8051968,15.6315074 32.8051968,15.1769488 L32.8051968,0.823051183 C32.8051968,0.368492566 33.1736894,8.35010632e-17 33.628248,0 Z" id="矩形" fill="#000000"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

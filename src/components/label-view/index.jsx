@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
-import { hoverRect, labelSample } from '../../assets';
+import { cbdb, hoverRect, iconpaint, labelSample, locfig, thingfig, timefig } from '../../assets';
 import axios from 'axios';
 import LabelText from './lable-text';
 import { bio, linkdata,lined, linshi} from '../../assets';
@@ -9,6 +9,7 @@ import { bio, linkdata,lined, linshi} from '../../assets';
 const DevideShow = (prop) =>{
     const [position, setPosition] = useState(null)
     const [clickP, setClickP] = useState(null)
+    const [clickType, setClickType] = useState(null)
     
 
     const handleClick = async ()=>{
@@ -85,6 +86,43 @@ const DevideShow = (prop) =>{
           //console.log(scrollnew)
           prop.setAddScroll(scrollnew)
     }
+    const showInfo = ()=>{
+      console.log(clickType)
+      switch(clickType){                
+        case 'Person':case'PersonName':
+          return(
+            <svg id= 'tool-tip' height ='600' width ="450">
+            <image href = {hoverRect} x={0} y={0} height={120}></image>
+            <image href = {iconpaint} x={20} y={10} height={60} onClick = {MatrixOnly}></image> 
+            <image href = {cbdb} x={90} y={10} height={60} onClick = {MatrixOnly}></image> 
+            <image href = {linshi} x={160} y={10} height={60} onClick = {MatrixOnly}></image> 
+            <image href = {linkdata} x={220} y={5} height={80} onClick = {handleClick}></image> 
+            <image href = {lined} x={300} y={7} height={70}></image>
+            <image href = {bio} x={322} y={26} height={35} onClick = {handleClickScroll}></image>
+             </svg>
+          )
+        case 'Location':case'LocationName':
+          return(
+            <div style={{transform: 'translate(100px,0)'}}>
+              <img src={locfig} style={{height:120}}></img>
+            </div>            
+          )
+          case 'Time':
+          return(
+            <div style={{transform: 'translate(100px,0)'}}>
+              <img src={timefig} style={{height:120}}></img>
+            </div>            
+          )
+          case 'Thing':
+          return(
+            <div style={{transform: 'translate(140px,0)'}}>
+              <img src={thingfig} style={{height:120}}></img>
+            </div>            
+          )
+      }
+        
+      
+    }
    
     return(
         <div className='label-container'>
@@ -96,6 +134,8 @@ const DevideShow = (prop) =>{
             setPosition={setPosition}
             clickP = {clickP}
             setClickP = {setClickP}
+            clickType = {clickType}
+            setClickType = {setClickType}
             selectedPerson={prop.selectedPerson}/>         
          {!!position && (
         <div
@@ -106,14 +146,14 @@ const DevideShow = (prop) =>{
             }px)`
           }}
         >
-            <svg id= 'tool-tip' height ='600' width ="450">
+          
+          {
+            showInfo()
+          }
+            
                 
-                <image href = {hoverRect} x={0} y={0} height={120}></image>
-                <image href = {linshi} x={160} y={10} height={60} onClick = {MatrixOnly}></image> 
-                <image href = {linkdata} x={220} y={5} height={80} onClick = {handleClick}></image> 
-                <image href = {lined} x={300} y={7} height={70}></image>
-                <image href = {bio} x={315} y={12} height={60} onClick = {handleClickScroll}></image>            
-            </svg>
+                            
+           
         </div>
       )}  
       </div> 

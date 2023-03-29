@@ -19,6 +19,21 @@
     pointer-events: all; 
 }
 
+#seal-link-svg circle{
+    pointer-events: all; 
+}
+
+.blocks{
+    position:absolute;
+    z-index: -1;
+
+}
+.link{
+    position:absolute;
+    z-index: 1;
+
+}
+
 .linkword{
     stroke-dasharray: 3 3;
 }

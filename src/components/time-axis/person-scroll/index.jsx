@@ -81,22 +81,19 @@ const PersonScroll = (prop) => {
     var svg = d3
     .select("#year-layer-svg")
     .attr("preserveAspectRatio", "xMidYMid meet")
-    .attr("viewBox", "0 0 1730 300")
+    .attr("viewBox", "0 0 2595 300")
 
-    const peryearlen=1700/810;
+    const peryearlen=170/81;
     var personind = {}      
     var authorlevel = {};
     var noneauthor =[];
 
 const handleSwitch =(e)=>{
-    console.log(e)
-    d3.select('#scroll'+e.name).remove();
-    showPersonScroll(e)
-
+    prop.setSelectedPerson(e.name)
 }
 
     
-const showPersonScroll = (e,dragy)=>{
+const showPersonScroll = (e)=>{
 
     const relation = prop.relation
     const person=prop.person
@@ -111,24 +108,15 @@ const showPersonScroll = (e,dragy)=>{
     else if(e.death==0){
         e.death=e.birth+50;
     }
-    var indx = (e.birth-1195)*peryearlen;
+    
+    var indx = (e.birth-950)*peryearlen;
     var length = (e.death-e.birth)*peryearlen;
     var therela = relation[e.cid]
     var score=therela.分数.画作相关+therela.分数.讨论度+therela.分数.身份
     var level = 5-Math.floor((score-8)/14)
     var indy;
-    if(dragy!=-100){
-        if(authorlevel[e.name]===undefined){
-            indy =dragy+(level-2)*63-10
-        }
-        else{
-            indy=dragy+(authorlevel[e.name]-2)*63-10
-        }
-        
-    }
-    else{
+
         indy=(level-2)*63-10;
-    }
     authorlevel[e.name]=level;
   
     var g = svg.append('g').attr('id','scroll'+e.cid).attr('class',e.name);
@@ -167,14 +155,21 @@ const showPersonScroll = (e,dragy)=>{
         .attr('cx',indx-23.5).attr('cy',indy+23)
         .attr('r',19)
         .style('fill','white')
-        .style('stroke',"RGB(122,32,2,1)")
+        .style('stroke',()=>{
+            var depth = relation[e.cid].题跋印章总数/650+0.2;
+            if(depth>1)depth=1;
+            return "RGB(122,32,2,"+depth+")"})
         .style('stroke-width',2.5)
     
 
         g.append('circle')
         .attr('cx',indx-23.5).attr('cy',(d)=>indy+23.5)
         .attr('r',16)
-        .style('fill',"RGB(151,99,95,1)")
+        .style('fill',()=>{
+            var depth = relation[e.cid].题跋印章本幅/10+0.2;
+            if(depth>1)depth=1;
+            return "RGB(151,99,95,"+depth+")"
+        })
     
         g.append('text')
         .attr('y', indy+32).attr('x', indx-37)
@@ -186,19 +181,43 @@ const showPersonScroll = (e,dragy)=>{
     }
 
     else{
+        if(relation[e.cid].题跋印章本幅!=0){
         g.append('rect')
         .attr('x',indx-43).attr('y',indy+3.5)
         .attr('width',38)
         .attr('height',38)
         .style('fill','white')
-        .style('stroke',"RGB(122,32,2,1)")
+        .style('stroke',()=>{
+            var depth = relation[e.cid].题跋印章总数/650+0.2;
+            if(depth>1)depth=1;
+            return "RGB(122,32,2,"+depth+")"})
         .style('stroke-width',2.5)
-        
+        }
 
+        else{
+            g.append('rect')
+        .attr('x',indx-43).attr('y',indy+3.5)
+        .attr('width',38)
+        .attr('height',38)
+        .style('fill','white')
+        .style('stroke',()=>{
+            var depth = relation[e.cid].题跋印章总数/650+0.2;
+            if(depth>1)depth=1;
+            return "RGB(122,32,2,"+depth+")"})
+        .style('stroke-width',2.5)
+        .attr("stroke-dasharray", "2,1");
+        }
+        
+        
         g.append('rect')
         .attr('x',indx-40).attr('y',(d)=>indy+6.5)
         .attr('width',32).attr('height',32)
-        .style('fill',"RGB(151,99,95,1)")
+        .style('fill',()=>{
+            var depth = relation[e.cid].题跋印章本幅/10+0.2;
+            if(depth>1)depth=1;
+            return "RGB(151,99,95,"+depth+")"
+        })
+    
         
         g.append('text')
         .attr('y', indy+32).attr('x', indx-37)
@@ -223,7 +242,7 @@ const showPersonScroll = (e,dragy)=>{
     sentence.map((e)=>{
         if(e.year==0) sentcount++;
         else{
-            var sentindx=(e.year-1195)*peryearlen;
+            var sentindx=(e.year-950)*peryearlen;
             var sentlen = e.content.length/10+5;
             g.append('rect')
             .attr('x',sentindx-sentlen).attr('y',()=>{
@@ -267,7 +286,7 @@ const showPersonScroll = (e,dragy)=>{
     seal.map((e)=>{
         if(e.year==0) sealcount++;
         else{
-            var sealindx=(e.year-1195)*peryearlen;
+            var sealindx=(e.year-950)*peryearlen;
             g.append('rect')
             .attr('x',sealindx-8).attr('y',indy+30)
             .attr('width',8).attr('height',8)
@@ -336,10 +355,10 @@ const showPersonScroll = (e,dragy)=>{
      var ey=(level-2)*63-10
      
      if(thisrelation.卒年!=null){
-         var ex=(thisrelation.卒年-1195)*peryearlen+5;
+         var ex=(thisrelation.卒年-950)*peryearlen+5;
      }
      else if(thisrelation.生年!=null){
-         var ex=(thisrelation.生年+50-1195)*peryearlen+5;
+         var ex=(thisrelation.生年+50-950)*peryearlen+5;
      }
      else{return}
 
@@ -388,9 +407,9 @@ const showPersonScroll = (e,dragy)=>{
                  case '画作':type = 'Paint';break;
              }
              Object.keys(thisrelation.全部关系年份[rkey]).forEach((ykey)=>{
-                 var soloex = (Number(ykey)-1195)*peryearlen
-                 g.append('rect').attr('x',soloex).attr('y',ey).attr('id',rkey+' '+thisname+ykey)
-                 .attr('height',45).attr('width',3)
+                 var soloex = (Number(ykey)-950)*peryearlen
+                 g.append('rect').attr('x',soloex).attr('y',ey+3).attr('id',rkey+' '+thisname+ykey)
+                 .attr('height',39).attr('width',2)
                  .style('fill',colors[type])
              })
          })
@@ -502,10 +521,10 @@ Object.keys(doubleaca).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -567,10 +586,10 @@ Object.keys(doublekin).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -625,10 +644,10 @@ Object.keys(doublepoli).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -682,10 +701,10 @@ Object.keys(doublepai).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -740,10 +759,10 @@ Object.keys(doublesoc).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -798,10 +817,10 @@ Object.keys(doubleoth).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-1195)*peryearlen;
+                xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-1195)*peryearlen;
+                xind=(rela.结束年-950)*peryearlen;
             }
             var y1=personind[p1].kiny
             var y2=personind[p2].kiny
@@ -890,7 +909,7 @@ Object.keys(doubleoth).forEach((p2)=>{
         }
 
         year.forEach((e)=>{
-            showPersonScroll(e,-100)               
+            showPersonScroll(e)               
         })
         prop.setNoneListS(noneauthor)
         relationLink()
@@ -901,7 +920,7 @@ Object.keys(doubleoth).forEach((p2)=>{
     useEffect(()=>{
         if(!prop.person) return
         prop.addScroll.forEach((e)=>{
-            showPersonScroll(e,-100)               
+            showPersonScroll(e)               
         })
         prop.setNoneListS(noneauthor)
         setTimeout(()=>{

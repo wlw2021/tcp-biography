@@ -166,10 +166,9 @@ const Matrix = (prop) =>{
   circles.append('rect')
     .attr('fill', d => d.color)
     .attr('width', boxSize)
-    .attr('height', boxSize)
-    
-    .attr('stroke', '#000')
-    .attr('stroke-width', '1.5px')
+    .attr('height', boxSize)    
+    .attr('stroke', 'rgb(171, 166, 166)')
+    .attr('stroke-width', '2px')
   
     //两道斜横
   // const twoLines = group.selectAll('scope-line')

@@ -69,19 +69,20 @@ const NoneDisplay = (prop) =>{
     }
 
     if(noneListS){
-        if(noneList)iy+=30
+        if(noneList!=null)iy+=140
+        else iy+=50
         setTimeout(()=>{
             noneListS.forEach((e,i)=>{
                 var g = nsvg.append('g').attr('id', 'noneauther'+e.name)
 
-                g.append('rect').attr('x',nx).attr('y',iy+90+i*50).attr('width',160).attr('height',40)
+                g.append('rect').attr('x',nx).attr('y',iy+90+i*40).attr('rx',20).attr('ry',30).attr('width',160).attr('height',30)
                 .attr('fill','none').attr('stroke','rgb(0,0,0,0.3)').attr('stroke-width',2)
 
-                g.append('text').attr('y', iy+90+i*50+30).attr('x', ()=>{
-                    if(e.name.length<3) return nx+52.5
-                else return nx+40})
+                g.append('text').attr('y', iy+90+i*40+23).attr('x', ()=>{
+                    if(e.name.length<3) return nx+60
+                else return nx+50})
                 .style('font-family','宋体')
-                .style('text-anchor', "start").text(e.name).style('font-size', '25px')
+                .style('text-anchor', "start").text(e.name).style('font-size', '20px')
                 .style('fill','rgb(0,0,0,0.5)');
             })
         },300)

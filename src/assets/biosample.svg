@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1011px" height="34px" viewBox="0 0 1011 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 42</title>
+    <defs>
+        <path d="M3.2832,0 L111.7168,0 C113.530061,7.71940704e-15 115,1.46993871 115,3.2832 L115,22.4988342 C115,24.3120955 113.530061,25.7820342 111.7168,25.7820342 L3.2832,25.7820342 C1.46993871,25.7820342 -2.88656401e-15,24.3120955 0,22.4988342 L0,3.2832 C-2.22060464e-16,1.46993871 1.46993871,1.22126912e-15 3.2832,0 Z" id="path-1"></path>
+        <filter x="-5.7%" y="-21.3%" width="111.3%" height="150.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.269831731 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M3.2832,0 L111.7168,0 C113.530061,8.60758546e-15 115,1.46993871 115,3.2832 L115,22.4988342 C115,24.3120955 113.530061,25.7820342 111.7168,25.7820342 L3.2832,25.7820342 C1.46993871,25.7820342 -2.4424748e-15,24.3120955 0,22.4988342 L0,3.2832 C-6.66149673e-16,1.46993871 1.46993871,1.22126912e-15 3.2832,0 Z" id="path-3"></path>
+        <filter x="-5.7%" y="-21.3%" width="111.3%" height="150.4%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.269831731 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M3.2832,0 L127.7168,0 C129.530061,-7.49741001e-15 131,1.46993871 131,3.2832 L131,22.4988342 C131,24.3120955 129.530061,25.7820342 127.7168,25.7820342 L3.2832,25.7820342 C1.46993871,25.7820342 3.77477414e-15,24.3120955 0,22.4988342 L0,3.2832 C-2.22060464e-16,1.46993871 1.46993871,1.22126912e-15 3.2832,0 Z" id="path-5"></path>
+        <filter x="-5.0%" y="-21.3%" width="109.9%" height="150.4%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.269831731 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.3" transform="translate(-717.000000, -730.000000)">
+            <g id="编组-42" transform="translate(717.000000, 733.000000)">
+                <g id="编组-185" transform="translate(0.000000, 3.000000)">
+                    <g id="编组-186">
+                        <g id="编组-133">
+                            <g id="编组-14" transform="translate(6.539509, 9.330781) scale(-1, -1) rotate(180.000000) translate(-6.539509, -9.330781) translate(0.000000, 2.721827)" fill="#681D17" fill-opacity="0.53" stroke="#7A2002" stroke-width="1.3401489">
+                                <g id="编组-9" transform="translate(-0.000000, 0.000000)">
+                                    <rect id="矩形" x="0.670074448" y="0.670074448" width="11.7388692" height="11.8777584" rx="5.86943458"></rect>
+                                </g>
+                            </g>
+                            <text id="Seal-with-exact-time" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" letter-spacing="-0.405999988" fill="#000000">
+                                <tspan x="17.768778" y="15.1446701">Seal with exact time</tspan>
+                            </text>
+                        </g>
+                        <g id="编组-109" transform="translate(155.294248, 0.710660)">
+                            <g id="编组-105" transform="translate(0.000000, 1.863706)">
+                                <g id="编组-14" transform="translate(6.539509, 7.021341) scale(-1, -1) rotate(180.000000) translate(-6.539509, -7.021341) translate(0.000000, 0.412387)" fill="#681D17" fill-opacity="0.53" stroke="#7A2002" stroke-width="1.3401489">
+                                    <g id="编组-9" transform="translate(-0.000000, 0.000000)">
+                                        <rect id="矩形" x="0.670074448" y="0.670074448" width="11.7388692" height="11.8777584" rx="5.86943458"></rect>
+                                    </g>
+                                </g>
+                                <text id="1" font-family="ArialMT, Arial" font-size="12.9696233" font-weight="normal" fill="#FFFFFF">
+                                    <tspan x="2.61580361" y="12.1142132">1</tspan>
+                                </text>
+                            </g>
+                            <text id="Number-of-seals-with" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" letter-spacing="-0.419999975" fill="#000000">
+                                <tspan x="18.6149103" y="15.1446701">Number of seals without exact time</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g id="编组-137" transform="translate(409.000000, 1.000000)">
+                        <g id="编组-134" transform="translate(0.000000, 2.100000)">
+                            <g id="编组-138" fill="#181818" fill-opacity="0.269613199" stroke="#151515" stroke-width="0.887883327">
+                                <g id="编组-11" transform="translate(5.082352, 7.547617) scale(-1, -1) rotate(180.000000) translate(-5.082352, -7.547617) ">
+                                    <rect id="矩形" x="0.443941663" y="0.443941663" width="9.27682137" height="14.20735"></rect>
+                                </g>
+                            </g>
+                            <g id="编组-138" transform="translate(30.081431, 0.000000)" fill="#181818" fill-opacity="0.269613199" stroke="#151515" stroke-width="0.887883327">
+                                <g id="编组-11" transform="translate(8.045034, 7.700000) scale(-1, -1) rotate(180.000000) translate(-8.045034, -7.700000) ">
+                                    <rect id="矩形" x="0.443941663" y="0.443941663" width="15.2021845" height="14.5121167"></rect>
+                                </g>
+                            </g>
+                            <line x1="12.8566246" y1="1.4" x2="28.2471243" y2="1.4" id="路径-35" stroke="#979797" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.1"></line>
+                            <line x1="12.8566246" y1="14.7" x2="28.2471243" y2="14.7" id="路径-35" stroke="#979797" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.1"></line>
+                        </g>
+                        <text id="Inscription-length" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" letter-spacing="-0.489999992" fill="#000000">
+                            <tspan x="51.0684762" y="15">Inscription length</tspan>
+                        </text>
+                    </g>
+                </g>
+                <g id="编组-39" transform="translate(596.000000, 0.000000)">
+                    <g id="Rectangle-Copy-19">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill-opacity="0.837031" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <text id="Painting" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" letter-spacing="-0.489999992" fill="#000000">
+                        <tspan x="31" y="18">Painting</tspan>
+                    </text>
+                </g>
+                <g id="编组-40" transform="translate(736.000000, 0.000000)">
+                    <g id="Rectangle-Copy-19">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        <use fill-opacity="0.837031" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    </g>
+                    <text id="Reasoning" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" letter-spacing="-0.489999992" fill="#000000">
+                        <tspan x="28" y="18">Reasoning</tspan>
+                    </text>
+                </g>
+                <g id="编组-41" transform="translate(876.000000, 0.000000)">
+                    <g id="Rectangle-Copy-19">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                        <use fill-opacity="0.837031" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                    </g>
+                    <text id="Recommendation" font-family="TimesNewRomanPSMT, Times New Roman" font-size="16.8" font-weight="normal" fill="#000000">
+                        <tspan x="6" y="18">Recommendation</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

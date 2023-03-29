@@ -4,8 +4,9 @@ import Appreciation from "./C-Appreciation"
 import Relation from "./D-Relation"
 import "./index.css"
 import 'antd/dist/reset.css';
-import { useCacheToken } from "@ant-design/cssinjs"
-import { Button, Space } from "antd"
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Space } from "antd"
+import { title } from "../assets"
 
 const Pages = () => {
     const [linkedID,setLinkedID] = useState('17690')
@@ -14,6 +15,7 @@ const Pages = () => {
     const [matrixName,setMatrixName] = useState(null)
     const [addScroll,setAddScroll] = useState([])
     const [whichCase, setWhichCase] = useState ('894')
+    const [selectedPerson, setSelectedPerson] = useState ("none")
 
     const switchCase = () =>{
         if(whichCase==='13941'){
@@ -25,19 +27,21 @@ const Pages = () => {
             setWhichCase('13941')
             setLinkedID('55870')
         }
+        setSelectedPerson('none')
     }
 
     return (
         <div className="layout-container">
-            <div className="Title" style={{fontFamily:'宋体'}}>
-            <Space className="Title" size='large'>
-            Traditional Chinese Painting Biography
-            <Button style={{ transform:"translate(2000,0)", fontSize: '40px', height:'80px', width:'300px' }} onClick = {switchCase}>switch</Button>
-            </Space>
+            <div className="Title" style={{fontFamily:'宋体', fontSize:100}}>
+            <img src={title} style={{ height: 90, marginLeft:40}}></img>
+            <Input prefix={<SearchOutlined style={{ width: 40,marginRight:25}}/>} placeholder="input search text"  style={{ width: 800, height: 70, marginLeft:1900, fontSize:45}} onClick = {switchCase}/>
+        
                 </div>
             
                 <div className="B-Features">
                     <Features 
+                    selectedPerson = {selectedPerson}
+                    setSelectedPerson = {setSelectedPerson}
                     whichCase = {whichCase}
                     linkedID = {linkedID}
                     setLinkedID = {setLinkedID}
@@ -66,6 +70,11 @@ const Pages = () => {
 
                 <div className="C-Appreciation">
                     <Appreciation 
+                    linkedID = {linkedID}
+                    setLinkedID = {setLinkedID}
+                    linkedName = {linkedName}
+                    setLinkedName = {setLinkedName}
+                    setSelectedPerson = {setSelectedPerson}
                     whichCase = {whichCase}
                     addScroll = {addScroll}
                     setAddScroll = {setAddScroll}/>

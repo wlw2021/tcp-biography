@@ -8,10 +8,11 @@ const SealView = (prop) =>{
     useEffect(()=>{
         var sealStart={}
         const namesize = 45;
-        const interval = 15;
+        const interval = 35;
+        const leftm = 15;
         const rectsize = 130;
-        const boxwidht=270;
-        const boxheight = 35;
+        const boxwidht=280;
+        const boxheight = 40;
 
     d3.select("#seal-view-svg").selectChildren("*")?.remove();
     var svg=d3.select("#seal-view-svg");
@@ -81,44 +82,48 @@ const SealView = (prop) =>{
         var g=svg.append("g");
     
 
-        g.append('rect')
-        .attr('class','image-rect')
-        .attr('x',interval*0.9)
-        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
-        .attr('filter','url(#shadow)')
-        .attr('width',rectsize)
-        .attr('height',rectsize)                 
-        .style('fill','black')
+        // g.append('rect')
+        // .attr('class','image-rect')
+        // .attr('x',leftm*0.9)
+        // .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
+        // .attr('filter','url(#shadow)')
+        // .attr('width',rectsize)
+        // .attr('height',rectsize)                 
+        // .style('fill','black')
 
         g.append('rect')
         .attr('class','image-rect')
-        .attr('x',interval*0.9)
+        .attr('x',leftm*0.9)
         .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('width',rectsize)
         .attr('height',rectsize)                 
         .style('fill','white')
+        .style('stroke','rgba(0,0,0,0.3)')
+        .style('stroke-width',2)
         
 
-        g.append('rect')
-        .attr('class','image-rect')
-        .attr('x',interval*2+rectsize)
-        .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
-        .attr('width',rectsize)
-        .attr('height',rectsize)  
-        .attr('filter','url(#shadow)')
-        .style('fill','black');
+        // g.append('rect')
+        // .attr('class','image-rect')
+        // .attr('x',leftm*2+rectsize)
+        // .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
+        // .attr('width',rectsize)
+        // .attr('height',rectsize)  
+        // .attr('filter','url(#shadow)')
+        // .style('fill','black');
 
         g.append('rect')
         .attr('class','image-rect')
-        .attr('x',interval*2+rectsize)
+        .attr('x',leftm*2+rectsize)
         .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
         .attr('width',rectsize)
         .attr('height',rectsize)
-        .style('fill','white');
+        .style('fill','white')
+        .style('stroke','rgba(0,0,0,0.3)')
+        .style('stroke-width',2);
 
         g.append('image')
         .attr('xlink:href',imgj)
-        .attr('x',interval*1.2)
+        .attr('x',leftm*1.2)
         .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval+interval*0.2)
         .attr('width',rectsize*0.9)
         .attr('height',rectsize*0.9);
@@ -127,22 +132,23 @@ const SealView = (prop) =>{
 
         g.append('image')
         .attr('xlink:href',imgy)
-        .attr('x',interval*2.2+rectsize)
+        .attr('x',leftm*2.2+rectsize)
         .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval+2)
         .attr('width',rectsize*0.9)
         .attr('height',rectsize*0.9);
 
-        g.append('rect').attr('x',interval).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+rectsize+8)
+        g.append('rect').attr('x',leftm).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+rectsize+15)
         .attr('width',boxwidht)
         .attr('height',boxheight)
+        .attr('rx',5).attr('ry',5)
         .style('fill','white')
-        .style('stroke','black')
-        .style('stroke-width',1.3);
+        .style('stroke','rgba(0,0,0,0.6)')       
+        .style('stroke-width',2);
 
         g.append('text')
-        .attr('x',interval*1.2).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+interval*0.2+rectsize+boxheight*0.9)
+        .attr('x',leftm*1.3).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+interval*0.3+rectsize+boxheight-1)
         .style('text-anchor', "start")            
-        .style('font-size',30).style('font-family','仿宋')
+        .style('font-size',27).style('font-family','宋体').style('font-weight',15)
         .style('fill','black').text(content)
         
         }
@@ -196,16 +202,6 @@ const SealView = (prop) =>{
 
     
 
-    //   person.children.map((e)=>{
-    //     e.children.map((e)=>{
-    //        // console.log(prop.selectedPerson)
-    //         if(e.name===prop.selectedPerson||prop.selectedPerson==='none'){
-                
-
-            
-    //     }            
-    //     })
-    //   })
 
     },[prop.selectedPerson])
 

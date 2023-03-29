@@ -1,11 +1,14 @@
 import axios from "axios";
 import './index.css'
 import React, { useEffect, useState } from "react"
+import { Checkbox } from 'antd';
 import * as d3 from "d3"
 import Matrix from "./matrix";
 import MatrixChart from "./matrix-chart";
 
 const MatrixView = (prop) =>{
+
+    const plainOptions = ['Apple', 'Pear', 'Orange'];
 
     const [personItems,setPersonItems] = useState(null) 
     const [relationList, setRelationList] = useState(null)
@@ -45,6 +48,14 @@ const MatrixView = (prop) =>{
 
     return(
         <div id="matrix-container">
+            <div id='checkbox-group' style={{fontSize:25}}>Event Type:
+            <Checkbox className="kin" style={{fontSize:25, marginLeft:20}}>Kinship</Checkbox>
+            <Checkbox className="poli" style={{fontSize:25, marginLeft:20}}>Political</Checkbox>
+            <Checkbox className="aca" style={{fontSize:25, marginLeft:20}}>Academic</Checkbox>
+            <Checkbox className="soc" style={{fontSize:25, marginLeft:20}}>Social</Checkbox>
+            <Checkbox className="pai" style={{fontSize:25, marginLeft:20}}>Paint</Checkbox>
+            <Checkbox className="oth" style={{fontSize:25, marginLeft:20}}>Others</Checkbox>
+            </div>
             <div id = 'matrix-pic'>
                 <Matrix
                 itemlist = {personItems}

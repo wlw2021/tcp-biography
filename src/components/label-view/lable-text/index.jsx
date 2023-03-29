@@ -37,23 +37,24 @@ const LabelText = (prop) =>{
     }
 
     const handleClick =(e)=>{
-        if(e.target.getAttribute('class')==='PersonName'){
-           
-            var left = e.clientX
-            var top = e.clientY
-            prop.setClickP(e.target.getAttribute('id'))
-            //console.log(left,top)
-            prop.setPosition({
-                x:left,
-                y:top
-            })           
+        prop.setClickType(e.target.getAttribute('class'))
+        var left = e.clientX
+        var top = e.clientY
+        if(e.target.getAttribute('class')==='PersonName'){      
+            
+            prop.setClickP(e.target.getAttribute('id'))                    
         }
+        prop.setPosition({
+            x:left,
+            y:top
+        })   
+        
     }
 
     const handleLeave =(e)=>{
         setTimeout(()=>{
             prop.setPosition(null)
-        },3000)
+        },10000)
         
     }
 
@@ -100,7 +101,7 @@ const LabelText = (prop) =>{
         }
 
         showPerson()
-    },[prop.selectedPerson])
+    },[prop.selectedPerson, prop.whichCase])
    
     return(
         <div className='container'>

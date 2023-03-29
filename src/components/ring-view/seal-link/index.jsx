@@ -41,6 +41,8 @@ const SealLink =(prop)=>{
         .attr("preserveAspectRatio", "xMidYMid meet")
         .attr("viewBox", "0 0 440 440")
 
+        
+
         let width = 400
         let height = 400
        
@@ -78,7 +80,7 @@ const SealLink =(prop)=>{
 
       g.selectAll('.node')
       .data(nodes)
-        .enter().append('g')
+        .enter().append('g').attr('id',(d)=>(d.data.name))
         .attr('class', function(d,i){
             if(d.depth===2){
             var basex, basey;
@@ -117,51 +119,115 @@ const SealLink =(prop)=>{
         };
         })
         
-        g.selectAll('.node').append('rect')
-        .attr('x',(d)=>{return d.x-8}).attr('y',(d)=>{return d.y-8})
-        .attr('width',16)
-        .attr('height',16)
-        .on('click',function(d){
-            highlight(d.srcElement.__data__.data.name)
-        })
-        .style('fill','white')
-        .style('stroke',function(d){
-            var depth = d.data.allnum/650+0.2;
-            if(depth>1)depth=1;
-            return "RGB(122,32,2,"+depth+")"
-        })
-        .style('stroke-width',1.3)
-
-        g.selectAll('.node').append('rect')
-        .attr('x',(d)=>{return d.x-6}).attr('y',(d)=>{return d.y-6})
-        .attr('width',12)
-        .attr('height',12)
-        .on('click',function(d){
-            highlight(d.srcElement.__data__.data.name)
-        })
-        .style('fill',function(d){
-            var depth = d.data.thisnum/10+0.2;
-            if(depth>1)depth=1;
-            return "RGB(151,99,95,"+depth+")"
-        })
+        var eles=g.selectAll('.node')._groups[0]
         
+        eles.forEach((e)=>{
+            var d=e.__data__;
+            var b = svg.append('g').attr('id','node'+d.data.name).attr('class','blocks')
 
-        g.selectAll('.node').append('text')
-        .attr('y', function (d) {
-             return d.y+4 
-        })
-        .attr('x', function (d) { return d.x-5 })
-        .on('click',function(d){
-            
-            highlight(d.srcElement.__data__.data.name)
-        })
-        .style('text-anchor', "start")
-        .text(function(d){
-            return d.data.name.substring(0,1);
-        })
-        .style('font-size', '9px')
-        .style('fill','white');
+            b.on('click',()=>{
+                console.log('clicking')
+                prop.setSelectedPerson(d.data.name)})
 
+            if(d.data.name==='趙孟頫'){
+                b.on('click',()=>{
+                    console.log('clicking')
+                    prop.setSelectedPerson(d.data.name)})
+
+                b.append('circle')
+                .attr('cx',()=>{return d.x}).attr('cy',()=>{return d.y})
+                .attr('r',9)
+                .style('fill','white')
+                .style('stroke',function(){
+                    var depth = d.data.allnum/650+0.2;
+                    if(depth>1)depth=1;
+                    return "RGB(122,32,2,"+depth+")"
+                })
+                .on('click',()=>{
+                    console.log('clicking')
+                    prop.setSelectedPerson(d.data.name)})
+                .style('stroke-width',1.3)
+
+                b.append('circle')
+                .attr('cx',()=>{return d.x}).attr('cy',()=>{return d.y})
+                .attr('r',7)
+                .style('fill',function(){
+                    var depth = d.data.thisnum/10+0.2;
+                    if(depth>1)depth=1;
+                    return "RGB(151,99,95,"+depth+")"
+                })
+                .on('click',()=>{
+                    console.log('clicking')
+                    prop.setSelectedPerson(d.data.name)})
+                
+
+                b.append('text')
+                .attr('y', function () {
+                    return d.y+4 
+                })
+                .attr('x', function () { return d.x-5 })
+                .style('text-anchor', "start")
+                .text(function(){
+                    if(d.data.name[0]==='愛') return d.data.name.substring(4,5);
+                    return d.data.name.substring(0,1);
+                })
+                .style('font-size', '9px')
+                .style('fill','white');
+            }
+            else{
+                b.append('rect')
+                .attr('x',()=>{return d.x-8}).attr('y',()=>{return d.y-8})
+                .attr('width',16)
+                .attr('height',16)                
+                .style('fill','white')
+                .style('stroke',function(){
+                    var depth = d.data.allnum/650+0.2;
+                    if(depth>1)depth=1;
+                    return "RGB(122,32,2,"+depth+")"
+                })
+                .style('stroke-width',1.3)
+
+                b.append('rect')
+                .attr('x',()=>{return d.x-8}).attr('y',()=>{return d.y-8})
+                .attr('width',16)
+                .attr('height',16)
+                .style('fill','white')
+                .style('stroke',function(){
+                    var depth = d.data.allnum/650+0.2;
+                    if(depth>1)depth=1;
+                    return "RGB(122,32,2,"+depth+")"
+                })
+                .style('stroke-width',1.3)
+
+                b.append('rect')
+                .attr('x',()=>{return d.x-6}).attr('y',()=>{return d.y-6})
+                .attr('width',12)
+                .attr('height',12)
+                .style('fill',function(){
+                    var depth = d.data.thisnum/10+0.2;
+                    if(depth>1)depth=1;
+                    return "RGB(151,99,95,"+depth+")"
+                })
+                
+
+                b.append('text')
+                .attr('y', function () {
+                    return d.y+4 
+                })
+                .attr('x', function () { return d.x-5 })
+                .style('text-anchor', "start")
+                .text(function(){
+                    if(d.data.name[0]==='愛') return d.data.name.substring(4,5);
+                    return d.data.name.substring(0,1);
+                })
+                .style('font-size', '9px')
+                .style('fill','white');
+            }
+
+        })
+
+        
+        
         g.selectAll('.node-seal').append('circle')
         .attr('cx',(d)=>{return d.x}).attr('cy',(d)=>{return d.y})
         .attr('r',1.5)
@@ -182,7 +248,9 @@ const SealLink =(prop)=>{
         })
         .style('stroke-width',0.5)
 
-        g.selectAll(".link")
+        var lg = svg.append('g').attr('id','links')
+
+        lg.selectAll(".link")
             .data(links)
             .enter()
             .append("path")

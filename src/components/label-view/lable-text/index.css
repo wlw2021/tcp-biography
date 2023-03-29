@@ -13,26 +13,26 @@
     background: rgb(100, 159, 219, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
-    border-radius: 2.31454px;
+    border-radius: 5px;
 }
 .LocationName{
     background: rgb(100, 159, 219, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
-    border-radius: 2.31454px;
+    border-radius: 5px;
 }
 
 .PersonName{
     background: rgb(106, 182, 180,0.6); 
     padding: 2px 2px; 
     margin: 0 2px;     
-    border-radius: 2.31454px;
+    border-radius: 5px;
 }
 .Person{
     background: rgb(106, 182, 180,0.6); 
     padding: 2px 2px; 
     margin: 0 2px; 
-    border-radius: 2.31454px;    
+    border-radius: 5px;    
 }
 
 
@@ -40,13 +40,13 @@
     background: rgb(182, 195, 66, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
-    border-radius: 2.31454px;
+    border-radius: 5px;
 }
 .Time{
     background: rgb(228, 188, 71, 0.6); 
     padding: 2px 2px; 
     margin: 0 2px;    
-    border-radius: 2.31454px;
+    border-radius: 5px;
 }
 
 .info{

@@ -12,6 +12,11 @@ const Appreciation =(prop)=>{
       return(
         <div className='C-container'>
             <TimeAxis 
+            linkedID={prop.linkedID}
+            setLinkedID={prop.setLinkedID}
+            linkedName={prop.linkedName}
+            setLinkedName={prop.setLinkedName}
+            setSelectedPerson = {prop.setSelectedPerson}
             whichCase={prop.whichCase}
             addScroll = {prop.addScroll}
             setAddScroll = {prop.setAddScroll}/>         

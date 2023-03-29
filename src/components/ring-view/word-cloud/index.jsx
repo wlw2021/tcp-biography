@@ -4,6 +4,7 @@ import { Js2WordCloud } from "./package/main"
 import {bklocation,bkperson,bkthing,bktime, shapePerson, shapeLocation, shapeThing, shapeTime } from "../../../assets"
 import './index.css'
 import axios from "axios"
+import { minFontSize } from "./package/wordcloud2"
 
 const WordCloud = (prop) => {
     const ColorRuler = [
@@ -13,7 +14,7 @@ const WordCloud = (prop) => {
         "rgba(0, 0, 0, 1)",
     ]
 
-    var fontmax=25, fontmin=21;
+    var fontmax=30, fontmin=21;
 
     var cloudind=[];
 
@@ -51,10 +52,10 @@ const WordCloud = (prop) => {
         let imageShape=shapePerson;
         
         switch(num){
-            case 1: imageShape = shapePerson;break;
-            case 2: imageShape = shapeLocation;break;
-            case 3: imageShape = shapeThing;break;
-            case 4: imageShape = shapeTime;break;
+            case 1: imageShape = shapePerson;fontmax=32;break;
+            case 2: imageShape = shapeLocation;fontmax=35;fontmin=25; break;
+            case 3: imageShape = shapeThing;fontmax=32;break;
+            case 4: imageShape = shapeTime;fontmax=25;break;
         }
         
         const options = {
@@ -128,7 +129,7 @@ const WordCloud = (prop) => {
         for (const [key, value] of Object.entries(list)) {
             cloudlist.push([key, value])
           }    
-
+          if (cloudlist.length>15) cloudlist=cloudlist.slice(0,15)
         return cloudlist       
     }
 

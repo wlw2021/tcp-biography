@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
-import { logo, ringview, origin, xyorigin, xyring, qhTitle, qhsample } from '../../assets';
+import { logo, ringview, origin, xyorigin, xyring, qhTitle, qhsample, tri, zoom } from '../../assets';
 import './index.css'
 import WordCloud from './word-cloud';
 import indqh from '../../data/reverse.json';
@@ -8,6 +8,7 @@ import indxy from '../../data/xynew2old.json'
 import SealLink from './seal-link';
 import yuantu1 from '../../data/yuantu.json'
 import yuantu2 from '../../data/xyyuantu.json'
+
 
 
 const RingView =(prop)=>{
@@ -95,7 +96,7 @@ const RingView =(prop)=>{
 
     const image = new Image();
 
-    if(prop.cases === '894'){
+    if(prop.whichCase === '894'){
         image.src = origin;
     }
     
@@ -130,6 +131,9 @@ const RingView =(prop)=>{
         
         var ring = document.getElementById('ringtu');
         ring.style.transform='rotate('+rotation+'deg)'
+
+        var tri = document.getElementById('tri');
+        tri.style.transform='rotate('+rotation+'deg)'
 
         var c=document.getElementById('zoom-view');
         c.width=2400;
@@ -179,16 +183,16 @@ const RingView =(prop)=>{
     
 
       return(
-        <div className='ring-view'>
-            <div id="logo">
-                <img src={logo} alt="标志" />
-            </div>  
+        <div className='ring-view'> 
             <img src={qhTitle} id='qhTitle'></img> 
             <img src={qhsample} id='qhsample'></img>
+            <img src={zoom} id='zoom'></img>
         <div id ='main'>     
 
             <div id = 'ring-view'>
+                
                 <img src={picid==='894'?ringview:xyring} id='ringtu'></img>
+                <img src={tri} id='tri'></img>
 
                 <div id='wordcloud'>
                     <WordCloud 

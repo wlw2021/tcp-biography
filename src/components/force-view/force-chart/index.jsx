@@ -185,7 +185,7 @@ const EditableCell = ({
       
     const columns = [
       {
-        title: '关系人1',
+        title: 'Figure 1',
         dataIndex: 'id1',
         key: 'id1'+'f',
         width: 200,
@@ -193,7 +193,7 @@ const EditableCell = ({
         ...getColumnSearchProps('id1'),
       },
       {
-        title: '关系人2',
+        title: 'Figure 2',
         dataIndex: 'id2',
         key: 'id2'+'s',
         width: 200,
@@ -201,7 +201,7 @@ const EditableCell = ({
         ...getColumnSearchProps('id2'),
       },
       {
-        title: '关系',
+        title: 'Thing',
         dataIndex: 'relation',
         key: 'relation',
         width: 300,
@@ -214,10 +214,10 @@ const EditableCell = ({
         onFilter: (value, record) => record.relation.substring(0,2) === value
       },
       {
-          title: '关系类型',
+          title: 'Event Type',
           dataIndex: 'type',
           key: 'type',
-          width: 150,
+          width: 200,
           editable: true,
           filters: [
             { text: '亲缘', value: '亲缘' },
@@ -230,28 +230,28 @@ const EditableCell = ({
           onFilter: (value, record) => record.type===value
         },
         {
-          title: '地点',
+          title: 'Location',
           dataIndex: 'address',
           key: 'address',
           width: 150,
           editable: true,
         },
         {
-          title: '起始年',
+          title: 'Begin',
           dataIndex: 'startyear',
           key: 'startyear',
           width: 120,
           editable: true,
         },
         {
-          title: '终止年',
+          title: 'End',
           dataIndex: 'endyear',
           key: 'endyear',
           width: 120,
           editable: true,
         },
         {
-          title: '操作',
+          title: 'Operation',
           dataIndex: 'operation',
           key: 'operation',
           render: (_, record) => {
@@ -318,27 +318,31 @@ const EditableCell = ({
         })}
         else{ 
           console.log(prop.chartInfo)
-          var d=prop.chartInfo
-          var name1 = person[d.人1id].姓名
+          prop.chartInfo.forEach((d)=>{
+            var name1 = person[d.人1id].姓名
             var name2 = person[d.人2id].姓名
             var begin, end, place;
             
-            if(!d.起始年) begin = '不详'
-            if(!d.结束年) end = '不详'
-            if(!d.地点) place = '不详'
+            if(!d.起始年||d.起始年===undefined) {begin = '不详'}
+            else begin=d.起始年
+            if(!d.结束年||d.结束年===undefined) {end = '不详'}
+            else end = d.结束年
+            if(!d.地点||d.地点===undefined) {place = '不详'}
+              else place = d.地点
 
-            var time = begin+' ~ '+end
-
-          var item = {
-            key: 'link'+(count++),
-            id1:name1,
-            id2:name2,
-            relation:d.关系,
-            type:d.关系类型,
-            address:place,
-            time:time
-        }
+            var item = {
+                key: count++,
+                id1:name1,
+                id2:name2,
+                relation:d.关系,
+                type:d.关系类型,
+                address:place,
+                startyear: begin,
+                endyear:end,
+                edit:'none'
+            }
           tabledata.push(item)
+          })          
         }
         setData(tabledata)
 

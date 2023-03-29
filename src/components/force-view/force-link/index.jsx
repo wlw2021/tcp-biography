@@ -153,14 +153,23 @@ const ForceLink = (prop) =>{
     //console.log(nodes)
 
     const transform = useZoom($container)
+    const cancleclick = (e) =>{
+      console.log(e)
+      if(e.target.getAttribute('id')==='force-link-svg'){
+        sethid1(null)
+        sethid2(null)
+      }
+      
+    }
     const onClickLink = (id1,id2) =>{
       sethid1(id1)
       sethid2(id2)
-      prop.relationList.some((d)=>{
+      var chartinfo = [];
+      prop.relationList.forEach((d)=>{
         if((d.人1id===id1&&d.人2id===id2)||(d.人1id===id2&&d.人2id===id1))
-        prop.setChartInfo(d)
-        return
+        chartinfo.push(d)
       })
+      prop.setChartInfo(chartinfo)
     }
     //console.log(prop.personInfo)
 
@@ -228,7 +237,7 @@ const ForceLink = (prop) =>{
 
     return(
         <div id="force-link-container" ref={$container}>
-            <svg width="100%" id= 'force-link-svg' height={height + "px"} viewBox={`0 0 ${height} ${height}`}>
+            <svg width="100%" id= 'force-link-svg' height={height + "px"} viewBox={`0 0 ${height} ${height}`} onClick={cancleclick}>
         <g stroke="#ccc" opacity={0.6} cursor="pointer">
           {links.map((link) => {
             if (link.source.id !== Number(prop.linkedID) && link.target.id !== Number(prop.linkedID)) {

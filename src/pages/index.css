@@ -1,7 +1,7 @@
 .layout-container {
     width: 5760px;
     height: 3240px;
-    
+    border: gray;
     background: #F5F3EF;
     display: flex;
     flex-wrap:wrap;

@@ -12,8 +12,8 @@ const Features =(prop)=>{
             <div id="ring-view-container">
                 <RingView 
                 whichCase={prop.whichCase}
-                 selectedPerson = {selectedPerson}
-                 setSelectedPerson = {setSelectedPerson}
+                 selectedPerson = {prop.selectedPerson}
+                 setSelectedPerson = {prop.setSelectedPerson}
                 />                
             </div>    
 
@@ -23,8 +23,8 @@ const Features =(prop)=>{
             <div id="seal-container">
                 <SealView 
                 whichCase={prop.whichCase}
-                selectedPerson = {selectedPerson}
-                setSelectedPerson = {setSelectedPerson}/>                               
+                selectedPerson = {prop.selectedPerson}
+                setSelectedPerson = {prop.setSelectedPerson}/>                               
             </div>    
             <div id="lable-view-container">
                 <DevideShow 
@@ -39,8 +39,8 @@ const Features =(prop)=>{
                 setMatrixName = {prop.setMatrixName}
                 addScroll = {prop.addScroll}
                 setAddScroll = {prop.setAddScroll}
-                selectedPerson = {selectedPerson}
-                setSelectedPerson = {setSelectedPerson}/>                
+                selectedPerson = {prop.selectedPerson}
+                setSelectedPerson = {prop.setSelectedPerson}/>                
             </div>      
         </div>
            

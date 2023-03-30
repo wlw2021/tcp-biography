@@ -1,3 +1,7 @@
+@font-face {
+    font-family: "微软繁楷体";
+    src: url("../../../assets/font/微软繁楷体.ttf");
+}
 #word-cloud-container{
     width:870px;
     height:540px;    

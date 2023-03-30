@@ -19,10 +19,8 @@ const WordCloud = (prop) => {
     var cloudind=[];
 
     function handlelist(list){
-        console.log(list)
         //console.log(list)
         list.map((e)=>{
-            console.log(e.length)
             //console.log(e[10])
         })
 
@@ -59,7 +57,7 @@ const WordCloud = (prop) => {
         }
         
         const options = {
-            fontFamily: "宋体",
+            fontFamily: "STKaiti",
             minFontSize: fontmin,
             maxFontSize: fontmax,
             tooltip: {
@@ -129,9 +127,14 @@ const WordCloud = (prop) => {
         for (const [key, value] of Object.entries(list)) {
             cloudlist.push([key, value])
           }    
+          const func = (a,b) =>{
+            return b[1]-a[1]
+          }
+          cloudlist.sort(func)
           if (cloudlist.length>15) cloudlist=cloudlist.slice(0,15)
         return cloudlist       
     }
+    
 
     useEffect(() => {
 
@@ -140,7 +143,6 @@ const WordCloud = (prop) => {
         
         const getWord = async() =>{
             const url = 'http://aailab.cn:28081/getciyun/'+prop.whichCase
-            console.log(url)
             await axios({
                 method:"get",
                 url:url,

@@ -214,10 +214,10 @@ const EditableCell = ({
         onFilter: (value, record) => record.relation.substring(0,2) === value
       },
       {
-          title: 'Event Type',
+          title: 'Type',
           dataIndex: 'type',
           key: 'type',
-          width: 200,
+          width: 150,
           editable: true,
           filters: [
             { text: '亲缘', value: '亲缘' },
@@ -317,7 +317,8 @@ const EditableCell = ({
             tabledata.push(item)
         })}
         else{ 
-          console.log(prop.chartInfo)
+          console.log(prop.chartInfo,'chart')
+          console.log(person)
           prop.chartInfo.forEach((d)=>{
             var name1 = person[d.人1id].姓名
             var name2 = person[d.人2id].姓名

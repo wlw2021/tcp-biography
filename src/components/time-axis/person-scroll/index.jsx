@@ -8,6 +8,8 @@ const PersonScroll = (prop) => {
     
     const [position, setPosition] = useState (null)
     const [info, setInfo] = useState (null)
+    const [thelevel, setlevel] = useState(null)
+    const [pind,setind]=useState(null)
    
 
     const levelY = [-73, -10, 53, 116, 179]
@@ -55,9 +57,11 @@ const PersonScroll = (prop) => {
                            personind[id].paiy=level+transy
                            personind[id].socy=level+transy
 
+                           setind(personind)
+
                            relationLink();
                            
-                            console.log(personind)
+                          
                         })
                         .on("end",function(d){
                             console.log(d);
@@ -72,7 +76,7 @@ const PersonScroll = (prop) => {
         'Academic': '#AD7982',
         'Social': '#8AA79B',
         'Kinship':'#CA9087',
-        'Paint':'#D6BF9E',
+        'Paint':'#8c765f',
         'None':'none'
       }
 
@@ -84,8 +88,8 @@ const PersonScroll = (prop) => {
     .attr("viewBox", "0 0 2595 300")
 
     const peryearlen=170/81;
-    var personind = {}      
-    var authorlevel = {};
+    const personind = {}      
+    const authorlevel = {};
     var noneauthor =[];
 
 const handleSwitch =(e)=>{
@@ -175,7 +179,7 @@ const showPersonScroll = (e)=>{
         .attr('y', indy+32).attr('x', indx-37)
         .style('text-anchor', "start")
         .text(e.name.substring(0,1))
-        .style('font-family','宋体')
+        .style('font-family','STKaiti')
         .style('font-size', '25px')
         .style('fill','white');
     }
@@ -227,7 +231,7 @@ const showPersonScroll = (e)=>{
             else if(e.name.substring(0,1)==='愛') return e.name.substring(4,5)
             else return e.name.substring(0,1)
         })
-        .style('font-family','宋体')
+        .style('font-family','STKaiti')
         .style('font-size', '25px')
         .style('fill','white');
     }            
@@ -271,7 +275,7 @@ const showPersonScroll = (e)=>{
     .style("stroke-width",0.6)
 
     g.append('text')
-    .attr('font-family', '宋体')
+    .attr('font-family', 'STKaiti')
     .style('text-anchor', "start")
     .attr('x',()=>{               
             if(sentcount>=10) return indx+3
@@ -312,7 +316,7 @@ const showPersonScroll = (e)=>{
     .style("stroke-width",0.6)
 
     g.append('text')
-    .attr('font-family', '宋体')
+    .attr('font-family', 'STKaiti')
     .style('text-anchor', "start")
     .attr('x',()=>{
         if(sentcount===0){
@@ -336,12 +340,15 @@ const showPersonScroll = (e)=>{
     var thisname=e.name
     var thisrelation
     var key = e.cid
+    //console.log(relation)
     Object.keys(relation).some((k)=>{
-     if(e.cid===k){
+       // console.log(e.cid,k)
+     if(String(e.cid)===String(k)){        
          thisrelation = relation[k]
          return
      }
  })
+
 
      Object.keys(person).some((pname)=>{
          if(Number(person[pname])===Number(key)){
@@ -363,13 +370,13 @@ const showPersonScroll = (e)=>{
      else{return}
 
      
-     //console.log(thisrelation)
+
      var rsum = 0;
      var allre = thisrelation.全部关系数量
      Object.values(allre).forEach((value)=>{
          rsum+=value
      })
-     //console.log(rsum, thisname)
+
      var devtime
      if(rsum>=200){
          devtime=6
@@ -498,13 +505,14 @@ const relationLink= () =>{
     const relation = prop.relation
     const person=prop.person
         
-        
-console.log(personind)
+    console.log(personind)
+    console.log(pind)
+
 /////////////////////////////// ///////////////事件连线
 var strech = [30,60,40];
 var eventi = 0
 Object.keys(relation).forEach((p1)=>{
-if(personind[p1]===undefined) return;
+if(pind[p1]===undefined) return;
 else{
 var doublekin = relation[p1].相关亲缘
 var doublepoli = relation[p1].相关政治
@@ -512,22 +520,22 @@ var doubleaca = relation[p1].相关文学
 var doublepai = relation[p1].相关画作
 var doublesoc = relation[p1].相关社交
 var doubleoth = relation[p1].相关其他
-//console.log(doublesoc)
+
 ///////////文学事件///////////////////////////////////////////////////       
 Object.keys(doubleaca).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doubleaca[p2].forEach((rela)=>{
-        //console.log(rela)
+
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
-            if(rela.起始年!=null){
+            if(rela.起始年!=null){ 
                 xind=(rela.起始年-950)*peryearlen;
             }
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'aca');
 
             g.append('rect')
@@ -545,16 +553,16 @@ Object.keys(doubleaca).forEach((p2)=>{
             .style('stroke',colors.Academic).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=(personind[p1].acay+personind[p1].paiy)/2
-            var y2=(personind[p2].acay+personind[p2].paiy)/2
+            var y1=(pind[p1].acay+pind[p1].paiy)/2
+            var y2=(pind[p2].acay+pind[p2].paiy)/2
             var g = svg.append('g').attr('id','event'+p1+p2+'aca');
             g.append('line').attr('class','scroll-line').on('mouseover',(e)=>{
                 handleClick(rela,e)
@@ -580,7 +588,7 @@ Object.keys(doubleaca).forEach((p2)=>{
 })
 ///////////亲缘事件连线///////////////////////////////////////////////////  
 Object.keys(doublekin).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doublekin[p2].forEach((rela)=>{
         //console.log(rela)
         if(rela.起始年!=null||rela.结束年!=null){
@@ -591,8 +599,8 @@ Object.keys(doublekin).forEach((p2)=>{
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'kin');
 
             g.append('rect')
@@ -610,16 +618,16 @@ Object.keys(doublekin).forEach((p2)=>{
             .style('stroke',colors.Kinship).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=(personind[p1].kiny+personind[p1].poliy)/2
-            var y2=(personind[p2].kiny+personind[p2].poliy)/2
+            var y1=(pind[p1].kiny+pind[p1].poliy)/2
+            var y2=(pind[p2].kiny+pind[p2].poliy)/2
             var g = svg.append('g').attr('id','event'+p1+p2+'kin');
             g.append('line').attr('class','scroll-line')
             .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
@@ -638,9 +646,9 @@ Object.keys(doublekin).forEach((p2)=>{
 })
 ///////////政治事件///////////////////////////////////////////////////  
 Object.keys(doublepoli).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doublepoli[p2].forEach((rela)=>{
-        //console.log(rela)
+
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
@@ -649,8 +657,8 @@ Object.keys(doublepoli).forEach((p2)=>{
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'poli');
 
             g.append('rect')
@@ -668,16 +676,16 @@ Object.keys(doublepoli).forEach((p2)=>{
             .style('stroke',colors.Political).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=(personind[p1].poliy+personind[p1].acay)/2
-            var y2=(personind[p2].poliy+personind[p2].acay)/2
+            var y1=(pind[p1].poliy+pind[p1].acay)/2
+            var y2=(pind[p2].poliy+pind[p2].acay)/2
             var g = svg.append('g').attr('id','event'+p1+p2+'poli');
             g.append('line').attr('class','scroll-line')
             .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
@@ -695,9 +703,9 @@ Object.keys(doublepoli).forEach((p2)=>{
 })
 ///////////画作事件///////////////////////////////////////////////////  
 Object.keys(doublepai).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doublepai[p2].forEach((rela)=>{
-        //console.log(rela)
+
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
@@ -706,8 +714,8 @@ Object.keys(doublepai).forEach((p2)=>{
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'pai');
 
             g.append('rect')
@@ -725,16 +733,16 @@ Object.keys(doublepai).forEach((p2)=>{
             .style('stroke',colors.Paint).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=(personind[p1].paiy+personind[p1].socy)/2
-            var y2=(personind[p2].paiy+personind[p2].socy)/2
+            var y1=(pind[p1].paiy+pind[p1].socy)/2
+            var y2=(pind[p2].paiy+pind[p2].socy)/2
             var g = svg.append('g').attr('id','event'+p1+p2+'pai');
             g.append('line').attr('class','scroll-line')
             .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
@@ -753,7 +761,7 @@ Object.keys(doublepai).forEach((p2)=>{
 })
 ///////////社交事件///////////////////////////////////////////////////  
 Object.keys(doublesoc).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doublesoc[p2].forEach((rela)=>{
         //console.log(rela)
         if(rela.起始年!=null||rela.结束年!=null){
@@ -764,8 +772,8 @@ Object.keys(doublesoc).forEach((p2)=>{
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'soc');
 
             g.append('rect')
@@ -783,16 +791,16 @@ Object.keys(doublesoc).forEach((p2)=>{
             .style('stroke',colors.Social).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=(personind[p1].socy+personind[p1].othy)/2
-            var y2=(personind[p2].socy+personind[p2].othy)/2
+            var y1=(pind[p1].socy+pind[p1].othy)/2
+            var y2=(pind[p2].socy+pind[p2].othy)/2
             var g = svg.append('g').attr('id','event'+p1+p2+'soc');
             g.append('line').attr('class','scroll-line')
             .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
@@ -811,7 +819,7 @@ Object.keys(doublesoc).forEach((p2)=>{
 })
 ///////////其他事件///////////////////////////////////////////////////  
 Object.keys(doubleoth).forEach((p2)=>{
-    if(personind[p2]===undefined) return;
+    if(pind[p2]===undefined) return;
     doubleoth[p2].forEach((rela)=>{
         //console.log(rela)
         if(rela.起始年!=null||rela.结束年!=null){
@@ -822,8 +830,8 @@ Object.keys(doubleoth).forEach((p2)=>{
             if(rela.结束年!=null){
                 xind=(rela.结束年-950)*peryearlen;
             }
-            var y1=personind[p1].kiny
-            var y2=personind[p2].kiny
+            var y1=pind[p1].kiny
+            var y2=pind[p2].kiny
             var g = svg.append('g').attr('id','event'+p1+p2+'oth');
 
             g.append('rect')
@@ -841,16 +849,16 @@ Object.keys(doubleoth).forEach((p2)=>{
             .style('stroke',colors.Others).style('stroke-width',2)
         }
         else{
-            if(personind[p2].endx-personind[p1].endx<0){
-                var x1=personind[p1].endx
-                var x2=personind[p1].endx+strech[(eventi++)%3]
-                var x3=personind[p2].endx
+            if(pind[p2].endx-pind[p1].endx<0){
+                var x1=pind[p1].endx
+                var x2=pind[p1].endx+strech[(eventi++)%3]
+                var x3=pind[p2].endx
             }
             else{
                 return
             }
-            var y1=personind[p1].othy
-            var y2=personind[p2].othy
+            var y1=pind[p1].othy
+            var y2=pind[p2].othy
             var g = svg.append('g').attr('id','event'+p1+p2+'oth');
             g.append('line').attr('class','scroll-line')
             .attr('x1',x1).attr('x2',x2).attr('y1',y1).attr('y2',y1)
@@ -912,7 +920,12 @@ Object.keys(doubleoth).forEach((p2)=>{
             showPersonScroll(e)               
         })
         prop.setNoneListS(noneauthor)
-        relationLink()
+        setlevel(authorlevel)
+        setind(personind)
+        setTimeout(()=>{
+            relationLink()
+        },100)
+        
 
     },[prop.person])
 
@@ -922,8 +935,21 @@ Object.keys(doubleoth).forEach((p2)=>{
         prop.addScroll.forEach((e)=>{
             showPersonScroll(e)               
         })
-        prop.setNoneListS(noneauthor)
+        var tmp1=thelevel
+        var tmpind=pind
+        Object.keys(authorlevel).forEach((k)=>{
+            tmp1[k]=authorlevel[k]
+        })
+        Object.keys(personind).forEach((k)=>{
+            tmpind[k]=personind[k]
+        })
+        setlevel(tmp1)
+        setind(tmpind)
         setTimeout(()=>{
+            console.log(personind)
+            console.log(pind)
+            console.log(authorlevel,'22')
+            console.log(thelevel)
             relationLink()
         },100)
         
@@ -931,7 +957,51 @@ Object.keys(doubleoth).forEach((p2)=>{
     },[prop.addScroll])
 
     
+    useEffect(()=>{
+        console.log(prop.addEvent)
+        if(prop.addEvent!=null){
+            var e=prop.addEvent
+            var fig1,fig2,y
+            if(e.ey){
+                y=e.ey
+            }
+            else if(e.by){
+                y=e.by
+            }
+            var x=(y-950)*peryearlen
+            console.log(thelevel)
+            console.log(e)
+            var g=svg.append('g').attr('id','addEventg')
+            var ey1,ey2
+            console.log(authorlevel[e.f1])
+            if(thelevel[e.f1]){
+                console.log('here')
+                fig1=thelevel[e.f1]                
+                ey1=levelY[fig1-1]
+                
+                g.append('rect').attr('x',x).attr('y',ey1+3).attr('id','addevent1'+e.f1)
+                 .attr('height',39).attr('width',2)
+                 .style('fill',colors[e.type])
 
+            }
+            if(thelevel[e.f2]){
+                fig2=thelevel[e.f2]
+                ey2=levelY[fig2-1]
+                
+                g.append('rect').attr('x',x).attr('y',ey2+3).attr('id','addevent1'+e.f2)
+                 .attr('height',39).attr('width',2)
+                 .style('fill',colors[e.type])
+            }
+
+            if((thelevel[e.f2]!=null)&&(thelevel[e.f1]!=null)){
+                g.append('line').attr('class','scroll-line')
+                .attr('x1',x+0.5).attr('y1',ey1+45)
+                .attr('x2',x+0.5).attr('y2',ey2)
+                .style('stroke',colors[e.type])
+                .style('stroke-width',2)
+            }
+        }
+    },[prop.addEvent])
 
 
     return(
@@ -945,7 +1015,8 @@ Object.keys(doubleoth).forEach((p2)=>{
           className="info"
           style={{
             transform: `translate(${position.x }px,${
-              position.y -1850
+              position.y -1851
+
             }px)`
           }}
         >

@@ -8,6 +8,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space } from "antd"
 import { title } from "../assets"
 
+
 const Pages = () => {
     const [linkedID,setLinkedID] = useState('17690')
     const [linkedName,setLinkedName] = useState(null)
@@ -32,7 +33,7 @@ const Pages = () => {
 
     return (
         <div className="layout-container">
-            <div className="Title" style={{fontFamily:'宋体', fontSize:100}}>
+            <div className="Title" style={{fontFamily:'STKaiti', fontSize:100}}>
             <img src={title} style={{ height: 90, marginLeft:40}}></img>
             <Input prefix={<SearchOutlined style={{ width: 40,marginRight:25}}/>} placeholder="input search text"  style={{ width: 800, height: 70, marginLeft:1900, fontSize:45}} onClick = {switchCase}/>
         

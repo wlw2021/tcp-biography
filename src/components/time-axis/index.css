@@ -2,13 +2,12 @@
     width:100%;
     height:100%;
 }
-#main-axis{
+.main-axis{
     position:absolute;
     width:87%;
     height:100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    scrollbar-width: thin;
 }
 #long{
     width:150%;
@@ -70,6 +69,31 @@
     margin-left: 80%;
     margin-top:2%;
 }
+.ant-tooltip { 
+    font-size: 40px;
+}
+.ant-modal-content {
+    height: 760px;
+    width: 1150px;
+
+}
+
+.my-modal {
+    top: 1800px;
+    left: 1800px;
+  }
+
+#add-event{
+    position:absolute;    
+    margin-left: 85.5%;
+    margin-top:9%;
+}
+#plus{
+    position:absolute;
+    margin-left: 85.5%;
+    margin-top:9%;
+}
+
 #biosample{
     position:absolute;
     margin-left:55%;
@@ -92,18 +116,8 @@
     width:30%;
 }
 
-::-webkit-scrollbar{
-	width:2%;
-    background:rgba(144, 147, 153,0.3);
-}
-
-/*滑块*/
-::-webkit-scrollbar-thumb{
-	width:1.8%;
-	background:rgba(144, 147, 153,1);
-}
-
-/*滚槽*/
-::-webkit-scrollbar-track-piece{
-	width:2%;
-}
+.main-axis::-webkit-scrollbar {
+    width: 100%;
+    height: 10px;
+  }
+ 

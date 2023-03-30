@@ -38,7 +38,7 @@ const SealView = (prop) =>{
         .attr('x', currentx)
         .style('text-anchor', "start")
         .text(key)
-        .style('font-family', '宋体')
+        .style('font-family', 'STKaiti')
         .style('font-size', namesize)
         .style('font-weight',10)
 
@@ -146,9 +146,9 @@ const SealView = (prop) =>{
         .style('stroke-width',2);
 
         g.append('text')
-        .attr('x',leftm*1.3).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+interval*0.3+rectsize+boxheight-1)
+        .attr('x',leftm*1.3).attr('y',interval+sealStart[key]+i*(rectsize+boxheight+interval)+interval*0.3+rectsize+boxheight-3)
         .style('text-anchor', "start")            
-        .style('font-size',27).style('font-family','宋体').style('font-weight',15)
+        .style('font-size',30).style('font-family','STKaiti').style('font-weight',15)
         .style('fill','black').text(content)
         
         }
@@ -163,7 +163,6 @@ const SealView = (prop) =>{
             method:"get",
             url:url,
         }).then(function (res) {
-            console.log(res.data)
             author = res.data.data
         })
         .catch(function (error) {

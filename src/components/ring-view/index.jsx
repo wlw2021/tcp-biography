@@ -40,8 +40,8 @@ const RingView =(prop)=>{
     }
     const handleMove = (e) =>{      
         //console.log('move'); 
-        setmx(e.clientX);
-        setmy(e.clientY-280);        
+        setmx(e.clientX-320);
+        setmy(e.clientY-520);        
     }
 
 

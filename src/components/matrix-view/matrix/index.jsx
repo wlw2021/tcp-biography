@@ -21,7 +21,6 @@ const boxSize =25
 const Matrix = (prop) =>{
     useEffect(()=>{
       if(!prop.itemlist||!prop.personOrder)return
-      console.log(prop)
       const items = []
       var itemlist = prop.itemlist
       var itemorder=prop.personOrder
@@ -108,7 +107,6 @@ const Matrix = (prop) =>{
 
         const matrix = getmatrix(prop.relation,itemlist)
         const eachRow = Math.hypot(boxSize, boxSize);
-        console.log(itemlist.length)
         var left = Math.pow(1.17,items.length)*8
         const margin = {top: 20, left: left, right: 20, bottom: 20};
         const chartHeight = eachRow * items.length;
@@ -144,6 +142,8 @@ const Matrix = (prop) =>{
     .attr('x', labelWidth - 5)
     .attr('y', eachRow / 2 + 4)
     .text(d => d)
+    .style('font-family','STKaiti')
+    .style('font-size',20)
    //中间的平横
   // const borders = listing.append('line')
   //   .attr('x1', 0)

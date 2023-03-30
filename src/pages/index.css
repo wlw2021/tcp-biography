@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "微软繁楷体";
+    src: url("../assets/font/微软繁楷体.ttf");
+}
+
 .layout-container {
     width: 5760px;
     height: 3240px;
@@ -55,4 +60,20 @@
     background-color: white;
     box-shadow: 0px 5px 9px -9px rgba(0, 0, 0, 0.2);
     border-radius: 11px;
+}
+
+::-webkit-scrollbar{
+	width:12px;
+    background:rgba(144, 147, 153,0.3);
+}
+
+/*滑块*/
+::-webkit-scrollbar-thumb{
+	width:10px;
+	background:rgba(144, 147, 153,1);
+}
+
+/*滚槽*/
+::-webkit-scrollbar-track-piece{
+	width:10px
 }

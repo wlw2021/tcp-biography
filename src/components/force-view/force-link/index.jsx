@@ -21,19 +21,22 @@ import Relation from "../../../pages/D-Relation";
     const [nodes, setNodes] = useState([])
     const [links, setLinks] = useState([])
     const [max, setMax] = useState(1)
-    
+    const [lastlen, setlastlen] = useState(0)
     
     useEffect(() => {
       setNodes([])
       setLinks([])
-
+      if(data!=null){
+        if((data.length>2000)&&(prop!='17690')) return
+        else if((data.length===295)&&(prop!='10183')) return
+        setlastlen(data.length)
+      }
+      
       if (!size) return
       if(!data) return
   
-      const linkCnt = {}
+      var linkCnt = {}
       let forceMax = 1
-
-      //console.log(data)
       
       data.forEach((d) => {
         const p1=d.人1id
@@ -51,11 +54,9 @@ import Relation from "../../../pages/D-Relation";
           forceMax = Math.max(forceMax, linkCnt[key].cnt)
         }
       })
-  
-      //console.log(linkCnt)
    
       const forceLinks = Object.values(linkCnt)
-      const forceNodes = Object.keys(id2name).map((d) => {return({ id: +d })})  
+      var forceNodes = Object.keys(id2name).map((d) => {return({ id: +d })})  
       //console.log(id2name)
       const scale = d3
         .scaleLinear()
@@ -80,7 +81,8 @@ import Relation from "../../../pages/D-Relation";
         } catch (e) {
           console.log(e)
         }
-        //console.log(forceNodes)
+        forceNodes=[{id:prop},...forceNodes]
+                //console.log(forceNodes)
         setNodes(forceNodes)
         setLinks(forceLinks)
         setMax(forceMax)
@@ -112,37 +114,12 @@ const useZoom = (ref) => {
   return transform
 }
 
-// const useHeight = (ele) => {
-//   const [height, setHeight] = useState(0)
-
-//   useLayoutEffect(() => {
-//     if (!ele) return
-
-//     const handleElementChange = () => {
-//       const newHeight = ele.offsetHeight
-//       setHeight(newHeight)
-//     }
-
-//     handleElementChange()
-
-//     if (!window?.ResizeObserver) return
-//     const resizeObserver = new ResizeObserver(handleElementChange)
-//     resizeObserver.observe(ele)
-
-//     return () => {
-//       resizeObserver.disconnect()
-//     }
-//   }, [ele])
-
-//   return height
-// }
-
 const ForceLink = (prop) =>{    
     //console.log(prop)
     const $container = useRef(null)
     const height = 1030
   
-    const { nodes, links, scale } = useForceGraph(prop.relationList, prop.personInfo, height, prop)
+    const { nodes, links, scale } = useForceGraph(prop.relationList, prop.personInfo, height, prop.linkedID)
     const [info, setInfo] = useState(null) // 山水，人物，花鸟
     const [position, setPosition] = useState(null)
     const [hid1,sethid1] = useState(null)
@@ -154,7 +131,6 @@ const ForceLink = (prop) =>{
 
     const transform = useZoom($container)
     const cancleclick = (e) =>{
-      console.log(e)
       if(e.target.getAttribute('id')==='force-link-svg'){
         sethid1(null)
         sethid2(null)
@@ -179,7 +155,8 @@ const ForceLink = (prop) =>{
     let maxX = Number.MIN_VALUE
     let maxY = Number.MIN_VALUE
 
-    nodes.forEach((node) => {
+    nodes.forEach((node,i) => {
+      if(i==0) return;
       minX = Math.min(minX, node.x)
       minY = Math.min(minY, node.y)
       maxX = Math.max(maxX, node.x)
@@ -211,7 +188,6 @@ const ForceLink = (prop) =>{
         朝代:showinfo.朝代,
         生年:showinfo.生年,
         卒年:showinfo.卒年,
-        社会区分:showinfo.社会区分[0],
         籍贯:showinfo.籍贯
       }
       setInfo(thisinfo)   
@@ -275,7 +251,11 @@ const ForceLink = (prop) =>{
           })}
         </g>
         <g fontSize={fontSize} textAnchor="middle" cursor="pointer">
-          {nodes.map((node) => {
+          {nodes.map((node,i) => {
+            if(i===0)return
+            //console.log(nodes)
+            if(nodes[0].id===prop.linkedID){
+              //console.log(nodes[0].id,prop.linkedID)
             const r = 30
             //console.log(prop.personInfo[node.id].画家)
             return (
@@ -296,6 +276,7 @@ const ForceLink = (prop) =>{
                 </text>
               </g>
             )
+                  }
           })}
         </g>
       </svg>

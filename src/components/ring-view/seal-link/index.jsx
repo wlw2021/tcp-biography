@@ -126,12 +126,10 @@ const SealLink =(prop)=>{
             var b = svg.append('g').attr('id','node'+d.data.name).attr('class','blocks')
 
             b.on('click',()=>{
-                console.log('clicking')
-                prop.setSelectedPerson(d.data.name)})
+                     prop.setSelectedPerson(d.data.name)})
 
             if(d.data.name==='趙孟頫'){
                 b.on('click',()=>{
-                    console.log('clicking')
                     prop.setSelectedPerson(d.data.name)})
 
                 b.append('circle')
@@ -144,8 +142,7 @@ const SealLink =(prop)=>{
                     return "RGB(122,32,2,"+depth+")"
                 })
                 .on('click',()=>{
-                    console.log('clicking')
-                    prop.setSelectedPerson(d.data.name)})
+                                    prop.setSelectedPerson(d.data.name)})
                 .style('stroke-width',1.3)
 
                 b.append('circle')
@@ -157,8 +154,7 @@ const SealLink =(prop)=>{
                     return "RGB(151,99,95,"+depth+")"
                 })
                 .on('click',()=>{
-                    console.log('clicking')
-                    prop.setSelectedPerson(d.data.name)})
+                  prop.setSelectedPerson(d.data.name)})
                 
 
                 b.append('text')

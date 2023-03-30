@@ -214,10 +214,10 @@ const getColumnSearchProps = (dataIndex) => ({
       onFilter: (value, record) => record.relation.substring(0,2) === value
     },
     {
-        title: 'Event Type',
+        title: 'Type',
         dataIndex: 'type',
         key: 'type',
-        width: 200,
+        width: 150,
         editable: true,
         filters: [
           { text: '亲缘', value: '亲缘' },

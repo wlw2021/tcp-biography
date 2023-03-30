@@ -17,7 +17,6 @@ const MatrixView = (prop) =>{
     useEffect(()=>{
 
         const getShowValue = async() =>{
-            console.log(prop)
             var url
             if(prop.matrixName!=null){
                 url = 'http://aailab.cn:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames='+prop.matrixName+'&addcids='+prop.matrixID
@@ -33,7 +32,6 @@ const MatrixView = (prop) =>{
                 method:"get",
                 url:url,
             }).then(function (res) {
-                console.log(res.data)    
                 setPersonItems(res.data.data.人物列表)
                 setPersonOrder(res.data.data.排序人物列表)
                 setRelationList(res.data.data.关系列表)            

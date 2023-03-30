@@ -6,9 +6,9 @@ import { uncertainty } from "../../../assets";
 
 const NoneDisplay = (prop) =>{
     useEffect(()=>{
-        
+        d3.select("#none-svg").selectChildren("*")?.remove();
         if(!prop.noneListP&&!prop.noneListS)return
-        var iy = 30;
+        var iy = 80;
         var nx=40;
         
         console.log(prop)
@@ -62,41 +62,41 @@ const NoneDisplay = (prop) =>{
         .attr('class','pic'+pic.相似画作id)
         .attr('x',nx+7).attr('y',iy+92)
         .style('text-anchor', "start")            
-        .style('font-size',12).style('font-family','仿宋')
+        .style('font-size',12).style('font-family','STKaiti')
         .style('fill','white').text(pic.画作名)
         iy+=ylen
         })
     }
-
-    if(noneListS){
-        if(noneList!=null)iy+=140
-        else iy+=50
-        setTimeout(()=>{
-            noneListS.forEach((e,i)=>{
-                var g = nsvg.append('g').attr('id', 'noneauther'+e.name)
-
-                g.append('rect').attr('x',nx).attr('y',iy+90+i*40).attr('rx',20).attr('ry',30).attr('width',160).attr('height',30)
+    setTimeout(()=>{
+        nsvg.selectAll('.nona').remove()
+        if(noneListS){
+            if(prop.noneListP===null)
+             iy+=49
+    
+             noneListS.forEach((e,i)=>{
+                var g = nsvg.append('g').attr('id', 'noneauther'+e.name).attr('class','nona')
+    
+                g.append('rect').attr('x',nx).attr('y',iy+100+i*40).attr('rx',20).attr('ry',30).attr('width',160).attr('height',30)
                 .attr('fill','none').attr('stroke','rgb(0,0,0,0.3)').attr('stroke-width',2)
-
-                g.append('text').attr('y', iy+90+i*40+23).attr('x', ()=>{
+    
+                g.append('text').attr('y', iy+100+i*40+23).attr('x', ()=>{
                     if(e.name.length<3) return nx+60
                 else return nx+50})
-                .style('font-family','宋体')
+                .style('font-family','STKaiti')
                 .style('text-anchor', "start").text(e.name).style('font-size', '20px')
-                .style('fill','rgb(0,0,0,0.5)');
-            })
-        },300)
-    }
+                .style('fill','rgb(0,0,0,0.5)');})
+         
+    }},500)
+    
         
-    },[prop])
+    },[prop.noneListP])
 
     return(
         
         <div id = 'none-container'>
-            <img src = {uncertainty} id='uncertainty'height={40}></img>
-            <svg id = 'none-svg'>
-                
-            </svg>
+            <img src = {uncertainty} id='uncertainty'></img>
+            <svg id = 'none-svg'>                
+        </svg>
         </div>
     )
 }

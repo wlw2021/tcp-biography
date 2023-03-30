@@ -6,83 +6,23 @@ import { bio, hoverRect, lined, linkdata, linshi, switchPaint } from "../../../a
 
 const SimilarPaint = (prop) =>{
  
-    const [position, setPosition] = useState(null)
-    const [clickA, setClickA] = useState(null)
 
     const handleClickA=(e,a)=>{
-        console.log('clickA')
         var left = e.clientX
         var top = e.clientY
-        setClickA(a)
-        setPosition({
+        prop.setClickA(a)
+        prop.setPosition({
             x:left,
             y:top
         })
         
         setTimeout(()=>{
-            setPosition(null)
-            setClickA(null)
+            prop.setPosition(null)
+            prop.setClickA(null)
         },5000)
     }
 
-    const handleClickL = async ()=>{
-        var id;
-        var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickA+'&stype=cperson'
-        await axios({
-          method:"get",
-          url:url,
-            }).then(function (res) {
-                id=(res.data.data[0].id)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        prop.setLinkedID(String(id))
-        prop.setLinkedName(clickA)
-      }
-  
-      
-  
-      const handleClickScroll = async ()=>{   
-        var scrollnew = []
-        var id;
-        var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickA+'&stype=cperson'
-        await axios({
-          method:"get",
-          url:url,
-            }).then(function (res) {
-                id=(res.data.data[0].id)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        var newdata;
-        var url = 'http://aailab.cn:28081/getpersonscore?pid='+prop.whichCase+'&addnames='+clickA+'&addcids='+id
-        await axios({
-          method:"get",
-          url:url,
-            }).then(function (res) {
-                var the = res.data.data.人物关系信息[id]
-                var score = the.分数.画作相关+the.分数.讨论度+the.分数.身份
-                var level =5 - Math.floor(score/20)
-                newdata={
-                  name:the.姓名,
-                  cid:String(id),
-                  birth:the.生年,
-                  death:the.卒年,
-                  level:level,
-                  seal:[],
-                  sentence:[]
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-  
-            scrollnew.push(newdata)
-            console.log(scrollnew)
-            prop.setAddScroll(scrollnew)
-      }
+   
     //:true 画心相似 :false 文本相似
     useEffect(()=>{      
         prop.setNoneListP(null)
@@ -188,7 +128,7 @@ const SimilarPaint = (prop) =>{
                 .attr('class','pic'+pic.相似画作id)
                 .attr('x',cx+7).attr('y',94)
                 .style('text-anchor', "start")            
-                .style('font-size',12).style('font-family','仿宋')
+                .style('font-size',12).style('font-family','STKaiti')
                 .style('fill','white').text(text).on('click',(e)=>{handleClickA(e,pic.作者)})
 
                 ssvg.on('click',(e)=>{
@@ -253,27 +193,7 @@ const SimilarPaint = (prop) =>{
     return(
         <div id="similar-container">
             <svg id='year-similar-svg'></svg>   
-            
-
-            {!!position && (
-        <div
-          className="info"
-          style={{
-            transform: `translate(${position.x-300}px,${
-              -200
-            }px)`
-          }}
-        > 
-        <svg id= 'tool-tip' height ='600' width ="500">
-            <image href = {hoverRect} x={0} y={0} height={140}></image>
-            <image href = {switchPaint} x={60} y={10} height={70} ></image> 
-            <image href = {lined} id ='line1' x={167} y={7} height={70}></image>
-            <image href = {linkdata} x={205} y={-10} height={110} onClick = {handleClickL}></image> 
-            <image href = {lined} id ='line2' x={333} y={7} height={70}></image>
-            <image href = {bio} x={357} y={7} height={70} onClick = {handleClickScroll}></image>
-             </svg>
-        </div>
-      )}  
+     
       </div>  
                           
      

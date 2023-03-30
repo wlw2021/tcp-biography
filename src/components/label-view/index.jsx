@@ -87,7 +87,6 @@ const DevideShow = (prop) =>{
           prop.setAddScroll(scrollnew)
     }
     const showInfo = ()=>{
-      console.log(clickType)
       switch(clickType){                
         case 'Person':case'PersonName':
           return(
@@ -96,7 +95,7 @@ const DevideShow = (prop) =>{
             <image href = {iconpaint} x={20} y={10} height={60} onClick = {MatrixOnly}></image> 
             <image href = {cbdb} x={90} y={10} height={60} onClick = {MatrixOnly}></image> 
             <image href = {linshi} x={160} y={10} height={60} onClick = {MatrixOnly}></image> 
-            <image href = {linkdata} x={220} y={5} height={80} onClick = {handleClick}></image> 
+            <image href = {linkdata} x={220} y={0} height={80} onClick = {handleClick}></image> 
             <image href = {lined} x={300} y={7} height={70}></image>
             <image href = {bio} x={322} y={26} height={35} onClick = {handleClickScroll}></image>
              </svg>
@@ -141,8 +140,8 @@ const DevideShow = (prop) =>{
         <div
           className="info"
           style={{
-            transform: `translate(${position.x-2380}px,${
-              position.y - 1920
+            transform: `translate(${position.x-2915}px,${
+              position.y - 1985
             }px)`
           }}
         >

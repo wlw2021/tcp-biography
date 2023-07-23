@@ -19,15 +19,15 @@ const MatrixView = (prop) =>{
         const getShowValue = async() =>{
             var url
             if(prop.matrixName!=null){
-                url = 'http://aailab.cn:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames='+prop.matrixName+'&addcids='+prop.matrixID
+                url = 'http://localhost:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames='+prop.matrixName+'&addcids='+prop.matrixID
             }
             
             else if(prop.linkedName!=null){
-                url = 'http://aailab.cn:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames='+prop.linkedName+'&addcids='+prop.linkedID
+                url = 'http://localhost:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames='+prop.linkedName+'&addcids='+prop.linkedID
             }
-            else url = 'http://aailab.cn:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames=&addcids='
+            else url = 'http://localhost:28081/getpersonmatrix?pid='+prop.whichCase+'&addnames=&addcids='
             
-            //url = 'http://aailab.cn:28081/getpersonmatrix?pid=13941&addnames=蘇軾,蔡肇,李之儀,王詵,秦觀,陳景元,李公麟,蘇轍,張耒,黃庭堅,晁補之,鄭靖,米芾,王欽臣,劉涇,圓通大師&addcids=3767,1648,3484,7376,3043,unknow,19865,1493,12354,522739,13,535896,3676,1767,10660,40425'
+            //url = 'http://localhost:28081/getpersonmatrix?pid=13941&addnames=蘇軾,蔡肇,李之儀,王詵,秦觀,陳景元,李公麟,蘇轍,張耒,黃庭堅,晁補之,鄭靖,米芾,王欽臣,劉涇,圓通大師&addcids=3767,1648,3484,7376,3043,unknow,19865,1493,12354,522739,13,535896,3676,1767,10660,40425'
             await axios({
                 method:"get",
                 url:url,

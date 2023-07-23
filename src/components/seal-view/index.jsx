@@ -50,7 +50,7 @@ const SealView = (prop) =>{
             var typey,image64y
             var content = e.top1.印章内容
 
-        var url = 'http://aailab.cn:28081/getimg?imgid='+e.印章截图地址+'&imgtype=截图'
+        var url = 'http://localhost:28081/getimg?imgid='+e.印章截图地址+'&imgtype=截图'
         await axios({
             method:"get",
             url:url,
@@ -63,7 +63,7 @@ const SealView = (prop) =>{
             console.log(error);
         })
 
-        url = 'http://aailab.cn:28081/getimg?imgid='+e.top1.印章匹配图地址+'&imgtype=匹配'
+        url = 'http://localhost:28081/getimg?imgid='+e.top1.印章匹配图地址+'&imgtype=匹配'
         await axios({
             method:"get",
             url:url,
@@ -158,7 +158,7 @@ const SealView = (prop) =>{
 
         var author = {}
 
-        var url = 'http://aailab.cn:28081/getyinzhanglist/'+prop.whichCase
+        var url = 'http://localhost:28081/getyinzhanglist/'+prop.whichCase
         await axios({
             method:"get",
             url:url,

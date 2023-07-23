@@ -14,7 +14,7 @@ const DevideShow = (prop) =>{
 
     const handleClick = async ()=>{
       var id;
-      var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickP+'&stype=cperson'
+      var url = 'http://localhost:28081/getonestringinfo?name='+clickP+'&stype=cperson'
       await axios({
         method:"get",
         url:url,
@@ -32,7 +32,7 @@ const DevideShow = (prop) =>{
 
     const MatrixOnly =async()=>{
       var id;
-      var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickP+'&stype=cperson'
+      var url = 'http://localhost:28081/getonestringinfo?name='+clickP+'&stype=cperson'
       await axios({
         method:"get",
         url:url,
@@ -49,7 +49,7 @@ const DevideShow = (prop) =>{
     const handleClickScroll = async ()=>{   
       var scrollnew = []
       var id;
-      var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickP+'&stype=cperson'
+      var url = 'http://localhost:28081/getonestringinfo?name='+clickP+'&stype=cperson'
       await axios({
         method:"get",
         url:url,
@@ -60,7 +60,7 @@ const DevideShow = (prop) =>{
               console.log(error);
           })
       var newdata;
-      var url = 'http://aailab.cn:28081/getpersonscore?pid='+prop.whichCase+'&addnames='+clickP+'&addcids='+id
+      var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames='+clickP+'&addcids='+id
       await axios({
         method:"get",
         url:url,

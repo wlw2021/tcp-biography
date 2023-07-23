@@ -63,12 +63,13 @@ const LabelText = (prop) =>{
         const showPerson = async()=>{
             var data2;
             var list=[];
-            const url = 'http://aailab.cn:28081/resultner/'+prop.whichCase
+            const url = 'http://localhost:28081/resultner/'+prop.whichCase
             await axios({
                 method:"get",
                 url:url,
             }).then(function (res) {
                 data2 = res.data.data;
+                console.log(data2)
             })
             .catch(function (error) {
                 console.log(error);

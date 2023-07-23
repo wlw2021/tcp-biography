@@ -9,7 +9,7 @@ const PilingView =()=>{
 
     useEffect(()=>{
 
-      var url = 'http://aailab.cn:28081/getpainting/894'
+      var url = 'http://localhost:28081/getpainting/894'
     //   axios({
     //       method:"get",
     //       url:url,

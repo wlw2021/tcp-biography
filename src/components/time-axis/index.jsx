@@ -27,7 +27,7 @@ const TimeAxis = (prop) =>{
     
     const handleClickL = async ()=>{
         var id;
-        var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickA+'&stype=cperson'
+        var url = 'http://localhost:28081/getonestringinfo?name='+clickA+'&stype=cperson'
         await axios({
           method:"get",
           url:url,
@@ -47,7 +47,7 @@ const TimeAxis = (prop) =>{
       const handleClickScroll = async ()=>{   
         var scrollnew = []
         var id;
-        var url = 'http://aailab.cn:28081/getonestringinfo?name='+clickA+'&stype=cperson'
+        var url = 'http://localhost:28081/getonestringinfo?name='+clickA+'&stype=cperson'
         await axios({
           method:"get",
           url:url,
@@ -58,7 +58,7 @@ const TimeAxis = (prop) =>{
                 console.log(error);
             })
         var newdata;
-        var url = 'http://aailab.cn:28081/getpersonscore?pid='+prop.whichCase+'&addnames='+clickA+'&addcids='+id
+        var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames='+clickA+'&addcids='+id
         await axios({
           method:"get",
           url:url,
@@ -148,7 +148,7 @@ const TimeAxis = (prop) =>{
         
         const authorScroll =async () =>{            
         
-            var url = 'http://aailab.cn:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密,黄公望&addcids=10183,109158'
+            var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密,黄公望&addcids=10183,109158'
             await axios({
                     method:"get",
                     url:url,

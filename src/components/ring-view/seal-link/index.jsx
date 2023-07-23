@@ -280,7 +280,7 @@ const SealLink =(prop)=>{
                 }
                 
         
-                var url="http://aailab.cn:28081/getlines/"+prop.whichCase+"/"+prop.selectedPerson
+                var url="http://localhost:28081/getlines/"+prop.whichCase+"/"+prop.selectedPerson
                 await axios({
                         method:"get",
                         url:url,

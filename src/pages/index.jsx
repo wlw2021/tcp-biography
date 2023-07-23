@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Features from "./B-Features"
 import Appreciation from "./C-Appreciation"
 import Relation from "./D-Relation"
@@ -7,6 +7,7 @@ import 'antd/dist/reset.css';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space } from "antd"
 import { title } from "../assets"
+import axios from 'axios';
 
 
 const Pages = () => {
@@ -30,6 +31,7 @@ const Pages = () => {
         }
         setSelectedPerson('none')
     }
+
 
     return (
         <div className="layout-container">
@@ -55,7 +57,7 @@ const Pages = () => {
                     addScroll = {addScroll}
                     setAddScroll = {setAddScroll}/>
                 </div>
-
+                
                 <div className = "D-Relation">
                     <Relation 
                     matrixID = {matrixID}

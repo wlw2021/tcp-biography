@@ -26,7 +26,7 @@ const NoneDisplay = (prop) =>{
         if(noneList){
         noneList.forEach(async (pic)=>{
             var type, image64
-            var url = 'http://aailab.cn:28081/getimg?imgid='+pic.相似画作图+'&imgtype=画心'
+            var url = 'http://localhost:28081/getimg?imgid='+pic.相似画作图+'&imgtype=画心'
         await axios({
                 method:"get",
                 url:url,

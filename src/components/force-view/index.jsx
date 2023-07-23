@@ -28,9 +28,9 @@ const ForceView = (prop) =>{
         setPersonInfo(null)
         setRelationList(null)
         const getShowValue = async() =>{
-            var url = 'http://aailab.cn:28081/getpersonnet?cid='+prop.linkedID
+            var url = 'http://localhost:28081/getpersonnet?cid='+prop.linkedID
             //console.log(url)
-            //var url = 'http://aailab.cn:28081/getpersonnet?cid=10183'
+            //var url = 'http://localhost:28081/getpersonnet?cid=10183'
             await axios({
                 method:"get",
                 url:url,

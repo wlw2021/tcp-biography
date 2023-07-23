@@ -142,7 +142,7 @@ const WordCloud = (prop) => {
 
         
         const getWord = async() =>{
-            const url = 'http://aailab.cn:28081/getciyun/'+prop.whichCase
+            const url = 'http://localhost:28081/getciyun/'+prop.whichCase
             await axios({
                 method:"get",
                 url:url,

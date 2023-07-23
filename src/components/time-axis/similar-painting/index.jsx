@@ -47,7 +47,7 @@ const SimilarPaint = (prop) =>{
             var authorlist={};            
             var similist;
 
-            var url = 'http://aailab.cn:28081/gethuaxin/'+prop.whichCase
+            var url = 'http://localhost:28081/gethuaxin/'+prop.whichCase
             await axios({
                     method:"get",
                     url:url,
@@ -74,7 +74,7 @@ const SimilarPaint = (prop) =>{
             const renderPic = async (pic,cx,key) =>{
                 var type, image64;                  
 
-                url = 'http://aailab.cn:28081/getimg?imgid='+pic.相似画作图+'&imgtype=画心'
+                url = 'http://localhost:28081/getimg?imgid='+pic.相似画作图+'&imgtype=画心'
                 await axios({
                         method:"get",
                         url:url,

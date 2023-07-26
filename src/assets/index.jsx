@@ -43,6 +43,8 @@ import iconpaint from './iconpaint.svg'
 import biosample from './biosample.svg'
 import simiTitle from './simiTitle.svg'
 import bioTitle from './bioTitle.svg'
+import xxy1 from './xxy1.png'
+import xxy2 from './xxy2.png'
 
 
 
@@ -57,3 +59,4 @@ export{xyring, xyorigin, tri, zoom, title, simiTitle, bioTitle}
 
 export{biography, labelSample, linkdataview, linkTitle, qhsample, qhTitle, similarPaint, uncertainty}
 export{linkSample, locfig, timefig, thingfig, switchPaint, biosample}
+export{xxy1,xxy2}

@@ -8,6 +8,7 @@ import indxy from '../../data/xynew2old.json'
 import SealLink from './seal-link';
 import yuantu1 from '../../data/yuantu.json'
 import yuantu2 from '../../data/xyyuantu.json'
+import { CurvePicture } from './examples/canvas-curve-picture';
 
 
 
@@ -190,8 +191,11 @@ const RingView =(prop)=>{
         <div id ='main'>     
 
             <div id = 'ring-view'>
+                <div id='ringtu'>
+                    {/* <img src={picid==='894'?ringview:xyring} id='ringpic'></img> */}
+                    <CurvePicture />
+                </div>                
                 
-                <img src={picid==='894'?ringview:xyring} id='ringtu'></img>
                 <img src={tri} id='tri'></img>
 
                 <div id='wordcloud'>

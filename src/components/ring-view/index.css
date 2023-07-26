@@ -41,7 +41,11 @@
     margin:0 0 0 180px;
     position:absolute;
     z-index: 0;
+}
 
+#ringpic{
+    height:1320px;
+    width:1320px;
 }
 
 #seallink{

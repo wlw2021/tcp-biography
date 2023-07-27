@@ -317,8 +317,8 @@ const EditableCell = ({
             tabledata.push(item)
         })}
         else{ 
-          console.log(prop.chartInfo,'chart')
-          console.log(person)
+          //console.log(prop.chartInfo,'chart')
+          //console.log(person)
           prop.chartInfo.forEach((d)=>{
             var name1 = person[d.人1id].姓名
             var name2 = person[d.人2id].姓名

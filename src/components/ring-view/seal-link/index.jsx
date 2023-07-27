@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
 import './index.css'
-import person1 from '../../../data/seal-all.json';
-import person2 from '../../../data/seal-allxy.json';
 import axios from 'axios';
 
 
-const SealLink =(prop)=>{    
+const SealLink =(prop)=>{
+        
     var personind=[];
-    var person
-    if(prop.whichCase==='13941')person=person2
-    else person=person1
+    
+    
+
+    
     function Rotateind(x,y){
         var pi = Math.PI;
         var x1=x-220;
@@ -25,15 +25,12 @@ const SealLink =(prop)=>{
 
     }
 
-   
-    function highlight(d) {
-        prop.setSelectedPerson(d);
-    }   
     
     useEffect(()=>{ 
-
-        personind=[]
-    
+        
+        var person=prop.person
+        personind=[]        
+        console.log(person)
         //印章人名连线
         d3.select("#seal-link-svg").selectChildren("*")?.remove();
         var svg = d3
@@ -405,7 +402,7 @@ const SealLink =(prop)=>{
         
             showCYLines(svg)
   
-    },[prop.selectedPerson,prop.rotation,prop.wordind])
+    },[prop.selectedPerson,prop.rotation,prop.wordind,prop.person])
     
 
       return(

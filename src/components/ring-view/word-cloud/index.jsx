@@ -147,7 +147,6 @@ const WordCloud = (prop) => {
                 method:"get",
                 url:url,
             }).then(function (res) {
-                console.log(res.data)
                 personData = res.data.data.PersonName;
                 locationData = res.data.data.Location;
                 thingData = res.data.data.Thing;

@@ -40,9 +40,7 @@ export function drawCurveImage(
   const originalPoints = computeOriginalPoints(pa, pb, pc, pd, xCount, yCount);
   // 弯曲后的图像的所有顶点
   const curvePoints = computeCurvePoints(pa, pb, pc, pd, angle, xCount, yCount);
-  console.log(originalPoints)
-  console.log(curvePoints)
-
+ 
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   curvePoints.forEach((p, i) => {
     if (hasDot) {

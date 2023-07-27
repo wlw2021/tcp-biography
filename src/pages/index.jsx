@@ -5,9 +5,9 @@ import Relation from "./D-Relation"
 import "./index.css"
 import 'antd/dist/reset.css';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space } from "antd"
+import { Input} from "antd"
 import { title } from "../assets"
-import axios from 'axios';
+import paintinglist from "../data/paintinglist.json"
 
 
 const Pages = () => {
@@ -16,28 +16,49 @@ const Pages = () => {
     const [matrixID,setMatrixID] = useState('17690')
     const [matrixName,setMatrixName] = useState(null)
     const [addScroll,setAddScroll] = useState([])
-    const [whichCase, setWhichCase] = useState ('894')
+    const [whichCase, setWhichCase] = useState ('6')
+    const [picid, setpicid] = useState ('6')
     const [selectedPerson, setSelectedPerson] = useState ("none")
+    var casenum;
+
+    const changecase = (e) =>{
+        casenum=e.target.value
+    }
 
     const switchCase = () =>{
-        if(whichCase==='13941'){
-            setWhichCase('894')
-            setLinkedID('17690')
+        setWhichCase(casenum)
+        setLinkedID('17690')
+        const id = paintinglist.find((e)=>{
+            if(e.pid==casenum) return true
+            else return false
+        })
+        console.log(id)
+        setpicid(id.id)
+        console.log(picid)
+        if(id.cid!=='unknow'){
+            setLinkedID(id.cid)
+            setMatrixID(id.cid)
         }
+        else setLinkedID('17690')
+        // if(whichCase==='13941'){
+        //     setWhichCase('894')
+        //     setLinkedID('17690')
+        // }
 
-        else{
-            setWhichCase('13941')
-            setLinkedID('55870')
-        }
+        // else{
+        //     setWhichCase('13941')
+        //     setLinkedID('55870')
+        // }
         setSelectedPerson('none')
     }
+
 
 
     return (
         <div className="layout-container">
             <div className="Title" style={{fontFamily:'STKaiti', fontSize:100}}>
             <img src={title} style={{ height: 90, marginLeft:40}}></img>
-            <Input prefix={<SearchOutlined style={{ width: 40,marginRight:25}}/>} placeholder="input search text"  style={{ width: 800, height: 70, marginLeft:1900, fontSize:45}} onClick = {switchCase}/>
+            <Input prefix={<SearchOutlined style={{ width: 40,marginRight:25}} onClick = {switchCase}/>} placeholder="input search text"  style={{ width: 800, height: 70, marginLeft:1900, fontSize:45}} onChange={changecase}/>
         
                 </div>
             
@@ -46,6 +67,7 @@ const Pages = () => {
                     selectedPerson = {selectedPerson}
                     setSelectedPerson = {setSelectedPerson}
                     whichCase = {whichCase}
+                    picid = {picid}
                     linkedID = {linkedID}
                     setLinkedID = {setLinkedID}
                     linkedName = {linkedName}

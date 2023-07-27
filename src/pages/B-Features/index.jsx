@@ -11,6 +11,7 @@ const Features =(prop)=>{
         <div className='B-container'>
             <div id="ring-view-container">
                 <RingView 
+                picid={prop.picid}
                 whichCase={prop.whichCase}
                  selectedPerson = {prop.selectedPerson}
                  setSelectedPerson = {prop.setSelectedPerson}

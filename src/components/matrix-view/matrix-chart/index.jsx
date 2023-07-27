@@ -282,7 +282,7 @@ const getColumnSearchProps = (dataIndex) => ({
   ];
        
     useEffect(()=>{
-        console.log(prop)
+        //console.log(prop)
         if(!prop.relation) return
 
         var relationlist = prop.relation;

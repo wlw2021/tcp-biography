@@ -505,9 +505,6 @@ const relationLink= () =>{
     const relation = prop.relation
     const person=prop.person
         
-    console.log(personind)
-    console.log(pind)
-
 /////////////////////////////// ///////////////事件连线
 var strech = [30,60,40];
 var eventi = 0
@@ -946,10 +943,6 @@ Object.keys(doubleoth).forEach((p2)=>{
         setlevel(tmp1)
         setind(tmpind)
         setTimeout(()=>{
-            console.log(personind)
-            console.log(pind)
-            console.log(authorlevel,'22')
-            console.log(thelevel)
             relationLink()
         },100)
         

@@ -9,7 +9,7 @@ import SealLink from './seal-link';
 import yuantu1 from '../../data/yuantu.json'
 import yuantu2 from '../../data/xyyuantu.json'
 import { CurvePicture } from './examples/canvas-curve-picture';
-
+import axios from 'axios';
 
 
 const RingView =(prop)=>{
@@ -25,11 +25,80 @@ const RingView =(prop)=>{
     const [rectx, setRectx] = useState(350)
     const [rotation, setRotation] = useState(45);
     const [wordind, setWordind] = useState([]);
+    const [personnn, setperson]=useState({
+        "children":[]
+    })
     
-
+    var personn={
+        "children":[]
+    }
     const ringr=660;
 
+    const getinfo = async()=>{
+        var dylist, aulist
+        var url="http://localhost:28081/getauthorlist/"+prop.whichCase
+                await axios({
+                        method:"get",
+                        url:url,
+                    }).then(function (res) {
+                        dylist=res.data.data.dylist
+                        aulist=res.data.data.aulist
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+        dylist.forEach((e)=>{
+            if(e!='unknow'){
+            personn.children.push({
+                "name":e,
+                "children":[]
+            })}
+            else{
+                personn.children.push({
+                    "name":'None',
+                    "children":[]
+                })
+            }
+        })
+        var tmp = []
+        aulist.unknow.forEach((e)=>{
+            tmp.push(
+                {
+                    "name":e.姓名,
+                    "thisnum": e.本幅,
+                    "allnum": e.总数,
+                    "children":e.印章列表
+                }
+            )
+        })
+        personn.children.forEach((e)=>{
+            if(e.name==='None'){
+                e.children=tmp
+            }
+        })
 
+        Object.keys(aulist).forEach((key)=>{
+            if(key!=='unknow'){
+                tmp=[]
+                aulist[key].forEach((e)=>{
+                    tmp.push(
+                        {
+                            "name":e.姓名,
+                            "thisnum": e.本幅,
+                            "allnum": e.总数,
+                            "children":e.印章列表
+                        }
+                    )
+                })
+                personn.children.forEach((e)=>{
+                    if(e.name===key){
+                        e.children=tmp
+                    }
+                })
+            }
+        })
+        setperson(personn)
+    }
     
     const handleEnter = (e) =>{
         //console.log('in')
@@ -104,6 +173,7 @@ const RingView =(prop)=>{
     else image.src = xyorigin
     
     useEffect(()=>{
+        getinfo()
         var len;
         if(prop.whichCase==='13941'){
             len=24830;
@@ -193,7 +263,8 @@ const RingView =(prop)=>{
             <div id = 'ring-view'>
                 <div id='ringtu'>
                     {/* <img src={picid==='894'?ringview:xyring} id='ringpic'></img> */}
-                    <CurvePicture />
+                    <CurvePicture 
+                    currentcase={prop.picid}/>
                 </div>                
                 
                 <img src={tri} id='tri'></img>
@@ -212,7 +283,8 @@ const RingView =(prop)=>{
                 onMouseOver={handleEnter}
                 onMouseLeave={handleLeave}
                 onMouseMove={handleMove}>
-                    <SealLink    
+                    <SealLink 
+                    person={personnn}   
                     whichCase = {prop.whichCase}
                     wordind = {wordind}
                     selectedPerson = {prop.selectedPerson}

@@ -5,11 +5,11 @@ import { axis, biosample, bioTitle, divide, simiTitle } from "../../assets";
 import * as d3 from "d3";
 import SimilarPaint from "./similar-painting";
 import NoneDisplay from "./none-list";
-import year from '../../data/year.json'
 import PersonScroll from "./person-scroll";
 import { Button, Modal, Tooltip, Input} from "antd";
-import { bio, hoverRect, lined, linkdata, linshi, switchPaint } from "../../assets";
+import { bio, hoverRect, lined, linkdata, switchPaint } from "../../assets";
 import { PlusOutlined } from '@ant-design/icons';
+import boome from '../../data/boome.json'
 
 const TimeAxis = (prop) =>{
 
@@ -87,57 +87,77 @@ const TimeAxis = (prop) =>{
 
     useEffect(()=>{  
         d3.select('#year-axis-svg').selectChildren('*')?.remove()
+        d3.select('#tool-svg').selectChildren('*')?.remove()
         const axis=d3.select('#year-axis-svg').attr("preserveAspectRatio", "xMidYMid meet")
     .attr("viewBox", "0 0 2595 30")
+    const tool=d3.select('#tool-svg').attr("preserveAspectRatio", "xMidYMid meet")
+    .attr("viewBox", "0 0 2595 118.5")
     const peryearlen=170/81
-    var year=1000
+    var year=2000
+    setPerson(prop.person)
+    setRelation(prop.relation)
+    if(relation!==null){
+    Object.keys(relation).forEach((e)=>{
+        if(relation[e].生年!=null){
+          if(relation[e].生年<year)year=relation[e].生年
+        }
+        else if(relation[e].卒年!=null){
+            if(relation[e].卒年-50<year)year=relation[e].卒年-50
+          }
+    })
+    year-=(year%50+50)
+    console.log(year)
+
+    var tang=618
+    var wudai=907
+    var song=960
     var yuan = 1271;
     var ming=1368;
     var qing=1636;
     axis.append('line').attr('class','axis-mark-dy')
-            .attr('x1',(yuan-950)*peryearlen).attr('y1',0).attr('x2',(yuan-950)*peryearlen).attr('y2',33)
+            .attr('x1',(yuan-year)*peryearlen).attr('y1',0).attr('x2',(yuan-year)*peryearlen).attr('y2',33)
             .style('stroke','rgba(0,0,0,0.2)').style('stroke-width',1.2)
             .attr("stroke-dasharray", "4,4");
 
             axis.append('text').attr('y', 27)
-            .attr('x', (yuan-950)*peryearlen-30)
+            .attr('x', (yuan-year)*peryearlen-30)
             .style('text-anchor', "start")
             .text('Yuan').style('font-family','STKaiti')
             .style('font-size', 30)
             .style('fill','rgba(0,0,0,0.2)');
 
             axis.append('line').attr('class','axis-mark-dy')
-            .attr('x1',(ming-950)*peryearlen).attr('y1',0).attr('x2',(ming-950)*peryearlen).attr('y2',33)
+            .attr('x1',(ming-year)*peryearlen).attr('y1',0).attr('x2',(ming-year)*peryearlen).attr('y2',33)
             .style('stroke','rgba(0,0,0,0.2)').style('stroke-width',1.2)
             .attr("stroke-dasharray", "4,4");
 
             axis.append('text').attr('y', 27)
-            .attr('x', (ming-950)*peryearlen-30)
+            .attr('x', (ming-year)*peryearlen-30)
             .style('text-anchor', "start")
             .text('Ming').style('font-family','STKaiti')
             .style('font-size', 30)
             .style('fill','rgba(0,0,0,0.2)');
 
             axis.append('line').attr('class','axis-mark-dy')
-            .attr('x1',(qing-950)*peryearlen).attr('y1',0).attr('x2',(qing-950)*peryearlen).attr('y2',33)
+            .attr('x1',(qing-year)*peryearlen).attr('y1',0).attr('x2',(qing-year)*peryearlen).attr('y2',33)
             .style('stroke','rgba(0,0,0,0.2)').style('stroke-width',1.2)
             .attr("stroke-dasharray", "4,4");
 
             axis.append('text').attr('y', 27)
-            .attr('x', (qing-950)*peryearlen-30)
+            .attr('x', (qing-year)*peryearlen-30)
             .style('text-anchor', "start")
             .text('Qing').style('font-family','STKaiti')
             .style('font-size', 30)
             .style('fill','rgba(0,0,0,0.2)');
             
-
+    var tyear=year
     while(year<=2000){
             axis.append('line').attr('class','axis-mark')
-            .attr('x1',(year-950)*peryearlen).attr('y1',0).attr('x2',(year-950)*peryearlen).attr('y2',10)
+            .attr('x1',(year-tyear)*peryearlen).attr('y1',0).attr('x2',(year-tyear)*peryearlen).attr('y2',10)
             .style('stroke','black').style('stroke-width',1.2)
 
             axis.append('text').attr('y', 27)
-            .attr('x', (year-950)*peryearlen-20)
+            .attr('x', (year-tyear)*peryearlen-20)
             .style('text-anchor', "start")
             .text(String(year))
             .style('font-size', 15)
@@ -145,22 +165,59 @@ const TimeAxis = (prop) =>{
 
         year+=50
     }  
+    console.log(boome)
+    Object.keys(boome).forEach((e)=>{
+        var time=Number(e)
+        var event=boome[e]
+        if(time>tyear){
+            // axis.append('line').attr('class','axis-event')
+            // .attr('x1',(time-tyear)*peryearlen).attr('y1',-2).attr('x2',(time-tyear)*peryearlen).attr('y2',35)
+            // .style('stroke','rgba(220,20,60,0.5)').style('stroke-width',3)
+            console.log(event)
+            axis.append('circle').attr('class','axis-event')
+            .attr('cx',(time-tyear)*peryearlen).attr('cy',15).attr('r',8)
+            .style('fill','rgba(220,20,60,0.5)')
+            .on('click',function(){
+                d3.select('#tool-svg').selectChildren('*')?.remove()
+                   tool.append('rect').attr('class','axis-event').attr('x',(time-tyear)*peryearlen).attr('y',60)
+                    .attr('height',55).attr('width',event[0].length*17+30)
+                    .attr('fill','rgba(0,0,0,0.3)')
+                    tool.append('text').attr('y', 80)
+                    .attr('x', (time-tyear)*peryearlen+15)
+                    .style('text-anchor', "start")
+                    .text(time+'年').style('font-family','STKaiti')
+                    .style('font-size', 20)
+                    .style('fill','white');
+                    tool.append('text').attr('y', 105)
+                    .attr('x', (time-tyear)*peryearlen+15)
+                    .style('text-anchor', "start")
+                    .text(event[0]).style('font-family','STKaiti')
+                    .style('font-size', 17)
+                    .style('fill','white');
+    
+                    setTimeout(() => {
+                        d3.select('#tool-svg').selectChildren('*')?.remove()
+                    }, 5000);
+                    return 1;
+            })
+        }
+    })}
+
+        // const authorScroll =async () =>{            
         
-        const authorScroll =async () =>{            
-        
-            var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密,黄公望&addcids=10183,109158'
-            await axios({
-                    method:"get",
-                    url:url,
-                }).then(function (res) {
-                   setRelation( res.data.data.人物关系信息)
-                   setPerson(res.data.data.人物列表)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })}
-                authorScroll()
-        },[prop.whichCase])      
+        //     var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密,黄公望&addcids=10183,109158'
+        //     await axios({
+        //             method:"get",
+        //             url:url,
+        //         }).then(function (res) {
+        //            setRelation( res.data.data.人物关系信息)
+        //            setPerson(res.data.data.人物列表)
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error);
+        //         })}
+        //         authorScroll()
+        },[prop.whichCase, prop.person,prop.relation,person])      
 
         const handleClickT = ()=>{
             setShowType(!showType)
@@ -229,6 +286,9 @@ const changeey =(e)=>{
         <div id="axis-container">
             <div class='main-axis'>
                 <div id='long'>
+                    <div id="tool">
+                    <svg id='tool-svg'></svg>
+                    </div>
             <div id='year-similar'>
                 <SimilarPaint 
                 positon={position}

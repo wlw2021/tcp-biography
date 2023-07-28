@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import './index.css'
 import * as d3 from "d3";
@@ -85,7 +84,7 @@ const PersonScroll = (prop) => {
     var svg = d3
     .select("#year-layer-svg")
     .attr("preserveAspectRatio", "xMidYMid meet")
-    .attr("viewBox", "0 0 2595 300")
+    .attr("viewBox", "0 0 3000 300")
 
     const peryearlen=170/81;
     const personind = {}      
@@ -113,7 +112,7 @@ const showPersonScroll = (e)=>{
         e.death=e.birth+50;
     }
     
-    var indx = (e.birth-950)*peryearlen;
+    var indx = (e.birth-prop.begin)*peryearlen;
     var length = (e.death-e.birth)*peryearlen;
     var therela = relation[e.cid]
     var score=therela.分数.画作相关+therela.分数.讨论度+therela.分数.身份
@@ -246,7 +245,7 @@ const showPersonScroll = (e)=>{
     sentence.map((e)=>{
         if(e.year==0) sentcount++;
         else{
-            var sentindx=(e.year-950)*peryearlen;
+            var sentindx=(e.year-prop.begin)*peryearlen;
             var sentlen = e.content.length/10+5;
             g.append('rect')
             .attr('x',sentindx-sentlen).attr('y',()=>{
@@ -290,7 +289,7 @@ const showPersonScroll = (e)=>{
     seal.map((e)=>{
         if(e.year==0) sealcount++;
         else{
-            var sealindx=(e.year-950)*peryearlen;
+            var sealindx=(e.year-prop.begin)*peryearlen;
             g.append('rect')
             .attr('x',sealindx-8).attr('y',indy+30)
             .attr('width',8).attr('height',8)
@@ -362,10 +361,10 @@ const showPersonScroll = (e)=>{
      var ey=(level-2)*63-10
      
      if(thisrelation.卒年!=null){
-         var ex=(thisrelation.卒年-950)*peryearlen+5;
+         var ex=(thisrelation.卒年-prop.begin)*peryearlen+5;
      }
      else if(thisrelation.生年!=null){
-         var ex=(thisrelation.生年+50-950)*peryearlen+5;
+         var ex=(thisrelation.生年+50-prop.begin)*peryearlen+5;
      }
      else{return}
 
@@ -414,7 +413,7 @@ const showPersonScroll = (e)=>{
                  case '画作':type = 'Paint';break;
              }
              Object.keys(thisrelation.全部关系年份[rkey]).forEach((ykey)=>{
-                 var soloex = (Number(ykey)-950)*peryearlen
+                 var soloex = (Number(ykey)-prop.begin)*peryearlen
                  g.append('rect').attr('x',soloex).attr('y',ey+3).attr('id',rkey+' '+thisname+ykey)
                  .attr('height',39).attr('width',2)
                  .style('fill',colors[type])
@@ -526,10 +525,10 @@ Object.keys(doubleaca).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){ 
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -591,10 +590,10 @@ Object.keys(doublekin).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -649,10 +648,10 @@ Object.keys(doublepoli).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -706,10 +705,10 @@ Object.keys(doublepai).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -764,10 +763,10 @@ Object.keys(doublesoc).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -822,10 +821,10 @@ Object.keys(doubleoth).forEach((p2)=>{
         if(rela.起始年!=null||rela.结束年!=null){
             var xind
             if(rela.起始年!=null){
-                xind=(rela.起始年-950)*peryearlen;
+                xind=(rela.起始年-prop.begin)*peryearlen;
             }
             if(rela.结束年!=null){
-                xind=(rela.结束年-950)*peryearlen;
+                xind=(rela.结束年-prop.begin)*peryearlen;
             }
             var y1=pind[p1].kiny
             var y2=pind[p2].kiny
@@ -879,12 +878,10 @@ Object.keys(doubleoth).forEach((p2)=>{
 }
 
     useEffect(()=>{
-        
-
         d3.select("#year-layer-svg").selectChildren("*")?.remove();
         if(!prop.person) return
         
-
+        if(prop.begin!==null){
         const relation = prop.relation
         const person=prop.person
 
@@ -922,9 +919,9 @@ Object.keys(doubleoth).forEach((p2)=>{
         setTimeout(()=>{
             relationLink()
         },100)
-        
+    }
 
-    },[prop.person])
+    },[prop.person, prop.begin])
 
 
     useEffect(()=>{
@@ -961,7 +958,7 @@ Object.keys(doubleoth).forEach((p2)=>{
             else if(e.by){
                 y=e.by
             }
-            var x=(y-950)*peryearlen
+            var x=(y-prop.begin)*peryearlen
             console.log(thelevel)
             console.log(e)
             var g=svg.append('g').attr('id','addEventg')

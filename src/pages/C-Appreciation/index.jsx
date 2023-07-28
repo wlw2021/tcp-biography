@@ -32,7 +32,7 @@ const Appreciation =(prop)=>{
                setyear(theyear)
       }
       getinfo()
-    },[])
+    },[prop.whichCase])
     
 
       return(

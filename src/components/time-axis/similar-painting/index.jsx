@@ -31,7 +31,7 @@ const SimilarPaint = (prop) =>{
         var ssvg = d3
         .select("#year-similar-svg")
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .attr("viewBox", "0 0 2595 110")
+        .attr("viewBox", "0 0 3000 110")
 
         var defs=ssvg.append("defs")
         var filter=defs.append("filter").attr("id", "shadow")
@@ -41,7 +41,8 @@ const SimilarPaint = (prop) =>{
                 .attr('stdDeviation','2')
 
 
-        var peryearlen=1700/810;
+        var peryearlen=170/81;
+       
         const showSimilar = async () =>{           
 
             var authorlist={};            
@@ -172,7 +173,7 @@ const SimilarPaint = (prop) =>{
 
                 Object.keys(authorlist).map( async (key)=>{
                     if(key!='佚名'){
-                        var cx=(authorlist[key][0].作者生年-950)*peryearlen
+                        var cx=(authorlist[key][0].作者生年-prop.begin)*peryearlen
                         for(var i=0;i<authorlist[key].length;i++){
                            renderPic(authorlist[key][i],cx, key)
                             cx += 15;                                   
@@ -185,9 +186,11 @@ const SimilarPaint = (prop) =>{
 
                 prop.setNoneListP(noneList)                
         }
-        showSimilar()    
+        if(prop.begin!==null){
+        showSimilar()  
+        }  
            
-    },[prop.showType,prop.whichCase])
+    },[prop.showType,prop.whichCase,prop.begin])
 
 
     return(

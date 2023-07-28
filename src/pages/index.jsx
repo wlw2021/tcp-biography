@@ -16,8 +16,8 @@ const Pages = () => {
     const [matrixID,setMatrixID] = useState('17690')
     const [matrixName,setMatrixName] = useState(null)
     const [addScroll,setAddScroll] = useState([])
-    const [whichCase, setWhichCase] = useState ('6')
-    const [picid, setpicid] = useState ('6')
+    const [whichCase, setWhichCase] = useState ('894')
+    const [picid, setpicid] = useState ('909')
     const [selectedPerson, setSelectedPerson] = useState ("none")
     var casenum;
 

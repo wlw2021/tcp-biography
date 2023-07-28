@@ -1,10 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
 import './index.css'
+import { SearchOutlined } from '@ant-design/icons';
+import { Input} from "antd"
 import axios from 'axios';
 
 
 const SealView = (prop) =>{
+    const [isshow,setshow]=useState('none')
+    const [changeid, setchangeid]=useState(null)
+    var casenum
+    const changeyinzhang=(e)=>{
+        setchangeid(e)
+        setshow('')
+    }
+    const changecase = (e) =>{
+        casenum=e.target.value
+    }
+    const upload = async() =>{
+        var url= 'localhost:28081/changeyinzhang?pid='+prop.whichCase+'&yzids='+changeid+'&ppids='+casenum
+        await axios({
+            method:"get",
+            url:url,
+        }).then(function (res) {
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+        setshow('none')
+    }
+
     useEffect(()=>{
         var sealStart={}
         const namesize = 45;
@@ -55,7 +80,6 @@ const SealView = (prop) =>{
             method:"get",
             url:url,
         }).then(function (res) {
-            //console.log(res.data)
             typej = res.data.data.note
             image64j=res.data.data.streamimg
         })
@@ -82,15 +106,6 @@ const SealView = (prop) =>{
         var g=svg.append("g");
     
 
-        // g.append('rect')
-        // .attr('class','image-rect')
-        // .attr('x',leftm*0.9)
-        // .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
-        // .attr('filter','url(#shadow)')
-        // .attr('width',rectsize)
-        // .attr('height',rectsize)                 
-        // .style('fill','black')
-
         g.append('rect')
         .attr('class','image-rect')
         .attr('x',leftm*0.9)
@@ -100,16 +115,11 @@ const SealView = (prop) =>{
         .style('fill','white')
         .style('stroke','rgba(0,0,0,0.3)')
         .style('stroke-width',2)
+        .on('click',(e)=>{
+            console.log(e)
+            changeyinzhang(e.印章截图地址)
+        })
         
-
-        // g.append('rect')
-        // .attr('class','image-rect')
-        // .attr('x',leftm*2+rectsize)
-        // .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval)
-        // .attr('width',rectsize)
-        // .attr('height',rectsize)  
-        // .attr('filter','url(#shadow)')
-        // .style('fill','black');
 
         g.append('rect')
         .attr('class','image-rect')
@@ -119,16 +129,19 @@ const SealView = (prop) =>{
         .attr('height',rectsize)
         .style('fill','white')
         .style('stroke','rgba(0,0,0,0.3)')
-        .style('stroke-width',2);
+        .style('stroke-width',2)
+        
 
         g.append('image')
         .attr('xlink:href',imgj)
         .attr('x',leftm*1.2)
         .attr('y',sealStart[key]+i*(rectsize+boxheight+interval)+interval+interval*0.2)
         .attr('width',rectsize*0.9)
-        .attr('height',rectsize*0.9);
-
-        
+        .attr('height',rectsize*0.9)
+        .on('click',(i)=>{
+            console.log(e.印章截图地址)
+            changeyinzhang(e.印章截图地址)
+        });      
 
         g.append('image')
         .attr('xlink:href',imgy)
@@ -204,17 +217,12 @@ const SealView = (prop) =>{
 
     },[prop.selectedPerson])
 
-    
-    //   var g=svg.append("g");
-    //   g.append('image')
-    //   .attr('xlink:href',".seals/909_1__0.png")
-    //   .attr('x',20)
-    //   .attr('y',20)
-    //   .attr('width',40)
-    //   .attr('height',40);
 
     return(
-        <div id = "seal-view">           
+        <div id = "seal-view">  
+        <div id='changebox'  style={{ width: 700, height: 70, fontSize:45}}>         
+            <Input prefix={<SearchOutlined style={{ width: 40,marginRight:25}} onClick={upload}/>} placeholder="input search text"  style={{ width: 700, height: 70, marginLeft:400, fontSize:45}} onChange={changecase} />
+        </div>
             <svg id = "seal-view-svg">
             </svg>
         </div>

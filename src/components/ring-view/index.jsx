@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from "d3";
-import { logo, ringview, origin, xyorigin, xyring, qhTitle, qhsample, tri, zoom } from '../../assets';
+import { origin, xyorigin, xyring, qhTitle, qhsample, tri, zoom } from '../../assets';
 import './index.css'
 import WordCloud from './word-cloud';
 import indqh from '../../data/reverse.json';
@@ -15,7 +15,6 @@ import axios from 'axios';
 const RingView =(prop)=>{
     var yuantu
 
-    const picid=prop.whichCase
     var indpro
     
     const [isZoom, setZoom]= useState(false);
@@ -28,6 +27,9 @@ const RingView =(prop)=>{
     const [personnn, setperson]=useState({
         "children":[]
     })
+    const [uppic, setuppic] = useState(null)
+    const [downpic, setdownpic] = useState(null)
+    const [origin, setorigin] = useState(null)
     
     var personn={
         "children":[]
@@ -99,6 +101,33 @@ const RingView =(prop)=>{
         })
         setperson(personn)
     }
+
+    const getpic = async()=>{
+        var url='http://localhost:28081/getimg?imgid='+prop.whichCase+'&imgtype=新图'
+        await axios({
+                method:"get",
+                url:url,
+            }).then(function (res) {
+                console.log(res.data)
+                setuppic(res.data.data[0].streamimg)
+                setdownpic(res.data.data[1].streamimg)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+            url='http://localhost:28081/getimg?imgid='+prop.whichCase+'&imgtype=画作'
+            await axios({
+                    method:"get",
+                    url:url,
+                }).then(function (res) {
+                    console.log(res.data)
+                    setorigin(res.data.data.streamimg)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+    }
     
     const handleEnter = (e) =>{
         //console.log('in')
@@ -165,15 +194,12 @@ const RingView =(prop)=>{
     }
 
     const image = new Image();
-
-    if(prop.whichCase === '894'){
-        image.src = origin;
-    }
-    
-    else image.src = xyorigin
+    image.src='data:image/jpg;base64,'+origin
     
     useEffect(()=>{
         getinfo()
+        getpic()
+
         var len;
         if(prop.whichCase==='13941'){
             len=24830;
@@ -264,7 +290,9 @@ const RingView =(prop)=>{
                 <div id='ringtu'>
                     {/* <img src={picid==='894'?ringview:xyring} id='ringpic'></img> */}
                     <CurvePicture 
-                    currentcase={prop.picid}/>
+                    currentcase={prop.picid}
+                    uppic={uppic}
+                    downpic={downpic}/>
                 </div>                
                 
                 <img src={tri} id='tri'></img>
@@ -300,7 +328,7 @@ const RingView =(prop)=>{
             </div>
 
             <div id = 'origin'>
-                <img src={picid==='894'?origin:xyorigin} id='origintu'></img>
+                <img src={'data:image/jpg;base64,'+origin} id='origintu'></img>
                 <canvas id='rotate-view'
                 onMouseDown={handleDragDown}
                 onMouseUp={handleDragUp}

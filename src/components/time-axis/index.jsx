@@ -23,6 +23,7 @@ const TimeAxis = (prop) =>{
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [modalText, setModalText] = useState('Content of the modal');
+    const [begin, setbegin]=useState(null)
 
     
     const handleClickL = async ()=>{
@@ -37,7 +38,6 @@ const TimeAxis = (prop) =>{
             .catch(function (error) {
                 console.log(error);
             })
-       console.log(clickA,id)
         prop.setLinkedID(String(id))
         prop.setLinkedName(clickA)
       }
@@ -81,7 +81,6 @@ const TimeAxis = (prop) =>{
             })
   
             scrollnew.push(newdata)
-            console.log(scrollnew)
             prop.setAddScroll(scrollnew)
       }
 
@@ -89,9 +88,9 @@ const TimeAxis = (prop) =>{
         d3.select('#year-axis-svg').selectChildren('*')?.remove()
         d3.select('#tool-svg').selectChildren('*')?.remove()
         const axis=d3.select('#year-axis-svg').attr("preserveAspectRatio", "xMidYMid meet")
-    .attr("viewBox", "0 0 2595 30")
+    .attr("viewBox", "0 0 3000 30")
     const tool=d3.select('#tool-svg').attr("preserveAspectRatio", "xMidYMid meet")
-    .attr("viewBox", "0 0 2595 118.5")
+    .attr("viewBox", "0 0 3000 118.5")
     const peryearlen=170/81
     var year=2000
     setPerson(prop.person)
@@ -106,7 +105,7 @@ const TimeAxis = (prop) =>{
           }
     })
     year-=(year%50+50)
-    console.log(year)
+    setbegin(year)
 
     var tang=618
     var wudai=907
@@ -165,7 +164,6 @@ const TimeAxis = (prop) =>{
 
         year+=50
     }  
-    console.log(boome)
     Object.keys(boome).forEach((e)=>{
         var time=Number(e)
         var event=boome[e]
@@ -173,7 +171,6 @@ const TimeAxis = (prop) =>{
             // axis.append('line').attr('class','axis-event')
             // .attr('x1',(time-tyear)*peryearlen).attr('y1',-2).attr('x2',(time-tyear)*peryearlen).attr('y2',35)
             // .style('stroke','rgba(220,20,60,0.5)').style('stroke-width',3)
-            console.log(event)
             axis.append('circle').attr('class','axis-event')
             .attr('cx',(time-tyear)*peryearlen).attr('cy',15).attr('r',8)
             .style('fill','rgba(220,20,60,0.5)')
@@ -203,20 +200,6 @@ const TimeAxis = (prop) =>{
         }
     })}
 
-        // const authorScroll =async () =>{            
-        
-        //     var url = 'http://localhost:28081/getpersonscore?pid='+prop.whichCase+'&addnames=周密,黄公望&addcids=10183,109158'
-        //     await axios({
-        //             method:"get",
-        //             url:url,
-        //         }).then(function (res) {
-        //            setRelation( res.data.data.人物关系信息)
-        //            setPerson(res.data.data.人物列表)
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //         })}
-        //         authorScroll()
         },[prop.whichCase, prop.person,prop.relation,person])      
 
         const handleClickT = ()=>{
@@ -291,6 +274,7 @@ const changeey =(e)=>{
                     </div>
             <div id='year-similar'>
                 <SimilarPaint 
+                begin={begin}
                 positon={position}
                 setPosition={setPosition}
                 clickA={clickA}
@@ -312,6 +296,7 @@ const changeey =(e)=>{
             </div>
             <div id='person-year'>
                 <PersonScroll 
+                begin={begin}
                 addEvent={changee}
                 setSelectedPerson = {prop.setSelectedPerson}
                 whichCase={prop.whichCase}

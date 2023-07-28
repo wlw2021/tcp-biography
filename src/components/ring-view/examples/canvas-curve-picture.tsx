@@ -21,10 +21,6 @@ type StaticDrawingParams = [
 ];
 
 export const CurvePicture: FC = (prop:any) => {
-
-  const xCount =50;
-  const yCount=50;
-  const angle = 180;
   
   const cvsRef = useRef<null | HTMLCanvasElement>(null);
   const cvsRefdown = useRef<null | HTMLCanvasElement>(null);
@@ -43,7 +39,7 @@ export const CurvePicture: FC = (prop:any) => {
     ctx.fillStyle='rgba(255,255,255,0)'
     ctx.fillRect(0,0,1320,1320)
     const imgd = new Image();
-    imgd.src = '/slice/'+prop.currentcase+'_1.jpg';
+    imgd.src = 'data:image/jpg;base64,'+prop.uppic
     console.log(imgd.src)
     imgd.onload = () => {
       const { width, height } = imgd;
@@ -74,7 +70,7 @@ export const CurvePicture: FC = (prop:any) => {
     };
 
     const img = new Image();
-    img.src = '/slice/'+prop.currentcase+'_2.jpg';;
+    img.src = 'data:image/jpg;base64,'+prop.downpic;
     console.log(img.src)
 
         img.onload = () => {
@@ -106,7 +102,7 @@ export const CurvePicture: FC = (prop:any) => {
       });
       };
     
-  }, [prop.currentcase]);
+  }, [prop.currentcase,prop.uppic,prop.downpic]);
   
   // useEffect(() => {
   //   console.log(staticParams)

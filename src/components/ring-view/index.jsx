@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as d3 from "d3";
-import { origin, xyorigin, xyring, qhTitle, qhsample, tri, zoom } from '../../assets';
+import { origin, qhTitle, qhsample, tri, zoom } from '../../assets';
 import './index.css'
 import WordCloud from './word-cloud';
 import indqh from '../../data/reverse.json';
@@ -9,12 +8,10 @@ import SealLink from './seal-link';
 import yuantu1 from '../../data/yuantu.json'
 import yuantu2 from '../../data/xyyuantu.json'
 import { CurvePicture } from './examples/canvas-curve-picture';
-import axios from 'axios';
 
 
 const RingView =(prop)=>{
     var yuantu
-
     var indpro
     
     const [isZoom, setZoom]= useState(false);
@@ -24,110 +21,10 @@ const RingView =(prop)=>{
     const [rectx, setRectx] = useState(350)
     const [rotation, setRotation] = useState(45);
     const [wordind, setWordind] = useState([]);
-    const [personnn, setperson]=useState({
-        "children":[]
-    })
-    const [uppic, setuppic] = useState(null)
-    const [downpic, setdownpic] = useState(null)
-    const [origin, setorigin] = useState(null)
     
-    var personn={
-        "children":[]
-    }
-    const ringr=660;
-
-    const getinfo = async()=>{
-        var dylist, aulist
-        var url="http://localhost:28081/getauthorlist/"+prop.whichCase
-                await axios({
-                        method:"get",
-                        url:url,
-                    }).then(function (res) {
-                        dylist=res.data.data.dylist
-                        aulist=res.data.data.aulist
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-        dylist.forEach((e)=>{
-            if(e!='unknow'){
-            personn.children.push({
-                "name":e,
-                "children":[]
-            })}
-            else{
-                personn.children.push({
-                    "name":'None',
-                    "children":[]
-                })
-            }
-        })
-        var tmp = []
-        aulist.unknow.forEach((e)=>{
-            tmp.push(
-                {
-                    "name":e.姓名,
-                    "thisnum": e.本幅,
-                    "allnum": e.总数,
-                    "children":e.印章列表
-                }
-            )
-        })
-        personn.children.forEach((e)=>{
-            if(e.name==='None'){
-                e.children=tmp
-            }
-        })
-
-        Object.keys(aulist).forEach((key)=>{
-            if(key!=='unknow'){
-                tmp=[]
-                aulist[key].forEach((e)=>{
-                    tmp.push(
-                        {
-                            "name":e.姓名,
-                            "thisnum": e.本幅,
-                            "allnum": e.总数,
-                            "children":e.印章列表
-                        }
-                    )
-                })
-                personn.children.forEach((e)=>{
-                    if(e.name===key){
-                        e.children=tmp
-                    }
-                })
-            }
-        })
-        setperson(personn)
-    }
-
-    const getpic = async()=>{
-        var url='http://localhost:28081/getimg?imgid='+prop.whichCase+'&imgtype=新图'
-        await axios({
-                method:"get",
-                url:url,
-            }).then(function (res) {
-                console.log(res.data)
-                setuppic(res.data.data[0].streamimg)
-                setdownpic(res.data.data[1].streamimg)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-
-            url='http://localhost:28081/getimg?imgid='+prop.whichCase+'&imgtype=画作'
-            await axios({
-                    method:"get",
-                    url:url,
-                }).then(function (res) {
-                    console.log(res.data)
-                    setorigin(res.data.data.streamimg)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-    }
+   
+    const ringr=660;  
+    
     
     const handleEnter = (e) =>{
         //console.log('in')
@@ -193,13 +90,10 @@ const RingView =(prop)=>{
 
     }
 
-    const image = new Image();
-    image.src='data:image/jpg;base64,'+origin
-    
-    useEffect(()=>{
-        getinfo()
-        getpic()
-
+    useEffect(()=>{    
+        const image = new Image();
+        image.src='data:image/jpg;base64,'+prop.origin    
+        console.log('herehere')
         var len;
         if(prop.whichCase==='13941'){
             len=24830;
@@ -264,9 +158,7 @@ const RingView =(prop)=>{
 
         ctx2.clearRect(0,0,c2.width,c2.height);
 
-        // var angle = ((rotation+90)%360)/360
-        
-        // var recx=555-(indpro[Math.floor(angle*9000)][0]/18280)*555+60;
+
         
         ctx2.lineWidth = 3;
         ctx2.fillStyle = "RGBA(0,0,0,0.3)"
@@ -276,8 +168,9 @@ const RingView =(prop)=>{
         setRectx(rectx)
 
         ctx2.stroke()
-    },[isZoom,mx,my,rotation,rectx,wordind])
-    
+
+    },[isZoom,mx,my,rotation,rectx,wordind,prop.origin])
+    //isZoom,mx,my,rotation,rectx,wordind
 
       return(
         <div className='ring-view'> 
@@ -291,8 +184,8 @@ const RingView =(prop)=>{
                     {/* <img src={picid==='894'?ringview:xyring} id='ringpic'></img> */}
                     <CurvePicture 
                     currentcase={prop.picid}
-                    uppic={uppic}
-                    downpic={downpic}/>
+                    uppic={prop.uppic}
+                    downpic={prop.downpic}/>
                 </div>                
                 
                 <img src={tri} id='tri'></img>
@@ -312,7 +205,7 @@ const RingView =(prop)=>{
                 onMouseLeave={handleLeave}
                 onMouseMove={handleMove}>
                     <SealLink 
-                    person={personnn}   
+                    person={prop.person}   
                     whichCase = {prop.whichCase}
                     wordind = {wordind}
                     selectedPerson = {prop.selectedPerson}
@@ -328,7 +221,7 @@ const RingView =(prop)=>{
             </div>
 
             <div id = 'origin'>
-                <img src={'data:image/jpg;base64,'+origin} id='origintu'></img>
+                <img src={'data:image/jpg;base64,'+prop.origin} id='origintu'></img>
                 <canvas id='rotate-view'
                 onMouseDown={handleDragDown}
                 onMouseUp={handleDragUp}

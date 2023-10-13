@@ -10,9 +10,11 @@ import { Button, Modal, Tooltip, Input} from "antd";
 import { bio, hoverRect, lined, linkdata, switchPaint } from "../../assets";
 import { PlusOutlined } from '@ant-design/icons';
 import boome from '../../data/boome.json'
+import testt from '../../data/test.json'
 
 const TimeAxis = (prop) =>{
 
+   
     const [noneListP,setNoneListP]=useState(null)
     const [noneListS,setNoneListS]=useState(null)
     const [relation, setRelation] = useState(null)
@@ -84,7 +86,8 @@ const TimeAxis = (prop) =>{
             prop.setAddScroll(scrollnew)
       }
 
-    useEffect(()=>{  
+    useEffect(()=>{ 
+        console.log(testt) 
         d3.select('#year-axis-svg').selectChildren('*')?.remove()
         d3.select('#tool-svg').selectChildren('*')?.remove()
         const axis=d3.select('#year-axis-svg').attr("preserveAspectRatio", "xMidYMid meet")
@@ -173,7 +176,7 @@ const TimeAxis = (prop) =>{
             // .style('stroke','rgba(220,20,60,0.5)').style('stroke-width',3)
             axis.append('circle').attr('class','axis-event')
             .attr('cx',(time-tyear)*peryearlen).attr('cy',15).attr('r',8)
-            .style('fill','rgba(220,20,60,0.5)')
+            .style('fill','rgba(0,0,0,0.5)')
             .on('click',function(){
                 d3.select('#tool-svg').selectChildren('*')?.remove()
                    tool.append('rect').attr('class','axis-event').attr('x',(time-tyear)*peryearlen).attr('y',60)

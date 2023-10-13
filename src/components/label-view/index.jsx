@@ -24,8 +24,8 @@ const DevideShow = (prop) =>{
           .catch(function (error) {
               console.log(error);
           })
-      prop.setLinkedID(String(id))
-      prop.setLinkedName(clickP)
+      prop.setLinkedID(String(id));
+      prop.setLinkedName(clickP);
       // if(clickP==="公謹") prop.setLinkedID('10183')
       // else prop.setLinkedID('17690')
     }

@@ -7,10 +7,7 @@ import axios from 'axios';
 const SealLink =(prop)=>{
         
     var personind=[];
-    
-    
 
-    
     function Rotateind(x,y){
         var pi = Math.PI;
         var x1=x-220;
@@ -30,15 +27,12 @@ const SealLink =(prop)=>{
         
         var person=prop.person
         personind=[]        
-        console.log(person)
         //印章人名连线
         d3.select("#seal-link-svg").selectChildren("*")?.remove();
         var svg = d3
         .select("#seal-link-svg")
         .attr("preserveAspectRatio", "xMidYMid meet")
-        .attr("viewBox", "0 0 440 440")
-
-        
+        .attr("viewBox", "0 0 440 440")  
 
         let width = 400
         let height = 400
@@ -268,7 +262,6 @@ const SealLink =(prop)=>{
             )
 
             const showCYLines = async(svg) =>{ 
-               
                 var px,py
         
                 var cylink = {
@@ -354,7 +347,6 @@ const SealLink =(prop)=>{
                         }
                     })
 
-                    //console.log(nodes2)
         
                     var wg=svg.append('g').attr('class','wordlink')
                     wg.selectAll(".linkword")
@@ -383,7 +375,7 @@ const SealLink =(prop)=>{
                         return d.y
                     })
                     )
-        
+                    console.log('here')
                     wg.selectAll(".nodes2")
                     .data(nodes2)
                     .enter()

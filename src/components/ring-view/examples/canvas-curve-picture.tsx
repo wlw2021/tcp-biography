@@ -40,7 +40,6 @@ export const CurvePicture: FC = (prop:any) => {
     ctx.fillRect(0,0,1320,1320)
     const imgd = new Image();
     imgd.src = 'data:image/jpg;base64,'+prop.uppic
-    console.log(imgd.src)
     imgd.onload = () => {
       const { width, height } = imgd;
       const imgWidth = 914;
@@ -71,11 +70,8 @@ export const CurvePicture: FC = (prop:any) => {
 
     const img = new Image();
     img.src = 'data:image/jpg;base64,'+prop.downpic;
-    console.log(img.src)
-
-        img.onload = () => {
+         img.onload = () => {
         const { width, height } = img;
-        console.log(width,height)
         const imgWidth = 914;
         const imgHeight = (height * imgWidth) / width;
         img.width = imgWidth;
